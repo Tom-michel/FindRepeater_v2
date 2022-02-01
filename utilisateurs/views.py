@@ -99,7 +99,45 @@ def enregistrement(request):
 # se connecter à son compte
 
 def connexion(request):
-    return render(request, 'utilisateurs/conexion.html')
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+        if user:
+            listClient = []
+            listRep = []
+            if user.is_active:
+                clients = Client.objects.all()
+                profs = Repetiteur.objects.all()
+                user_actif = username
+                
+                for cli in clients:
+                    listClient.append(cli.user.username)
+                for rep in profs:
+                    listRep.append(rep.user.username)
+
+                if user_actif in listClient:
+                    login(request, user)
+                    return HttpResponseRedirect('bienvenue')
+                elif user_actif in listRep:
+                    login(request, user)
+                    return HttpResponseRedirect('consulter_profil')
+                else:
+                    msg1 = messages.info(request, "cet utilisateur ne correspond pas à un compte Parent/Élève ou Enseignant !")
+                content1 = {
+                    'msg1':msg1
+                }
+                return render(request, 'utilisateurs/conexion.html', content1)
+            else:
+                return HttpResponse("L'utilisateur est désactivé")
+        else:
+            msg = messages.info(request, "votre Nom d'utilisateur ou votre Mot de passe est incorrect, veuillez réessayer SVP !")
+            content = {
+                'msg':msg
+            }
+            return render(request, 'utilisateurs/conexion.html', content)
+    else:
+        return render(request, 'utilisateurs/conexion.html')
 
 
 
