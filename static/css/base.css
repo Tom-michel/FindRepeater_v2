@@ -1,0 +1,56 @@
+@media screen and (min-width: 992px) {
+    .navbar{
+        height: 60px;
+    }
+    .separer{
+        margin-left: 40%;
+    }
+    nav .logo{
+        margin-left: 20px;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    nav ul li a{
+        margin: 2px auto !important;
+        width: 60% !important;
+        background-color: rgba(255, 166, 0, 0.075);
+        
+    }
+    nav ul li a:hover{
+        background-color: rgba(255, 166, 0, 0.39); 
+    }
+}
+    
+.navbar-toggler{
+    margin-bottom: 10px;
+}
+
+nav .logo{
+    color: orange !important;
+    font-weight: bold;
+    size: 23px;
+}
+
+nav button{
+    border-color: orange !important;
+    color: orange !important;
+}
+
+.dropdown-menu{
+    width: 60% !important;
+    margin-left: 20%;
+}
+
+
+.btn-connexion{
+    background: orange;
+    border: none;
+    color: #000 !important;
+    border-radius: 20px;
+    transition: 0.5s;
+    padding-left:15px !important;
+    padding-right:15px !important;
+}
+
+/* *{background-color: rgb(0, 0, 0);} */

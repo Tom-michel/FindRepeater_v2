@@ -5,12 +5,17 @@
 
 {% block content %}
 
-<section id="hero" class="img-fluid bg-secondary" style="background-image:url(static/core/img/home.jpg); background-attachment: fixed; background-repeat:no-repeat; background-size: cover;">
-    <div class="hero-container">
-      <h1 class="text-center">Améliorez votre niveau avec nos <br> <span>professeurs en ligne</span></h1>
-      <p class="text-center text-white">Demarrez FindRepeater peut vous aider à trouver la solution pour vos cours en ligne via notre <span>équipe de professeur expérimenté</span></p>
-      <a href="#inscription" class="btn-get-started">Commencer</a>
-    </div>
+<section id="hero" class="img-fluid bg-secondary" style="background-image:url(static/img/home.jpg); background-attachment: fixed; background-repeat:no-repeat; background-size: cover;">
+  <div class="hero-container">    
+    <!-- desktop -->
+    <h1 class="text-center d-none d-md-block">Améliorez votre niveau avec des <br> <span>professeurs sur mesure</span></h1>
+    <p class="text-center text-white pb-2 d-none d-md-block">FindRepeater vous permet de touver facilement et rapidement des professeurs sur mesure, <br>proches de chez vous et sélectionnés en fonction de vos exigences</p>
+    
+    <!-- mobile -->
+    <h1 class="text-center d-md-none">Améliorez votre niveau avec des professeurs sur mesure</h1>
+    <p class="text-center text-white pb-2 d-md-none">FindRepeater vous permet de touver facilement et rapidement des professeurs sur mesure, proches de chez vous et sélectionnés en fonction de vos exigences</p>
+    <a href="" class="btn-get-started mt-3">Commencer</a>
+  </div>
 </section>
 
 {% endblock %}
