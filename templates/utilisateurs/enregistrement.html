@@ -5,6 +5,50 @@
 
 {% block content %}
 
-  <h1>Accueil</h1>
+<br><br><br>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <form action="" method="post">
+          {% csrf_token %}
+          
+          <div class="form-control">
+            <label for="type_user">Type d'utilisateur : </label>
+            <select name="type_user" id="type_user">
+              <option value="élève">élève</option>
+              <option value="parent">parent</option>
+              <option value="enseignant">enseignant</option>
+            </select>
+          </div>
+          <div class="form-control">
+            <label for="username">username</label>
+            <input type="text" name="username" id="username">
+          </div>
+          <div class="form-control">
+            <label for="first_name">Prénom </label>
+            <input type="text" name="first_name" id="first_name">
+          </div>
+          <div class="form-control">
+            <label for="last_name">Nom </label>
+            <input type="text" name="last_name" id="last_name">
+          </div>
+          <div class="form-control">
+            <label for="email">Email </label>
+            <input type="email" name="email" id="email">
+          </div>
+          <div class="form-control">
+            <label for="password1">password1 </label>
+            <input type="password" name="password1" id="password1">
+          </div>
+          <div class="form-control">
+            <label for="password2">password2 </label>
+            <input type="password" name="password2" id="password2">
+          </div>
+      
+          <input type="submit" value="Valider">
+        </form>
+      </div>
+    </div>
+  </div>
 
 {% endblock %}

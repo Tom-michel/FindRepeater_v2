@@ -3,6 +3,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from .forms import UserForm, ClientForm, RepetiteurForm
+from django.contrib.auth.models import User
+from .models import Repetiteur, Client
 
 # Create your views here.
 
@@ -14,9 +17,82 @@ def accueil(request):
     return render(request, 'utilisateurs/index.html')
 
 
+
+# page affiché après inscription du client
+
+@login_required(login_url='connexion')
+def bienvenue(request):
+    return render(request, 'utilisateurs/bienvenue.html') 
+
+
+
 # crer son compte (profil) parent/eleve
 
 def enregistrement(request):
+    registered = False
+    err1 = " "
+    err2 = " "
+    if request.method == 'POST':
+
+        # enregisterer le user
+        user_form = UserForm()
+        user_form.username = request.POST.get('username')
+        user_form.first_name = request.POST.get('first_name')
+        user_form.last_name = request.POST.get('last_name')
+        user_form.email = request.POST.get('email')
+        user_form.password1 = request.POST.get('password1')
+        user_form.password2 = request.POST.get('password2')
+        user_form = UserForm(data=request.POST)
+        if user_form.is_valid():
+            user = user_form.save()
+            user.save()
+
+        type_user = request.POST.get('type_user')
+
+        if type_user == 'enseignant':
+            
+            # enregistrer l'enseigant
+            repetiteur_form = RepetiteurForm()
+            repetiteur_form.civilite = request.POST.get('civilite')
+            repetiteur_form.age = request.POST.get('age')
+            repetiteur_form.telephone = request.POST.get('telephone')
+            repetiteur_form.photoProfil = request.POST.get('photoProfil')
+            repetiteur_form.niveauEtude = request.POST.get('niveauEtude')
+            repetiteur_form.ville = request.POST.get('ville')
+            repetiteur_form.quartier = request.POST.get('quartier')
+            repetiteur_form.langue = request.POST.get('langue')
+            repetiteur_form = RepetiteurForm(data=request.POST)
+            if repetiteur_form.is_valid():
+                repetiteur = repetiteur_form.save(commit=False)
+                repetiteur.user = user
+                repetiteur.save()
+                registered = True
+                
+                # connecter le user
+                user_log = authenticate(username=user_form.username, password=user_form.password1)
+                login(request, user_log)
+                # le renvoyer vers la page Mon Profil
+                return HttpResponseRedirect('consulter_profil')
+        else:
+
+            # enregistrer le client (élève/parent)
+            client_form = ClientForm(data=request.POST)
+            client_form.civilite = request.POST.get('civilite')
+            client_form.age = request.POST.get('age')
+            client_form.telephone = request.POST.get('telephone')
+            client_form.photoProfil = request.POST.get('photoProfil')
+            client_form.langue = request.POST.get('langue')
+            client_form = ClientForm(data=request.POST)
+            if client_form.is_valid():
+                client = client_form.save(commit=False)
+                client.user = user
+                client.save()
+                registered = True
+
+                # connecter le user
+                user_log = authenticate(username=user_form.username, password=user_form.password1)
+                login(request, user_log)
+                return HttpResponseRedirect('bienvenue')
     return render(request, 'utilisateurs/enregistrement.html')
 
 
@@ -66,6 +142,13 @@ def profs_disponibles(request):
 def recherche_repetiteur(request):
     return render(request, 'utilisateurs/recherche_repetiteur.html')
 
+
+
+# afficher la liste de tous les répétiteurs en enregistrés sur la plateforme
+
+@login_required(login_url='connexion')
+def liste_repetiteurs(request):
+    return render(request, 'utilisateurs/liste_repetiteurs.html')
 
 
 # fonction permettant de se déconnecter
