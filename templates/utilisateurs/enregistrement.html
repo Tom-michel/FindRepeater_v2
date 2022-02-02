@@ -5,50 +5,96 @@
 
 {% block content %}
 
-<br><br><br>
+<section class="py-5 my-5">
   <div class="container">
     <div class="row">
       <div class="col-md-6 offset-md-3">
-        <form action="" method="post">
-          {% csrf_token %}
-          
-          <div class="form-control">
-            <label for="type_user">Type d'utilisateur : </label>
-            <select name="type_user" id="type_user">
-              <option value="élève">élève</option>
-              <option value="parent">parent</option>
-              <option value="enseignant">enseignant</option>
-            </select>
-          </div>
-          <div class="form-control">
-            <label for="username">username</label>
-            <input type="text" name="username" id="username">
-          </div>
-          <div class="form-control">
-            <label for="first_name">Prénom </label>
-            <input type="text" name="first_name" id="first_name">
-          </div>
-          <div class="form-control">
-            <label for="last_name">Nom </label>
-            <input type="text" name="last_name" id="last_name">
-          </div>
-          <div class="form-control">
-            <label for="email">Email </label>
-            <input type="email" name="email" id="email">
-          </div>
-          <div class="form-control">
-            <label for="password1">password1 </label>
-            <input type="password" name="password1" id="password1">
-          </div>
-          <div class="form-control">
-            <label for="password2">password2 </label>
-            <input type="password" name="password2" id="password2">
-          </div>
-      
-          <input type="submit" value="Valider">
-        </form>
+        <div  class="form-enregistrement">
+          <style>
+            h4{color: orange; padding: 20px 0 5px;}
+          </style>
+          <form action="" method="post">
+            {% csrf_token %}
+            
+            <h4 class="text-center">Choisir un type de compte</h4>
+            <div class="form-control">
+              <label for="type_user">Vous êtes </label>
+              <select name="type_user" id="type_user">
+                <option value="élève">élève</option>
+                <option value="parent">parent</option>
+                <option value="enseignant">enseignant</option>
+              </select>
+            </div>
+
+            <h4 class="text-center">Vos informations personnelles</h4>
+            <div class="form-control">
+              <label for="civilite">Civilité &emsp;</label>
+              {{form2.civilite}}
+            </div>
+            <div class="form-control">
+              <label for="last_name">Nom </label>
+              <input type="text" name="last_name" id="last_name">
+            </div>
+            <div class="form-control">
+              <label for="first_name">Prénom </label>
+              <input type="text" name="first_name" id="first_name">
+            </div>
+            <div class="form-control">
+              <label for="age">Âge </label>
+              <input type="number" name="age" id="age">
+            </div>
+            <div class="form-control">
+              <label for="last_name">Téléphone </label>
+              <input type="text" name="telephone" id="telephone">
+            </div>
+            <div class="form-control">
+              <label for="email">Email </label>
+              <input type="email" name="email" id="email">
+            </div>
+            <div class="form-control">
+              <label for="photoProfil">Photo de profil </label>
+              <input type="file" name="photoProfil" id="photoProfil">
+            </div>
+
+            <h4 class="text-center">Vos informations professionnelles</h4>
+            <div class="form-control">
+              <label for="langue">Langue d'enseignement &emsp;</label>
+              {{form2.langue}}
+            </div>
+            <div class="form-control">
+              <label for="niveauEtude">Niveau d'étude </label>
+              <input type="text" name="niveauEtude" id="niveauEtude">
+            </div>
+            <div class="form-control">
+              <label for="ville">Ville </label>
+              <input type="text" name="ville" id="ville">
+            </div>
+            <div class="form-control">
+              <label for="quartier">Quartier </label>
+              <input type="text" name="quartier" id="quartier">
+            </div>
+
+            <h4 class="text-center">Vos informations de connexion</h4>
+            <div class="form-control">
+              <label for="username">Nom d'utilisateur</label>
+              <input type="text" name="username" id="username">
+            </div>
+            <div class="form-control">
+              <label for="password1">Créez votre mot de passe </label>
+              <input type="password" name="password1" id="password1">
+            </div>
+            <div class="form-control">
+              <label for="password2">Ratapez le mot de passe </label>
+              <input type="password" name="password2" id="password2">
+            </div>
+            
+            {{err1}}
+            {{err2}}
+            <input class="btn-connexion" type="submit" value="Valider">
+          </form>
+        </div>  
       </div>
     </div>
   </div>
-
+</section>
 {% endblock %}

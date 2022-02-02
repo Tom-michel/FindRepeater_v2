@@ -62,4 +62,14 @@ nav button{
     margin-top: 3px !important;
 }
 
+.nav-link {
+    color: white;
+    text-decoration: none;
+  }
+  
+  .nav-link, a:hover {
+    color: orange;
+    text-decoration: none;
+  }
+
 /* *{background-color: rgb(0, 0, 0);} */

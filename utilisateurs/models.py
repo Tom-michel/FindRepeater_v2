@@ -77,7 +77,7 @@ class Repetiteur(Utilisateur):
     quartier = models.CharField(max_length=200, null=True) 
 
     def __str__(self):
-        info = self.civilité+" "+self.user.username
+        info = self.civilite+" "+self.user.username
         return info
    
     # s'inscrire : redefinir la methdode inscrire() de Utilisateur
