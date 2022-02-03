@@ -94,17 +94,46 @@ h1, h2, h3, h4, h5, h6 {
   padding: 40px;
   box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
   border-radius: 10px;
+  margin-bottom: 40px;
+  /* border-bottom: rgb(56, 51, 133) solid 2px;
+  border-top: rgb(56, 51, 133) solid 2px; */
 }
+
+.etape{
+  position: absolute;
+  padding-left: 40px;
+  padding-top: 30px;
+}
+.etape .numEtape{
+  position: absolute;
+  background-color: #f8f9fa;
+  padding: 8px 18px;
+  border: rgb(56, 51, 133) solid 1px;
+  border-radius: 25px;
+  color: rgb(56, 51, 133);
+  font-size: 20px;
+  font-weight: 400;
+  box-shadow: 0 0 .3rem rgb(56, 51, 133);
+}
+
 
 @media screen and (max-width: 992px) {
   .form-enregistrement{
-    background-color: #fff;
     padding: 20px;
-    box-shadow: 0 0 1rem rgba(0,0,0,.15);
-    border-radius: 10px;
+    margin-bottom: 30px;
+  }
+
+  .etape{
+    position: absolute;
+    padding-left: 0px;
+    padding-top: 0px;
+  }
+  .etape .numEtape{
+    padding: 5px 12px;
+    border-radius: 25px;
+    font-size: 15px;
   }
 }
-
 /* page d'enregistrement FIN */
 
 
@@ -148,9 +177,7 @@ input[type="password"]:hover,
 input[type="email"]:hover,
 input[type="tel"]:hover,
 input[type="date"]:hover,
-input[type="number"]:hover,
-select:hover,
-textarea:hover {
+input[type="number"]:hover{
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
   border-color: #3c2994;
   box-shadow: 0 0 0 3px #3d299475;

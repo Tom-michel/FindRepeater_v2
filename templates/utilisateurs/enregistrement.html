@@ -5,19 +5,36 @@
 
 {% block content %}
 
+<style>
+  
+  @media screen and (min-width: 992px) {
+    h4{color: orange; padding: 0px 0 5px;}
+    .form-control{
+      width: 100% !important;
+    }
+  }
+  @media screen and (max-width: 992px) {
+    h4{color: orange; padding: 20px 0 5px;}
+    label{
+      padding-left: 15px;
+    }
+  }
+</style>
+
 <section class="py-5 my-5">
   <div class="container">
     <div class="row">
-      <div class="col-md-6 offset-md-3">
-        <div  class="form-enregistrement">
-          <style>
-            h4{color: orange; padding: 20px 0 5px;}
-          </style>
-          <form action="" method="post">
-            {% csrf_token %}
-            
+      <div class="col-md-4 offset-md-1">
+
+      </div>
+      <div class="col-md-6"> 
+        <form action="" method="post">
+          {% csrf_token %}
+
+          <div class="etape"><span class="numEtape">1</span></div>
+          <div  class="form-enregistrement">
             <h4 class="text-center">Choisir un type de compte</h4>
-            <div class="form-control">
+            <div class="py-2 text-center">
               <label for="type_user">Vous êtes </label>
               <select name="type_user" id="type_user">
                 <option value="élève">élève</option>
@@ -25,131 +42,238 @@
                 <option value="enseignant">enseignant</option>
               </select>
             </div>
+          </div>
 
+          <div class="etape"><span class="numEtape">2</span></div>
+          <div  class="form-enregistrement">
             <p class="pt-4">
               Céez un compte en tant que <b>enseignant</b> afin d'être 
               visible sur la plateforme et être contacté par toute personne désirant vos services
             </p>
-
             <h4 class="text-center">Informations personnelles</h4>
-            <div class="form-control">
-              <label for="civilite">Civilité &emsp;</label>
-              {{form2.civilite}}
+            <div class="row">
+              <div class="col-md-6 mt-3 text-center">
+                  <div class="form-group">
+                    <label style="padding-bottom: 5px;" for="civilite">Civilité &emsp;</label>
+                    {{form2.civilite}}
+                  </div>
+              </div>
+              <div class="col-md-6 mt-3">
+                  <div class="form-group">
+                    <label for="photoProfil">Photo de profil </label>
+                    <input class="form-control" type="file" name="photoProfil" id="photoProfil">
+                  </div>
+              </div>
             </div>
-            <div class="form-control">
-              <label for="last_name">Nom </label>
-              <input type="text" name="last_name" id="last_name">
+            <div class="row">
+              <div class="col-md-6 mt-3">
+                  <div class="form-group">
+                    <label for="last_name">Nom </label>
+                    <input class="form-control" type="text" name="last_name" id="last_name">
+                  </div>
+              </div>
+              <div class="col-md-6 mt-3">
+                  <div class="form-group">
+                    <label for="first_name">Prénom </label>
+                    <input class="form-control" type="text" name="first_name" id="first_name">
+                  </div>
+              </div>
             </div>
-            <div class="form-control">
-              <label for="first_name">Prénom </label>
-              <input type="text" name="first_name" id="first_name">
+            <div class="row">
+              <div class="col-md-6 mt-3">
+                  <div class="form-group">
+                    <label for="age">Âge </label>
+                    <input class="form-control" type="number" name="age" id="age">
+                  </div>
+              </div>
+              <div class="col-md-6 mt-3">
+                  <div class="form-group">
+                    <label for="telephone1">Téléphone </label>
+                    <input class="form-control" type="text" name="telephone1" id="telephone1">
+                  </div>
+              </div>
             </div>
-            <div class="form-control">
-              <label for="age">Âge </label>
-              <input type="number" name="age" id="age">
+            <div class="row">
+              <div class="col-md-6 mt-3">
+                  <div class="form-group">
+                    <label for="telephone2">Whatsapp </label>
+                    <input class="form-control" type="text" name="telephone2" id="telephone2">
+                  </div>
+              </div>
+              <div class="col-md-6 mt-3">
+                  <div class="form-group">
+                    <label for="email">Email </label>
+                    <input class="form-control" type="email" name="email" id="email">
+                  </div>
+              </div>
             </div>
-            <div class="form-control">
-              <label for="last_name">Téléphone </label>
-              <input type="text" name="telephone" id="telephone">
-            </div>
-            <div class="form-control">
-              <label for="email">Email </label>
-              <input type="email" name="email" id="email">
-            </div>
-            <div class="form-control">
-              <label for="photoProfil">Photo de profil </label>
-              <input type="file" name="photoProfil" id="photoProfil">
-            </div>
+          </div>
 
+          <div class="etape"><span class="numEtape">3</span></div>
+          <div  class="form-enregistrement">
             <h4 class="text-center">Informations professionnelles</h4>
-            <div class="form-control">
-              <label for="langue">Langue d'enseignement &emsp;</label>
-              {{form2.langue}}
+            <div class="row">
+              <div class="col-md-6 mt-3 text-center">
+                  <div class="form-group">
+                    <label style="padding-bottom: 5px;" for="langue">Langue d'enseignement &emsp;</label>
+                    {{form2.langue}}
+                  </div>
+              </div>
+              <div class="col-md-6 mt-3">
+                  <div class="form-group">
+                    <label for="niveauEtude">Niveau d'étude </label>
+                    <input class="form-control" type="text" name="niveauEtude" id="niveauEtude">
+                  </div>
+              </div>
             </div>
-            <div class="form-control">
-              <label for="niveauEtude">Niveau d'étude </label>
-              <input type="text" name="niveauEtude" id="niveauEtude">
+            <div class="row">
+              <div class="col-md-6 mt-3">
+                  <div class="form-group">
+                    <label for="ville">Ville </label>
+                    <input class="form-control" type="text" name="ville" id="ville">
+                  </div>
+              </div>
+              <div class="col-md-6 mt-3">
+                  <div class="form-group">
+                    <label for="quartier">Quartier </label>
+                    <input class="form-control" type="text" name="quartier" id="quartier">
+                  </div>
+              </div>
             </div>
-            <div class="form-control">
-              <label for="ville">Ville </label>
-              <input type="text" name="ville" id="ville">
-            </div>
-            <div class="form-control">
-              <label for="quartier">Quartier </label>
-              <input type="text" name="quartier" id="quartier">
-            </div>
+          </div>
 
+          <div class="etape"><span class="numEtape">4</span></div>
+          <div  class="form-enregistrement">
             <h4 class="text-center">Informations de connexion</h4>
-            <div class="form-control">
-              <label for="username">Nom d'utilisateur</label>
-              <input type="text" name="username" id="username">
-            </div>
-            <div class="form-control">
-              <label for="password1">Créez votre mot de passe </label>
-              <input type="password" name="password1" id="password1">
-            </div>
-            <div class="form-control">
-              <label for="password2">Ratapez le mot de passe </label>
-              <input type="password" name="password2" id="password2">
+            <div class="row">
+              <div class="col-md-6 mt-3">
+                  <div class="form-group">
+                    <label for="username">Nom d'utilisateur</label>
+                    <input class="form-control" type="text" name="username" id="username">
+                  </div>
+              </div>
+              <div class="col-md-6 mt-3">
+                  <div class="form-group">
+                    <label for="password1">Créez votre mot de passe </label>
+                    <input class="form-control" type="password" name="password1" id="password1">
+                  </div>
+              </div>
+            </div><div class="row mt-3">
+              <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="password2">Ratapez le mot de passe </label>
+                  </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="form-group">
+                    <input class="form-control" type="password" name="password2" id="password2">
+                  </div>
+              </div>
             </div>
             
             {{err1}}
             {{err2}}
 
+            <div class="text-center">
+              <input class="btn-connexion mt-5 mb-3" type="submit" value="Enregistrer">
+              <br>
+              <p>Vous avez déja un compte ? <a href="{% url 'connexion' %}">Connexion</a></p>
+            </div>
+          </div>
+
+          <div class="etape"><span class="numEtape">2</span></div>
+          <div  class="form-enregistrement">
             <p class="pt-4">
               Créez un compte en tant que <b>élève</b> ou <b>parent</b> 
               afin de rechercher un répétiteur sur mesure, adapté à vos besoins
             </p>
-
             <h4 class="text-center">Informations personnelles</h4>
-            <div class="form-control">
-              <label for="last_name">Nom </label>
-              <input type="text" name="last_name" id="last_name">
+            <div class="row">
+              <div class="col-md-6 mt-3">
+                  <div class="form-group">
+                    <label for="last_name">Nom </label>
+                    <input class="form-control" type="text" name="last_name" id="last_name">
+                  </div>
+              </div>
+              <div class="col-md-6 mt-3">
+                  <div class="form-group">
+                    <label for="first_name">Prénom </label>
+                    <input class="form-control" type="text" name="first_name" id="first_name">
+                  </div>
+              </div>
             </div>
-            <div class="form-control">
-              <label for="first_name">Prénom </label>
-              <input type="text" name="first_name" id="first_name">
+            <div class="row">
+              <div class="col-md-6 mt-3">
+                  <div class="form-group">
+                    <label for="email">Email </label>
+                    <input class="form-control" type="email" name="email" id="email">
+                  </div>
+              </div>
+              <div class="col-md-6 mt-3">
+                  <div class="form-group">
+                    <label for="photoProfil">Photo de profil </label>
+                    <input class="form-control" type="file" name="photoProfil" id="photoProfil">
+                  </div>
+              </div>
             </div>
-            <div class="form-control">
-              <label for="email">Email </label>
-              <input type="email" name="email" id="email">
-            </div>
-            <div class="form-control">
-              <label for="photoProfil">Photo de profil </label>
-              <input type="file" name="photoProfil" id="photoProfil">
-            </div>
+          </div>
 
+          <div class="etape"><span class="numEtape">3</span></div>
+          <div  class="form-enregistrement">
             <h4 class="text-center">Où habitez-vous ?</h4>
-            <div class="form-control">
-              <label for="ville">Ville </label>
-              <input type="text" name="ville" id="ville">
+            <div class="row">
+              <div class="col-md-6 mt-3">
+                  <div class="form-group">
+                    <label for="ville">Ville </label>
+                    <input class="form-control" type="text" name="ville" id="ville">
+                  </div>
+              </div>
+              <div class="col-md-6 mt-3">
+                  <div class="form-group">
+                    <label for="quartier">Quartier </label>
+                    <input class="form-control" type="text" name="quartier" id="quartier">
+                  </div>
+              </div>
             </div>
-            <div class="form-control">
-              <label for="quartier">Quartier </label>
-              <input type="text" name="quartier" id="quartier">
-            </div>
+          </div>
 
+          <div class="etape"><span class="numEtape">4</span></div>
+          <div  class="form-enregistrement">
             <h4 class="text-center">Informations de connexion</h4>
-            <div class="form-control">
-              <label for="username">Nom d'utilisateur</label>
-              <input type="text" name="username" id="username">
-            </div>
-            <div class="form-control">
-              <label for="password1">Créez votre mot de passe </label>
-              <input type="password" name="password1" id="password1">
-            </div>
-            <div class="form-control">
-              <label for="password2">Ratapez le mot de passe </label>
-              <input type="password" name="password2" id="password2">
+            <div class="row">
+              <div class="col-md-6 mt-3">
+                  <div class="form-group">
+                    <label for="username">Nom d'utilisateur</label>
+                    <input class="form-control" type="text" name="username" id="username">
+                  </div>
+              </div>
+              <div class="col-md-6 mt-3">
+                  <div class="form-group">
+                    <label for="password1">Créez votre mot de passe </label>
+                    <input class="form-control" type="password" name="password1" id="password1">
+                  </div>
+              </div>
+            </div><div class="row mt-3">
+              <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="password2">Ratapez le mot de passe </label>
+                  </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="form-group">
+                    <input class="form-control" type="password" name="password2" id="password2">
+                  </div>
+              </div>
             </div>
 
             <div class="text-center">
-             <input class="btn-connexion mt-5 mb-3" type="submit" value="Enregistrer">
-             <br>
+              <input class="btn-connexion mt-5 mb-3" type="submit" value="Enregistrer">
+              <br>
               <p>Vous avez déja un compte ? <a href="{% url 'connexion' %}">Connexion</a></p>
             </div>
-          </form>
-        </div>  
+
+          </div>  
+        </form>
       </div>
     </div>
   </div>
