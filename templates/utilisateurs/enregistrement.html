@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %} FindRepeater | Trouvez facilement et rapidement des profs sur mesures | Accueil {% endblock %}
+{% block title %} FindRepeater | Créer un compte {% endblock %}
 
 {% block content %}
 
@@ -26,7 +26,12 @@
               </select>
             </div>
 
-            <h4 class="text-center">Vos informations personnelles</h4>
+            <p class="pt-4">
+              Céez un compte en tant que <b>enseignant</b> afin d'être 
+              visible sur la plateforme et être contacté par toute personne désirant vos services
+            </p>
+
+            <h4 class="text-center">Informations personnelles</h4>
             <div class="form-control">
               <label for="civilite">Civilité &emsp;</label>
               {{form2.civilite}}
@@ -56,7 +61,7 @@
               <input type="file" name="photoProfil" id="photoProfil">
             </div>
 
-            <h4 class="text-center">Vos informations professionnelles</h4>
+            <h4 class="text-center">Informations professionnelles</h4>
             <div class="form-control">
               <label for="langue">Langue d'enseignement &emsp;</label>
               {{form2.langue}}
@@ -74,7 +79,7 @@
               <input type="text" name="quartier" id="quartier">
             </div>
 
-            <h4 class="text-center">Vos informations de connexion</h4>
+            <h4 class="text-center">Informations de connexion</h4>
             <div class="form-control">
               <label for="username">Nom d'utilisateur</label>
               <input type="text" name="username" id="username">
@@ -90,7 +95,59 @@
             
             {{err1}}
             {{err2}}
-            <input class="btn-connexion" type="submit" value="Valider">
+
+            <p class="pt-4">
+              Créez un compte en tant que <b>élève</b> ou <b>parent</b> 
+              afin de rechercher un répétiteur sur mesure, adapté à vos besoins
+            </p>
+
+            <h4 class="text-center">Informations personnelles</h4>
+            <div class="form-control">
+              <label for="last_name">Nom </label>
+              <input type="text" name="last_name" id="last_name">
+            </div>
+            <div class="form-control">
+              <label for="first_name">Prénom </label>
+              <input type="text" name="first_name" id="first_name">
+            </div>
+            <div class="form-control">
+              <label for="email">Email </label>
+              <input type="email" name="email" id="email">
+            </div>
+            <div class="form-control">
+              <label for="photoProfil">Photo de profil </label>
+              <input type="file" name="photoProfil" id="photoProfil">
+            </div>
+
+            <h4 class="text-center">Où habitez-vous ?</h4>
+            <div class="form-control">
+              <label for="ville">Ville </label>
+              <input type="text" name="ville" id="ville">
+            </div>
+            <div class="form-control">
+              <label for="quartier">Quartier </label>
+              <input type="text" name="quartier" id="quartier">
+            </div>
+
+            <h4 class="text-center">Informations de connexion</h4>
+            <div class="form-control">
+              <label for="username">Nom d'utilisateur</label>
+              <input type="text" name="username" id="username">
+            </div>
+            <div class="form-control">
+              <label for="password1">Créez votre mot de passe </label>
+              <input type="password" name="password1" id="password1">
+            </div>
+            <div class="form-control">
+              <label for="password2">Ratapez le mot de passe </label>
+              <input type="password" name="password2" id="password2">
+            </div>
+
+            <div class="text-center">
+             <input class="btn-connexion mt-5 mb-3" type="submit" value="Enregistrer">
+             <br>
+              <p>Vous avez déja un compte ? <a href="{% url 'connexion' %}">Connexion</a></p>
+            </div>
           </form>
         </div>  
       </div>

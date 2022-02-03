@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} FindRepeater | Créer un compte {% endblock %}
+
+{% block content %}
+
+<section class="py-5 my-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div  class="form-enregistrement">
+          <style>
+            h4{color: orange; font-size: 27px; padding: 5px 0 30px;}
+          </style>
+          <form name="formConnexion" onsubmit="return validateFormConnex()" action="" method="post">
+            {% csrf_token %}
+
+            <h4 class="text-center">Connectez vous à votre compte</h4>
+            
+            <div>
+              {% for message in messages %}
+                <p class="errornotes">{{message}}</p>
+              {% endfor %}
+
+              {% if user.is_authenticated %}
+              <p class="infonotes text-center pt-2">
+                Vous êtes déja connecté en tant que <b>{{request.user.username}} 
+              </p>
+              {% endif %}
+            </div>
+
+            <div class="py-2 text-center">
+              <input class="form-control usernameC" type="text" name="username" id="username" placeholder="Nom d'utilisateur">
+              <p>
+                <span class="errorform" id="error_username"></span>
+              </p>
+            </div>
+            <div class="py-2 text-center">
+              <input class="form-control"  type="password" name="password" id="password" placeholder="Mot de passe">
+              <p>
+                <span class="errorform" id="error_password"></span>
+              </p>
+            </div>
+
+            <div class="text-center">
+              {% if user.is_authenticated %}
+              <br>
+              <a class="btn-register" href="{% url 'user_logout' %}">Déconnexion</a>  
+              {% endif %}
+            </div>
+            <div class="text-center">
+              {% if not user.is_authenticated %}
+                <input class="btn-connexion mt-2 mb-3" type="submit" value="Connexion">
+                <br>
+                <p>Vous n'avez pas de compte ? <a href="{% url 'enregistrement' %}">S'inscrire</a></p>
+              {% endif %}
+            </div>
+          </form>
+        </div>  
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

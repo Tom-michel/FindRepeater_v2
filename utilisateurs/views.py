@@ -14,7 +14,12 @@ from .models import Repetiteur, Client
 # page d'accueil
 
 def accueil(request):
-    return render(request, 'utilisateurs/index.html')
+    listR = Repetiteur.objects.all()
+    listRep = []
+    for rep in listR:
+        listRep.append(rep.user.username)
+    content = {'listRep':listRep}
+    return render(request, 'utilisateurs/index.html', content)
 
 
 
@@ -33,9 +38,11 @@ def enregistrement(request):
     err1 = " "
     err2 = " "
     if request.method == 'POST':
+        user_form = UserForm()
+        repetiteur_form = RepetiteurForm()
+        client_form = ClientForm()
 
         # récuper les infos du user
-        user_form = UserForm()
         user_form.username = request.POST.get('username')
         username = user_form.username
         user_form.first_name = request.POST.get('first_name')
@@ -51,7 +58,7 @@ def enregistrement(request):
         if type_user == 'enseignant':
             
             # enregistrer l'enseigant
-            repetiteur_form = RepetiteurForm()
+            
             #repetiteur_form.civilite = request.POST.get('civilite')
             repetiteur_form.age = request.POST.get('age')
             repetiteur_form.telephone = request.POST.get('telephone')
@@ -71,6 +78,8 @@ def enregistrement(request):
                 
                 # connecter le user
                 user_log = authenticate(username=username, password=password)
+                if user.is_authenticated:
+                    logout(request)
                 login(request, user_log)
                 # le renvoyer vers la page Mon Profil
                 return HttpResponseRedirect('consulter_profil')
@@ -80,12 +89,9 @@ def enregistrement(request):
         else:
 
             # enregistrer le client (élève/parent)
-            client_form = ClientForm(data=request.POST)
-            #client_form.civilite = request.POST.get('civilite')
-            client_form.age = request.POST.get('age')
-            client_form.telephone = request.POST.get('telephone')
+            client_form.ville = request.POST.get('ville')
+            client_form.quartier = request.POST.get('quartier')
             client_form.photoProfil = request.POST.get('photoProfil')
-            #client_form.langue = request.POST.get('langue')
             client_form = ClientForm(data=request.POST)
             if user_form.is_valid() and client_form.is_valid():
                 user = user_form.save()
@@ -97,6 +103,8 @@ def enregistrement(request):
 
                 # connecter le user
                 user_log = authenticate(username=username, password=password)
+                if user.is_authenticated:
+                    logout(request)
                 login(request, user_log)
                 return HttpResponseRedirect('bienvenue')
             else:
@@ -136,9 +144,13 @@ def connexion(request):
                     listRep.append(rep.user.username)
 
                 if user_actif in listClient:
+                    if user.is_authenticated:
+                        logout(request)
                     login(request, user)
                     return HttpResponseRedirect('bienvenue')
                 elif user_actif in listRep:
+                    if user.is_authenticated:
+                        logout(request)
                     login(request, user)
                     return HttpResponseRedirect('consulter_profil')
                 else:
@@ -146,17 +158,17 @@ def connexion(request):
                 content1 = {
                     'msg1':msg1
                 }
-                return render(request, 'utilisateurs/conexion.html', content1)
+                return render(request, 'utilisateurs/connexion.html', content1)
             else:
                 return HttpResponse("L'utilisateur est désactivé")
         else:
-            msg = messages.info(request, "votre Nom d'utilisateur ou votre Mot de passe est incorrect, veuillez réessayer SVP !")
+            msg = messages.info(request, "votre Nom d'utilisateur ou votre Mot de passe est incorrect, veuillez réessayer !")
             content = {
                 'msg':msg
             }
-            return render(request, 'utilisateurs/conexion.html', content)
+            return render(request, 'utilisateurs/connexion.html', content)
     else:
-        return render(request, 'utilisateurs/conexion.html')
+        return render(request, 'utilisateurs/connexion.html')
 
 
 

@@ -35,17 +35,15 @@
                       <a class="nav-link active" aria-current="page" href="{% url 'accueil' %}">Accueil</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="{% url 'enregistrement' %}">Devenir prof</a>
-                    </li>
-                    <li class="nav-item">
                       <a class="nav-link" href="">Rechercher un prof</a>
                     </li>
+                    <li class="nav-item">
+                      <a class="nav-link btn-register" href="{% url 'enregistrement' %}">S'inscrire</a>
+                    </li>
                     {% if not user.is_authenticated %}
-                      <li class="nav-item">
-                        <a class="nav-link btn btn-connexion" href="">
-                          Connexion
-                        </a>
-                      </li>
+                    <li class="nav-item">
+                      <a class="nav-link btn-connexion" href="{% url 'connexion' %}">Connexion</a>
+                    </li>
                     {% endif %}
                     {% if user.is_authenticated %}
                       <li class="nav-item dropdown">
@@ -54,7 +52,7 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="border: orange solid 2px;">
                           {% if user.username in listRep %}  
-                            <li><a class="dropdown-item" href="">Mon profil</a></li>
+                            <li><a class="dropdown-item" href="{% url 'consulter_profil' %}">Mon profil</a></li>
                             <li><hr class="dropdown-divider" style="border: orange solid 2px;"></li>
                           {% endif %}
                             <li><a class="dropdown-item" href="{% url 'user_logout' %}">Déconnexion</a></li>

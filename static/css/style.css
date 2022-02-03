@@ -87,8 +87,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* banière page d'accueil FIN */
 
-/* page d'znregistrement DÉBUT */
-
+/* page d'enregistrement DÉBUT */
 
 .form-enregistrement{
   background-color: #fff;
@@ -106,5 +105,129 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+/* page d'enregistrement FIN */
 
-/* page d'znregistrement FIN */
+
+/* formulaires DÉBUT */
+
+
+.form-control {
+  width: 80% !important;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: .25rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  margin: auto;
+}
+
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+input[type="number"],
+select,
+textarea {
+    /* width: 80%; */
+
+    /* height: 2.5em; */
+}
+
+input[type="text"]:hover,
+input[type="password"]:hover,
+input[type="email"]:hover,
+input[type="tel"]:hover,
+input[type="date"]:hover,
+input[type="number"]:hover,
+select:hover,
+textarea:hover {
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  border-color: #3c2994;
+  box-shadow: 0 0 0 3px #3d299475;
+}
+
+
+
+
+/* erreurs de formulaire dans les champs */
+.err {
+  border: red solid 1px !important;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out !important;
+  box-shadow: 0 0 0 2px rgba(255, 0, 0, 0.301) !important;
+}
+.errorform{
+  padding-top: 5px;
+  font-size: 14px;
+  display: block;
+  margin: 0 0 10px 0;
+  color: #e35f5f;
+  overflow-wrap: break-word;
+}
+
+  /* page de connexion DÉBUT */
+
+  /* erreurs du formulaire (dans la BD) */
+.errornotes{
+  font-size: 14px;
+  font-weight: 700;
+  display: block;
+  padding: 10px 12px;
+  color: #e35f5f;;
+  border: 1px solid #e35f5f;;
+  border-radius: 4px;
+  background-color: rgb(255, 210, 210);
+  background-position: 5px 12px;
+  overflow-wrap: break-word;
+  width: 80%;
+  margin: auto;
+}
+
+.infonotes{
+  font-size: 14px;
+  font-weight: 700;
+  display: block;
+  padding: 10px 12px;
+  color: #006b1b;
+  border: 1px solid #006b1b;;
+  border-radius: 4px;
+  background-color: rgb(215, 255, 210);
+  background-position: 5px 12px;
+  overflow-wrap: break-word;
+  width: 80%;
+  margin: auto;
+}
+
+
+
+  /* page de connexion FIN */
+
+@media screen and (max-width: 992px) {
+  .form-control {
+    width: 95% !important;
+  }
+  .errornotes{
+    width: 95%;
+    margin: auto;
+    font-size: 13px;
+    padding: 10px 12px;
+  }
+  .infonotes{
+    width: 95%;
+    margin: auto;
+    font-size: 13px;
+    padding: 10px 12px;
+  }
+}
+
+
+/* formulaies FIN */

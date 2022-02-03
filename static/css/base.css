@@ -3,10 +3,7 @@
         height: 50px;
     }
     .separer{
-        margin-left: 40%;
-    }
-    nav .logo{
-        margin-left: 20px;
+        margin-left: 45%;
     }
 }
 
@@ -36,6 +33,11 @@ nav button{
     border-color: orange !important;
     color: orange !important;
 }
+nav button:focus{
+    border: #231e39 solid 2px !important;
+    box-shadow: none !important;
+    color: orange !important;
+}
 
 .dropdown-menu{
     width: 60% !important;
@@ -48,18 +50,57 @@ nav button{
     color: #000 !important;
     border-radius: 20px;
     transition: 0.5s;
-    padding: 5px 15px !important;
-    /* padding-right:15px !important; */
+    padding: 8px 18px !important;
+    text-decoration: none !important;
 }
-
-.navbar .btn-connexion{
-    background: orange;
-    border: none;
+.btn-register{
+    border: #231e39 solid 1px;
     color: #000 !important;
     border-radius: 20px;
     transition: 0.5s;
-    padding: 5px 15px !important;
+    padding: 8px 18px !important;
+    text-decoration:  none !important;
+    font-weight: normal;
+}
+
+.navbar .btn-register{
+    background: none;
+    border: #231e39 solid 1px;
+    color: #000 !important;
+    border-radius: 20px;
+    transition: 0.3s;
+    padding: 4px 12px !important;
     margin-top: 3px !important;
+    font-size: 14px !important;
+    margin-top: 5px !important;
+}
+.navbar .btn-connexion{
+    background: orange;
+    border: orange solid 1px;
+    color: #000 !important;
+    border-radius: 20px;
+    transition: 0.3s;
+    padding: 4px 12px !important;
+    margin-top: 3px !important;
+    font-size: 14px !important;
+    margin-top: 5px !important;
+}
+@media screen and (min-width: 992px) {
+    .navbar .btn-register{
+        margin-right: 2px !important;
+    }
+}
+
+
+.btn-connexion:hover{
+    background: orange;
+    border: none;
+    color: #fff !important;
+}
+.btn-register:hover{
+    background: #231e39;
+    border: none;
+    color: #fff !important;
 }
 
 .nav-link {
