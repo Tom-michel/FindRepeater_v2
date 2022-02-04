@@ -91,23 +91,25 @@ h1, h2, h3, h4, h5, h6 {
 
 .form-enregistrement{
   background-color: #fff;
-  padding: 40px;
+  padding: 10px 20px;
   box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
   border-radius: 10px;
   margin-bottom: 40px;
+  width: 90%;
+  margin-left: 5%;
   /* border-bottom: rgb(56, 51, 133) solid 2px;
   border-top: rgb(56, 51, 133) solid 2px; */
 }
 
 .etape{
   position: absolute;
-  padding-left: 40px;
-  padding-top: 30px;
+  padding-left: 4px;
+  padding-top: 20px;
 }
 .etape .numEtape{
-  position: absolute;
+  /* position: absolute; */
   background-color: #f8f9fa;
-  padding: 8px 18px;
+  padding: 8px 15px;
   border: rgb(56, 51, 133) solid 1px;
   border-radius: 25px;
   color: rgb(56, 51, 133);
@@ -119,21 +121,53 @@ h1, h2, h3, h4, h5, h6 {
 
 @media screen and (max-width: 992px) {
   .form-enregistrement{
-    padding: 20px;
+    padding: 10px 20px;
     margin-bottom: 30px;
   }
 
   .etape{
     position: absolute;
-    padding-left: 0px;
-    padding-top: 0px;
+    padding-left: 2px;
+    padding-top: 15px;
   }
   .etape .numEtape{
-    padding: 5px 12px;
+    padding: 5px 10px;
     border-radius: 25px;
     font-size: 15px;
   }
 }
+
+@media screen and (min-width: 992px) {
+  h4{color: orange; padding: 10px 0 3px;}
+  .form-control{
+    width: 100% !important;
+  }
+  .btn-register.suivant{
+    font-size: 12px;
+    box-shadow: 0 0 .3rem rgb(56, 51, 133);
+  }
+}
+@media screen and (max-width: 992px) {
+  h4{color: orange; padding: 5px 0 0px; font-size: 18px;}
+  label{
+    padding-left: 15px;
+  }
+  .form-enregistrement{
+    font-size: 15px;
+  }
+  .btn-register.suivant{
+    padding: 6px 11px !important;
+    font-size: 12px;
+    box-shadow: 0 0 .3rem rgb(56, 51, 133);
+  }
+}
+span{
+  color: rgb(99, 99, 99);
+}
+span:hover{
+  color: rgb(173, 169, 147);
+}
+
 /* page d'enregistrement FIN */
 
 

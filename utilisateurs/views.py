@@ -59,14 +59,19 @@ def enregistrement(request):
             
             # enregistrer l'enseigant
             
-            #repetiteur_form.civilite = request.POST.get('civilite')
             repetiteur_form.age = request.POST.get('age')
-            repetiteur_form.telephone = request.POST.get('telephone')
+            repetiteur_form.telephone1 = request.POST.get('telephone1')
+            tel1 = repetiteur_form.telephone1
+            repetiteur_form.telephone2 = request.POST.get('telephone2')
+            tel2 = repetiteur_form.telephone2
             repetiteur_form.photoProfil = request.POST.get('photoProfil')
             repetiteur_form.niveauEtude = request.POST.get('niveauEtude')
             repetiteur_form.ville = request.POST.get('ville')
             repetiteur_form.quartier = request.POST.get('quartier')
-            #repetiteur_form.langue = request.POST.get('langue')
+            if tel1=="" and tel2!="":
+                tel1 = tel2
+            elif tel2 == "" and tel1 != "":
+                tel2 = tel1
             repetiteur_form = RepetiteurForm(data=request.POST)
             if user_form.is_valid() and repetiteur_form.is_valid():
                 user = user_form.save()

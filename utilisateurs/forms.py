@@ -27,7 +27,8 @@ class RepetiteurForm(forms.ModelForm):
         fields = [
             'civilite',
             'age',
-            'telephone',
+            'telephone1',
+            'telephone2',
             'photoProfil',
             'niveauEtude',
             'ville',

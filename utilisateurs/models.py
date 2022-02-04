@@ -66,7 +66,8 @@ class Repetiteur(Utilisateur):
     ]
     langue = models.CharField(max_length=200, null=True, choices=LANGUE, default='fançais')
     age = models.IntegerField(null=True)
-    telephone = models.CharField(max_length=200, null=True)
+    telephone1 = models.CharField(max_length=200, null=True)
+    telephone2 = models.CharField(max_length=200, null=True)
     niveauEtude = models.CharField(max_length=200, null=True) 
 
     def __str__(self):
