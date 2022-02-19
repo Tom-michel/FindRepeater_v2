@@ -148,7 +148,7 @@ h4 {
   border-bottom: #c5c5c5 solid 1px;
   width: 100% !important;
   color: rgb(56, 51, 133);
-  padding: 10px 0
+  padding: 7px 0;
 }
 
 .etapeRep, .etapeCli {
@@ -156,7 +156,7 @@ h4 {
 }
 
 @media screen and (min-width: 992px) {
-  h4{font-size: 18px;}
+  h4{font-size: 18px; margin-bottom: 0 !important;}
   .form-control{
     width: 100% !important;
   }
@@ -168,7 +168,7 @@ h4 {
   }
 }
 @media screen and (max-width: 992px) {
-  h4{font-size: 17px;}
+  h4{font-size: 16px; padding: 5px 0;}
   label{
     padding-left: 15px;
   }
@@ -193,6 +193,38 @@ h4 {
 
 /* effet collapse DEBUT */
 
+.form-enregistrement .etapeRep {
+  position: relative;
+}
+.form-enregistrement .etapeRep .contentRep{
+  position: relative;
+  height: 0;
+  overflow: hidden;
+  transition: 0.5s;
+  overflow-y: auto;
+}
+
+.form-enregistrement .etapeRep.active .contentRep{
+  height: 330px;
+}
+.form-enregistrement .etapeRep.active .contentRep.et1{
+  height: 25px;
+}
+.form-enregistrement .etapeRep.active .contentRep.et4{
+  height: 260px;
+}
+
+@media screen and (max-width: 992px) {
+  .form-enregistrement .etapeRep.active .contentRep.et2{
+    height: 550px;
+  }
+  .form-enregistrement .etapeRep.active .contentRep.et3{
+    height: 530px;
+  }
+  .form-enregistrement .etapeRep.active .contentRep.et4{
+    height: 390px;
+  }
+}
 
 /* .form-enregistrement .etapeRep {
   position: relative;
@@ -294,7 +326,7 @@ input[type="number"]:hover{
   color: #e35f5f;
   overflow-wrap: break-word;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .errorlist {

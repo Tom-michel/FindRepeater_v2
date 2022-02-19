@@ -47,6 +47,7 @@ def enregistrement(request):
     registered = False
     err1 = " "
     err2 = " "
+    util = " "
     if request.method == "POST":
         user_form = UserForm(data=request.POST)
         client_form = ClientForm(data=request.POST)
@@ -73,6 +74,7 @@ def enregistrement(request):
         else:
             err1 = user_form.errors
             err2 = client_form.errors
+            util = username
     else:
         user_form = UserForm()
         client_form = ClientForm()
@@ -82,6 +84,7 @@ def enregistrement(request):
         'err2':err2,
         'form1':user_form,
         'form2':client_form,
+        'util':util,
     }
     return render(request, 'utilisateurs/enregistrement.html', content)
 
@@ -89,7 +92,7 @@ def enregistrement_prof(request):
     registered = False
     err1 = " "
     err2 = " "
-    errUser = ""
+    util = " "
     if request.method == "POST":
         repetiteur_form = RepetiteurForm(data=request.POST)
         user_form = UserForm(data=request.POST)
@@ -117,22 +120,19 @@ def enregistrement_prof(request):
             # le renvoyer vers la page Mon Profil
             return HttpResponseRedirect('consulter_profil')
         else:
-            nom_util = request.POST.get('username')
-            for util in User.objects.all():
-                if util.username == nom_util:
-                    errUser = "Un utilisateur avec ce nom existe déjà."
             err1 = user_form.errors
             err2 = repetiteur_form.errors
+            util = username
     else:
         user_form = UserForm()
         repetiteur_form = RepetiteurForm()
     content = {
         'registered':registered,
-        'errUser':errUser,
         'err1':err1,
         'err2':err2,
         'form1':user_form,
         'form2':repetiteur_form,
+        'util':util,
     }
     return render(request, 'utilisateurs/enregistrement_prof.html', content)
 

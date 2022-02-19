@@ -32,34 +32,32 @@ function validateFormConnex() {
 
 // choix du formulaire en fonction du type d'utilisateur
 
-function choisirFoum() {
-  var type_user = document.forms["formRegister"]["type_user"];
+// function choisirFoum() {
+//   var type_user = document.forms["formRegister"]["type_user"];
 
-  // document.querySelector('.e1').style.display="none"
-  type = document.querySelector('#type');
-  type.innerHTML = type_user.value;
-  type.style.display="";
+//   type = document.querySelector('#type');
+//   type.innerHTML = type_user.value;
+//   type.style.display="";
   
-  formRep = document.querySelector('.formRep')
-  formCli = document.querySelector('.formCli')
-  formPreview = document.querySelector('.formPreview')
-  etape2 = document.getElementById('etape2');
-  etape1 = document.getElementById('etape1');
+//   formRep = document.querySelector('.formRep')
+//   formCli = document.querySelector('.formCli')
+//   formPreview = document.querySelector('.formPreview')
+//   etape2 = document.getElementById('etape2');
+//   etape1 = document.getElementById('etape1');
   
-  // alert(type_user.value);
-  if (type_user.value == "élève" || type_user.value == "parent") {
-    formRep.style.display="none";
-    formPreview.style.display="none";
-    formCli.style.display=""; 
-  }else{
-    formRep.style.display="";
-    formCli.style.display="none"; 
-    formPreview.style.display="none";
+//   if (type_user.value == "élève" || type_user.value == "parent") {
+//     formRep.style.display="none";
+//     formPreview.style.display="none";
+//     formCli.style.display=""; 
+//   }else{
+//     formRep.style.display="";
+//     formCli.style.display="none"; 
+//     formPreview.style.display="none";
     
     
-  }
+//   }
 
-}
+// }
 
 
 // effect collpase (Test)
@@ -132,16 +130,16 @@ function valChapmsTel(champs, errClass) {
 
 // etape 2
 
-var last_nameRep = document.getElementById('last_nameRep');
+var last_nameRep = document.getElementById('id_last_name');
 var error_last_nameRep = document.getElementById('error_last_nameRep');
 
-var first_nameRep = document.getElementById('first_nameRep');
+var first_nameRep = document.getElementById('id_first_name');
 var error_first_nameRep = document.getElementById('error_first_nameRep');
 
-var ageRep = document.getElementById('ageRep');
+var ageRep = document.getElementById('id_age');
 var error_ageRep = document.getElementById('error_ageRep');
 
-var telephone1Rep = document.getElementById('telephone1Rep');
+var telephone1Rep = document.getElementById('id_telephone1');
 var error_telephone1Rep = document.getElementById('error_telephone1Rep');
 
 function valER2() {
@@ -158,19 +156,19 @@ function valER2() {
 
 //  etape 3
 
-var niveauEtudeRep = document.getElementById('niveauEtudeRep');
+var niveauEtudeRep = document.getElementById('id_niveauEtude');
 var error_niveauEtudeRep = document.getElementById('error_niveauEtudeRep');
 
-var telephone2Rep = document.getElementById('telephone2Rep');
+var telephone2Rep = document.getElementById('id_telephone2');
 var error_telephone2Rep = document.getElementById('error_telephone2Rep');
 
-var emailRep = document.getElementById('emailRep');
+var emailRep = document.getElementById('id_email');
 var error_emailRep = document.getElementById('error_emailRep');
 
-var villeRep = document.getElementById('villeRep');
+var villeRep = document.getElementById('id_ville');
 var error_villeRep = document.getElementById('error_villeRep');
 
-var quartierRep = document.getElementById('quartierRep');
+var quartierRep = document.getElementById('id_quartier');
 var error_quartierRep = document.getElementById('error_quartierRep');
 
 function valER3() {
@@ -187,67 +185,37 @@ function valER3() {
 }
 
 
-// etape 4
-
-var usernameRep = document.getElementById('usernameRep');
-var error_usernameRep = document.getElementById('error_usernameRep');
-
-var password1Rep = document.getElementById('password1Rep');
-var error_password1Rep = document.getElementById('error_password1Rep');
-
-var password2Rep = document.getElementById('password2Rep');
-var error_password2Rep = document.getElementById('error_password2Rep');
-
-function valER4() {
-  if (valChapmsText(usernameRep, error_usernameRep) 
-      && valChapmsText(password1Rep, error_password1Rep)) 
-  {
-    return true;
-  } else {
-    return false
-  }
-}
-
-
 // suivant
 const suivantRep = document.getElementsByClassName('suivantRep');
 const etapeRep = document.getElementsByClassName('etapeRep');
 for (let i = 0; i < suivantRep.length; i++) {
   suivantRep[i].addEventListener('click', function(){
+    
+    
     if (i == 0) {
-      etapeRep[i].classList.toggle('active');
-      etapeRep[i+1].classList.toggle('active');
+      if (valER2()){
+        etapeRep[i+1].classList.toggle('active');
+        etapeRep[i+2].classList.toggle('active');
+      }
     }
     if (i == 1) {
-      if (valER2()){
-        etapeRep[i].classList.toggle('active');
-        etapeRep[i+1].classList.toggle('active');
-      }
-    }
-    if (i == 2) {
       if (valER3()){
-        etapeRep[i].classList.toggle('active');
         etapeRep[i+1].classList.toggle('active');
+        etapeRep[i+2].classList.toggle('active');
       }
     }
-    if (i == 3) {
-      if (valER4()){
-        etapeRep[i].classList.toggle('active');
-        etapeRep[i+1].classList.toggle('active');
-      }
-    }
-    // etapeRep[i].classList.toggle('active');
-    // etapeRep[i+1].classList.toggle('active');
   });
 }
+
+
 
 
 // précédent
 const precedentRep = document.getElementsByClassName('precedentRep');
 for (let i = 0; i < precedentRep.length; i++) {
   precedentRep[i].addEventListener('click', function(){
-    etapeRep[i].classList.toggle('active');
-    etapeRep[i-1].classList.toggle('active');
+    etapeRep[i+2].classList.toggle('active');
+    etapeRep[i+1].classList.toggle('active');
   });
 }
 
@@ -255,41 +223,10 @@ for (let i = 0; i < precedentRep.length; i++) {
 
 
 
-// validation formulaire d'enregistrement
+//  enregistrement ÉLÈVE/PARENT
 
-// ETAPE 1 PROF
-// function valProfE2() {
-//   var etape2 = document.getElementById('etape2');
-//   // var etape3 = document.querySelector('#etape3');
 
-//   var last_nameRep = document.getElementById('last_nameRep');
-  
-  // var last_name = document.forms["formRegister"]["last_name"];       
-  // var first_name = document.forms["formRegister"]["first_name"];       
-  // var age = document.forms["formRegister"]["age"];       
-  // var telephone1 = document.forms["formRegister"]["telephone1"];       
-  // var telephone2 = document.forms["formRegister"]["telephone2"];       
-  // var email = document.forms["formRegister"]["email"];
-
-//   if (last_nameRep.value == ""){ 
-//     document.getElementById('error_last_name').innerHTML="*veuillez saisir votre Nom";  
-//     last_nameRep.focus();
-//     last_nameRep.classList.add('err');
-//     etape2.classList.remove('etape2-3');
-//     // etape3.classList.remove('etape2-3');
-//     return false; 
-//   }else{
-//     etape2.classList.add('etape2-3');
-//     // alert('le Nom a été rempli');
-//   }  
-// }
-
-// ETAPE 3 PROF
-function valProfE3() {
-  
-}
-
-// ETAPE 1 CLI
+// ETAPE 2 CLI
 function valCliE2() {
 
 }
@@ -300,18 +237,9 @@ function valCliE3() {
 }
 
 
-// ETAPE 4 PROF ET CLI
-function valProfCliE4() {
-  
-}
+
+// suivant
 
 
-function validateFormEnreg() {
-  var type_user = document.forms["formRegister"]["type_user"];
-  
-  if (type_user.value == "élève" || type_user.value == "parent") {
 
-  }else{    
-    return valER4();
-  }
-}
+// précédent

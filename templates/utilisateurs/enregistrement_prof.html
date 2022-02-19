@@ -33,8 +33,8 @@
           <div class="etape"><span class="numEtape">1</span></div>
             <div  class="form-enregistrement">
               <h4 class="text-center">Type de compte</h4>
-              <div class="etapeRep">
-                  <div class="contentRep text-center">
+              <div class="etapeRep active">
+                  <div class="contentRep et1 text-center">
                     <span id="type" style="color: orange; font-size: 17px;">enseignant</span>
                   </div> 
             </div>
@@ -49,8 +49,9 @@
               color: rgb(173, 169, 147);
             }
             .form-group{
-                font-size: 14px;
-                text-align: center !important;
+              font-size: 14px;
+              text-align: center !important;
+              padding: 0 3px !important;
             }
           </style>
           
@@ -58,8 +59,13 @@
             <div class="etape"><span class="numEtape">2</span></div>
             <div  class="form-enregistrement">
                 <h4 class="text-center">Informations personnelles</h4>
-                <div class="etapeRep mt-3">
-                    <div class="contentRep">
+                {% if util == " " %}
+                <div class="etapeRep active mt-1">
+                {% endif %}
+                {% if util != " " %}
+                <div class="etapeRep mt-1">
+                {% endif %}
+                    <div class="contentRep et2">
                         <div class="row">
                             <div class="col-md-6 mt-3">
                                 <div class="form-group">
@@ -112,8 +118,6 @@
                             </div>
                         </div>
                         <div class="pt-2 pb-1 mb-1 text-end">
-                            <span type="button" class="precedentRep">Précédent</span>
-                            &emsp;
                             <span class="btn-connexion suivant suivantRep" type="button">Suivant</span>
                         </div>
                     </div>  
@@ -122,8 +126,8 @@
             <div class="etape"><span class="numEtape">3</span></div>
             <div  class="form-enregistrement">
                 <h4 class="text-center">Informations professionnelles</h4>
-                <div class="etapeRep mt-3">
-                    <div class="contentRep">
+                <div class="etapeRep mt-1">
+                    <div class="contentRep et3">
                         <div class="row">
                             <div class="col-md-6 mt-1">
                               <div class="form-group">
@@ -186,8 +190,13 @@
             </div>
             <div class="etape"><span class="numEtape">4</span></div>
             <div  class="form-enregistrement">
-                <h4 class="text-center">Informations de connexion</h4>
-                <div class="etapeRep mt-3">
+                <h4 class="text-center">Informations de connexion {{util}}</h4>
+                {% if util == " " %}
+                <div class="etapeRep mt-1">
+                {% endif %}
+                {% if util != " " %}
+                <div class="etapeRep active mt-1">
+                {% endif %}
                     <div class="contentRep et4">
                         <div class="row">
                             <div class="col-md-6 mt-1">
@@ -242,6 +251,7 @@
     for (var fields in form_fieldSel) {
         form_fieldSel[fields].className += ' form-control';
     }
+    document.getElementById('id_civilite').focus();
 </script>
 
 {% endblock %}
