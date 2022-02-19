@@ -30,6 +30,16 @@ def bienvenue(request):
     return render(request, 'utilisateurs/bienvenue.html') 
 
 
+def collapse(request):
+    user_form = UserForm()
+    repetiteur_form = RepetiteurForm()
+    content = {
+        'form1':user_form,
+        'form2':repetiteur_form,
+    }
+    return render(request, 'utilisateurs/collapse.html', content) 
+
+
 
 # crer son compte (profil) parent/eleve
 
@@ -37,95 +47,94 @@ def enregistrement(request):
     registered = False
     err1 = " "
     err2 = " "
-    if request.method == 'POST':
-        user_form = UserForm()
-        repetiteur_form = RepetiteurForm()
-        client_form = ClientForm()
-
-        # récuper les infos du user
-        user_form.username = request.POST.get('username')
-        username = user_form.username
-        user_form.first_name = request.POST.get('first_name')
-        user_form.last_name = request.POST.get('last_name')
-        user_form.email = request.POST.get('email')
-        user_form.password1 = request.POST.get('password1')
-        password = user_form.password1
-        user_form.password2 = request.POST.get('password2')
+    if request.method == "POST":
         user_form = UserForm(data=request.POST)
+        client_form = ClientForm(data=request.POST)
+        username = request.POST.get('username')
+        password = request.POST.get('password1')
+        if user_form.is_valid() and client_form.is_valid():
 
-        type_user = request.POST.get('type_user')
-
-        if type_user == 'enseignant':
+            # enregistrer dans la BD
+            user = user_form.save()
+            user.save()
+            client = client_form.save(commit=False)
+            client.user = user
+            client.save()
+            registered = True
             
-            # enregistrer l'enseigant
-            
-            repetiteur_form.age = request.POST.get('age')
-            repetiteur_form.telephone1 = request.POST.get('telephone1')
-            tel1 = repetiteur_form.telephone1
-            repetiteur_form.telephone2 = request.POST.get('telephone2')
-            tel2 = repetiteur_form.telephone2
-            repetiteur_form.photoProfil = request.POST.get('photoProfil')
-            repetiteur_form.niveauEtude = request.POST.get('niveauEtude')
-            repetiteur_form.ville = request.POST.get('ville')
-            repetiteur_form.quartier = request.POST.get('quartier')
-            if tel1=="" and tel2!="":
-                tel1 = tel2
-            elif tel2 == "" and tel1 != "":
-                tel2 = tel1
-            repetiteur_form = RepetiteurForm(data=request.POST)
-            if user_form.is_valid() and repetiteur_form.is_valid():
-                user = user_form.save()
-                user.save()
-                repetiteur = repetiteur_form.save(commit=False)
-                repetiteur.user = user
-                repetiteur.save()
-                registered = True
-                
-                # connecter le user
-                user_log = authenticate(username=username, password=password)
+            # connecter le user
+            user_log = authenticate(username=username, password=password)
+            if user_log:
                 if user.is_authenticated:
                     logout(request)
                 login(request, user_log)
-                # le renvoyer vers la page Mon Profil
-                return HttpResponseRedirect('consulter_profil')
-            else:
-                err1 = user_form.errors
-                err2 = repetiteur_form.errors
+            # le renvoyer vers la page Mon Profil
+            return HttpResponseRedirect('bienvenue')
         else:
-
-            # enregistrer le client (élève/parent)
-            client_form.ville = request.POST.get('ville')
-            client_form.quartier = request.POST.get('quartier')
-            client_form.photoProfil = request.POST.get('photoProfil')
-            client_form = ClientForm(data=request.POST)
-            if user_form.is_valid() and client_form.is_valid():
-                user = user_form.save()
-                user.save()
-                client = client_form.save(commit=False)
-                client.user = user
-                client.save()
-                registered = True
-
-                # connecter le user
-                user_log = authenticate(username=username, password=password)
-                if user.is_authenticated:
-                    logout(request)
-                login(request, user_log)
-                return HttpResponseRedirect('bienvenue')
-            else:
-                err1 = user_form.errors
-                err2 = client_form.errors
+            err1 = user_form.errors
+            err2 = client_form.errors
     else:
         user_form = UserForm()
-        repetiteur_form = RepetiteurForm()
+        client_form = ClientForm()
     content = {
         'registered':registered,
         'err1':err1,
         'err2':err2,
         'form1':user_form,
-        'form2':repetiteur_form,
+        'form2':client_form,
     }
     return render(request, 'utilisateurs/enregistrement.html', content)
+
+def enregistrement_prof(request):
+    registered = False
+    err1 = " "
+    err2 = " "
+    errUser = ""
+    if request.method == "POST":
+        repetiteur_form = RepetiteurForm(data=request.POST)
+        user_form = UserForm(data=request.POST)
+        username = request.POST.get('username')
+        password = request.POST.get('password1')
+        if user_form.is_valid() and repetiteur_form.is_valid():
+            # enregistrer dans la BD
+            user = user_form.save()
+            user.save()
+            repetiteur = repetiteur_form.save(commit=False)
+            tel1 = repetiteur.telephone1
+            tel2 = repetiteur.telephone2
+            if tel2 == "":
+                tel2 = tel1
+            repetiteur.user = user
+            repetiteur.save()
+            registered = True
+            
+            # connecter le user
+            user_log = authenticate(username=username, password=password)
+            if user_log:
+                if user.is_authenticated:
+                    logout(request)
+                login(request, user_log)
+            # le renvoyer vers la page Mon Profil
+            return HttpResponseRedirect('consulter_profil')
+        else:
+            nom_util = request.POST.get('username')
+            for util in User.objects.all():
+                if util.username == nom_util:
+                    errUser = "Un utilisateur avec ce nom existe déjà."
+            err1 = user_form.errors
+            err2 = repetiteur_form.errors
+    else:
+        user_form = UserForm()
+        repetiteur_form = RepetiteurForm()
+    content = {
+        'registered':registered,
+        'errUser':errUser,
+        'err1':err1,
+        'err2':err2,
+        'form1':user_form,
+        'form2':repetiteur_form,
+    }
+    return render(request, 'utilisateurs/enregistrement_prof.html', content)
 
 
 # se connecter à son compte

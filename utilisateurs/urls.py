@@ -3,8 +3,10 @@ from .views import *
 
 urlpatterns = [
     path('', accueil, name="accueil"),
+    path('collapse', collapse, name="collapse"),
     path('bienvenue', bienvenue, name="bienvenue"),
     path('liste_repetiteurs', liste_repetiteurs, name="liste_repetiteurs"),
+    path('enregistrement_prof', enregistrement_prof, name="enregistrement_prof"),
     path('enregistrement', enregistrement, name="enregistrement"),
     path('connexion', connexion, name="connexion"),
     path('consulter_profil', consulter_profil, name="consulter_profil"),

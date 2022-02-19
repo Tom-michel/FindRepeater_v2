@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %} FindRepeater | Créer un compte {% endblock %}
+{% block title %} FindClieater | Créer un compte {% endblock %}
 
 {% block content %}
 
 <section class="py-5 my-5">
   <div class="container">
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-5">
         <p class="pt-4">
           Céez un compte en tant que <b>enseignant</b> afin d'être 
           visible sur la plateforme et être contacté par toute personne désirant vos services
@@ -22,285 +22,563 @@
           <br>
           <p>Vous avez déja un compte ? <a href="{% url 'connexion' %}">Connexion</a></p>
         </div>
-      
+        {{errUser}}
         {{err1}}
         {{err2}}
       </div>
-      <div class="col-md-6"> 
-        <form action="" method="post">
+      <div class="col-md-7"> 
+        <form name="formRegister" onsubmit="return validateFormEnreg()" action="" method="post">
           {% csrf_token %}
           
           <div class="etape"><span class="numEtape">1</span></div>
-          <div  class="form-enregistrement">
-
-            <h4 class="text-center">Choisir un type de compte</h4>
-            <div class="collapse etape1-2 etapeCli-1-2 show" id="etape1">
-              <div class="py-2 text-center">
-                <label for="type_user">Vous êtes </label>
-                <select name="type_user" id="type_user">
-                  <option value="élève">élève</option>
-                  <option value="parent">parent</option>
-                  <option value="enseignant">enseignant</option>
-                </select>
-              </div>
-              <div class="pt-3 pb-1 text-end">
-                <span class="btn-register suivant" type="button" data-bs-toggle="collapse" data-bs-target=".etape1-2" aria-expanded="false" aria-controls="etape1 etape2 etapeCli-2">Suivant</span>
-              </div>
+            <div  class="form-enregistrement">
+              <h4 class="text-center">Type de compte</h4>
+              <div class="etapeCli">
+                  <div class="contentCli text-center">
+                    <span id="type" style="color: orange; font-size: 17px;">élève/parent d'élève.s</span>
+                  </div> 
             </div>
           </div>
 
-          <div class="etape"><span class="numEtape">2</span></div>
-          <div  class="form-enregistrement">
-            <h4 class="text-center">Informations personnelles</h4>
-            <div class="collapse etape1-2 etape2-3" id="etape2">
-              <div class="row">
-                <div class="col-md-6 mt-3 text-center">
-                    <div class="form-group">
-                      <label style="padding-bottom: 5px;" for="civilite">Civilité &emsp;</label>
-                      {{form2.civilite}}
-                    </div>
-                </div>
-                <div class="col-md-6 mt-3">
-                    <div class="form-group">
-                      <label for="photoProfil">Photo de profil </label>
-                      <input class="form-control" type="file" name="photoProfil" id="photoProfil">
-                    </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6 mt-3">
-                    <div class="form-group">
-                      <label for="last_name">Nom </label>
-                      <input class="form-control" type="text" name="last_name" id="last_name">
-                    </div>
-                </div>
-                <div class="col-md-6 mt-3">
-                    <div class="form-group">
-                      <label for="first_name">Prénom </label>
-                      <input class="form-control" type="text" name="first_name" id="first_name">
-                    </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6 mt-3">
-                    <div class="form-group">
-                      <label for="age">Âge </label>
-                      <input class="form-control" type="number" name="age" id="age">
-                    </div>
-                </div>
-                <div class="col-md-6 mt-3">
-                    <div class="form-group">
-                      <label for="telephone1">Téléphone </label>
-                      <input class="form-control" type="text" name="telephone1" id="telephone1">
-                    </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6 mt-3">
-                    <div class="form-group">
-                      <label for="telephone2">Whatsapp </label>
-                      <input class="form-control" type="text" name="telephone2" id="telephone2">
-                    </div>
-                </div>
-                <div class="col-md-6 mt-3">
-                    <div class="form-group">
-                      <label for="email">Email </label>
-                      <input class="form-control" type="email" name="email" id="email">
-                    </div>
-                </div>
-              </div>
-              <div class="pt-4 text-end">
-                <span type="button" data-bs-toggle="collapse" data-bs-target=".etape1-2" aria-expanded="false" aria-controls="etape1 etape2">Précédent</span>
-                &emsp;
-                <span class="btn-register suivant" type="button" data-bs-toggle="collapse" data-bs-target=".etape2-3" aria-expanded="false" aria-controls="etape2 etape3">Suivant</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="etape"><span class="numEtape">3</span></div>
-          <div  class="form-enregistrement">
-            <h4 class="text-center">Informations professionnelles</h4>
-            <div class="collapse etape2-3 etape3-4" id="etape2">
-              <div class="row">
-                <div class="col-md-6 mt-3 text-center">
-                    <div class="form-group">
-                      <label style="padding-bottom: 5px;" for="langue">Langue d'enseignement &emsp;</label>
-                      {{form2.langue}}
-                    </div>
-                </div>
-                <div class="col-md-6 mt-3">
-                    <div class="form-group">
-                      <label for="niveauEtude">Niveau d'étude </label>
-                      <input class="form-control" type="text" name="niveauEtude" id="niveauEtude">
-                    </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6 mt-3">
-                    <div class="form-group">
-                      <label for="ville">Ville </label>
-                      <input class="form-control" type="text" name="ville" id="ville">
-                    </div>
-                </div>
-                <div class="col-md-6 mt-3">
-                    <div class="form-group">
-                      <label for="quartier">Quartier </label>
-                      <input class="form-control" type="text" name="quartier" id="quartier">
-                    </div>
-                </div>
-              </div>
-              <div class="pt-4 text-end">
-                <span type="button" data-bs-toggle="collapse" data-bs-target=".etape2-3" aria-expanded="false" aria-controls="etape2 etape3">Précédent</span>
-                &emsp;
-                <span class="btn-register suivant" type="button" data-bs-toggle="collapse" data-bs-target=".etape3-4" aria-expanded="false" aria-controls="etape3 etape4">Suivant</span>
+          <style>
+            span{
+              color: rgb(99, 99, 99);
+              font-size: 14px;
+            }
+            span:hover{
+              color: rgb(173, 169, 147);
+            }
+            .form-group{
+                font-size: 14px;
+                text-align: center !important;
+            }
+          </style>
+          
+          <div class="formCli">
+            <div class="etape"><span class="numEtape">2</span></div>
+            <div  class="form-enregistrement">
+                <h4 class="text-center">Informations personnelles</h4>
+                <div class="etapeCli mt-3">
+                    <div class="contentCli">
+                        <div class="row">
+                            <div class="col-md-6 mt-3 offset-md-3">
+                                <div class="form-group text-end">
+                                  <label for="photoProfil">Photo de profil </label>
+                                  <!-- <input class="form-control" type="file" name="photoProfil" id="photoProfil"> -->
+                                  {{form2.photoProfil}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mt-3">
+                                <div class="form-group">
+                                  <label for="last_name">Nom </label>
+                                  <!-- <input class="form-control" type="text" name="last_name" id="last_nameCli"> -->
+                                  {{form1.last_name}}
+                                  <p><span class="errorform" id="error_last_nameCli"></span></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mt-3">
+                                <div class="form-group">
+                                  <label for="first_name">Prénom </label>
+                                  <!-- <input class="form-control" type="text" name="first_name" id="first_nameCli"> -->
+                                  {{form1.first_name}}
+                                  <p><span class="errorform" id="error_first_nameCli"></span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mt-1">
+                                <div class="form-group">
+                                  <label for="telephone1">Téléphone </label>
+                                  {{form2.telephone1}}
+                                  <!-- <input class="form-control" type="text" name="telephone1" id="telephone1Cli"> -->
+                                  <p><span class="errorform" id="error_telephone1Cli"></span></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mt-1">
+                              <div class="form-group">
+                                  <label for="email">Email </label>
+                                  <!-- <input class="form-control" type="email" name="email" id="emailCli"> -->
+                                  {{form1.email}}
+                                  <p><span class="errorform" id="error_emailCli"></span></p>
+                              </div>
+                            </div>
+                        </div>
+                        <div class="pt-2 pb-1 mb-1 text-end">
+                            <span type="button" class="precedentCli">Précédent</span>
+                            &emsp;
+                            <span class="btn-connexion suivant suivantCli" type="button">Suivant</span>
+                        </div>
+                    </div>  
               </div>
             </div>
-          </div>
-
-          <div class="etape"><span class="numEtape">4</span></div>
-          <div  class="form-enregistrement">
-            <h4 class="text-center">Informations de connexion</h4>
-            <div class="collapse etape3-4 etape4" id="etape2">
-              <div class="row">
-                <div class="col-md-6 mt-3">
-                    <div class="form-group">
-                      <label for="username">Nom d'utilisateur</label>
-                      <input class="form-control" type="text" name="username" id="username">
+            <div class="etape"><span class="numEtape">3</span></div>
+            <div  class="form-enregistrement">
+                <h4 class="text-center">Informations professionnelles</h4>
+                <div class="etapeCli mt-3">
+                    <div class="contentCli">
+                        <div class="row">
+                            <div class="col-md-6 mt-1 offset-md-3">
+                              <div class="form-group">
+                                <label for="langue">Langue d'étude &emsp;</label>
+                                {{form2.langue}}
+                              </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                        <div class="col-md-6 mt-1">
+                            <div class="form-group">
+                                <label for="ville">Ville </label>
+                                <!-- <input class="form-control" type="text" name="ville" id="villeCli"> -->
+                                {{form2.ville}}
+                                <p><span class="errorform" id="error_villeCli"></span></p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mt-1">
+                            <div class="form-group">
+                                <label for="quartier">Quartier </label>
+                                <!-- <input class="form-control" type="text" name="quartier" id="quartierCli"> -->
+                                {{form2.quartier}}
+                                <p><span class="errorform" id="error_quartierCli"></span></p>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="pt-2 pb-1 mb-1 text-end">
+                            <span type="button" class="precedentCli">Précédent</span>
+                            &emsp;
+                            <span class="btn-connexion suivant suivantCli" type="button">Suivant</span>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-6 mt-3">
-                    <div class="form-group">
-                      <label for="password1">Créez votre mot de passe </label>
-                      <input class="form-control" type="password" name="password1" id="password1">
+            </div>
+            <div class="etape"><span class="numEtape">4</span></div>
+            <div  class="form-enregistrement">
+                <h4 class="text-center">Informations de connexion</h4>
+                <div class="etapeCli mt-3">
+                    <div class="contentCli et4">
+                        <div class="row">
+                            <div class="col-md-6 mt-1">
+                                <div class="form-group">
+                                  <label for="username">Nom d'utilisateur</label>
+                                  <!-- <input class="form-control" type="text" name="username" id="usernameCli"> -->
+                                  {{form1.username}}
+                                  {{form1.username.errors}}
+                                </div>
+                            </div>
+                            <div class="col-md-6 mt-1">
+                                <div class="form-group">
+                                  <label for="password1">Créez votre mot de passe </label>
+                                  <!-- <input class="form-control" type="password" name="password1" id="password1Cli"> -->
+                                  {{form1.password1}}
+                                  {{form1.password2.errors}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-1">
+                            <div class="col-md-6 offset-md-3">
+                                <div class="form-group">
+                                <label for="password2">Ratapez le mot de passe </label>
+                                  <!-- <input class="form-control" type="password" name="password2" id="password2Cli"> -->
+                                  {{form1.password2}}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="pt-2 pb-1 mt-4 text-center">
+                            <span type="button" class="precedentCli">Précédent</span>
+                            <!-- <a class="btn-register annuler mt-2 mb-1" href="{% url 'enregistrement' %}">Effacer</a> -->
+                            <input class="btn-register annuler mt-2 mb-1" type="reset" value="Effacer">
+                            <input class="btn-connexion sub mt-2 mb-1" type="submit" value="Enregistrer">
+                        </div>
                     </div>
                 </div>
-              </div><div class="row mt-3">
-                <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="password2">Ratapez le mot de passe </label>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                      <input class="form-control" type="password" name="password2" id="password2">
-                    </div>
-                </div>
-              </div>
-              <div class="pt-3 pb-1 text-center">
-                <span type="button" data-bs-toggle="collapse" data-bs-target=".etape3-4" aria-expanded="false" aria-controls="etape3 etape4">Précédent</span>
-                &emsp;
-                <input class="btn-connexion mt-5 mb-3" type="submit" value="Enregistrer">
-              </div>
-            </div> 
-          </div>
-
-          <div class="etape"><span class="numEtape">2</span></div>
-          <div  class="form-enregistrement">
-            <h4 class="text-center">Informations personnelles</h4>
-            <div class="collapse etape1-2 etapeCli-1-2 etapeCli-2-3" id="etapeCli2">
-              <div class="row">
-                <div class="col-md-6 mt-3">
-                    <div class="form-group">
-                      <label for="last_name">Nom </label>
-                      <input class="form-control" type="text" name="last_name" id="last_name">
-                    </div>
-                </div>
-                <div class="col-md-6 mt-3">
-                    <div class="form-group">
-                      <label for="first_name">Prénom </label>
-                      <input class="form-control" type="text" name="first_name" id="first_name">
-                    </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6 mt-3">
-                    <div class="form-group">
-                      <label for="email">Email </label>
-                      <input class="form-control" type="email" name="email" id="email">
-                    </div>
-                </div>
-                <div class="col-md-6 mt-3">
-                    <div class="form-group">
-                      <label for="photoProfil">Photo de profil </label>
-                      <input class="form-control" type="file" name="photoProfil" id="photoProfil">
-                    </div>
-                </div>
-              </div>
-              <div class="pt-4 text-end">
-                <span type="button" data-bs-toggle="collapse" data-bs-target=".etapeCli-1-2" aria-expanded="false" aria-controls="etape1 etape2 etapeCli2">Précédent</span>
-                &emsp;
-                <span class="btn-register suivant" type="button" data-bs-toggle="collapse" data-bs-target=".etapeCli-2-3" aria-expanded="false" aria-controls="etapeCli2 etapeCli3">Suivant</span>
-              </div>
             </div>
           </div>
-
-          <div class="etape"><span class="numEtape">3</span></div>
-          <div  class="form-enregistrement">
-            <h4 class="text-center">Où habitez-vous ?</h4>
-            <div class="collapse etapeCli-2-3 etapeCli-3-4" id="etapeCli3">  
-              <div class="row">
-                <div class="col-md-6 mt-3">
-                    <div class="form-group">
-                      <label for="ville">Ville </label>
-                      <input class="form-control" type="text" name="ville" id="ville">
-                    </div>
-                </div>
-                <div class="col-md-6 mt-3">
-                    <div class="form-group">
-                      <label for="quartier">Quartier </label>
-                      <input class="form-control" type="text" name="quartier" id="quartier">
-                    </div>
-                </div>
-              </div>
-              <div class="pt-4 text-end">
-                <span type="button" data-bs-toggle="collapse" data-bs-target=".etapeCli-2-3" aria-expanded="false" aria-controls="etapeCli2 etapeCli3">Précédent</span>
-                &emsp;
-                <span class="btn-register suivant" type="button" data-bs-toggle="collapse" data-bs-target=".etapeCli-3-4" aria-expanded="false" aria-controls="etapeCli3 etapeCli4">Suivant</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="etape"><span class="numEtape">4</span></div>
-          <div  class="form-enregistrement">
-            <h4 class="text-center">Informations de connexion</h4>
-            <div class="collapse etapeCli-3-4" id="etapeCli4">
-              <div class="row">
-                <div class="col-md-6 mt-3">
-                    <div class="form-group">
-                      <label for="username">Nom d'utilisateur</label>
-                      <input class="form-control" type="text" name="username" id="username">
-                    </div>
-                </div>
-                <div class="col-md-6 mt-3">
-                    <div class="form-group">
-                      <label for="password1">Créez votre mot de passe </label>
-                      <input class="form-control" type="password" name="password1" id="password1">
-                    </div>
-                </div>
-              </div><div class="row mt-3">
-                <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="password2">Ratapez le mot de passe </label>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                      <input class="form-control" type="password" name="password2" id="password2">
-                    </div>
-                </div>
-              </div>
-              <div class="pt-3 pb-1 text-center">
-                <span type="button" data-bs-toggle="collapse" data-bs-target=".etapeCli-3-4" aria-expanded="false" aria-controls="etapeCli3 etapeCli4">Précédent</span>
-                &emsp;
-                <input class="btn-connexion mt-5 mb-3" type="submit" value="Enregistrer">
-              </div>
-            
-            </div> 
-          </div>          
-
         </form>
       </div>
     </div>
   </div>
 </section>
+
+<script>
+    var form_fields = document.getElementsByTagName('input');
+    for (let i = 0; i < (form_fields.length-2); i++) {
+        form_fields[i].className += ' form-control';
+    }
+    var form_fieldSel = document.getElementsByTagName('select');
+    for (var fields in form_fieldSel) {
+        form_fieldSel[fields].className += ' form-control';
+    }
+</script>
+
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<form name="formRegister" onsubmit="return validateFormEnreg()" action="" method="post">
+  {% csrf_token %}
+  
+  <div class="etape"><span class="numEtape">1</span></div>
+  <div  class="form-enregistrement">
+    {{type_user}}
+      <h4 class="text-center">Choisir un type de compte</h4>
+      <div class="etapeCli active">
+          <div class="contentCli et1">
+              <div class="e1">  
+                  <div class="py-2 text-center">
+                    <label for="type_user">Vous êtes </label>
+                    <select name="type_user" id="type_user">
+                      <option value="élève">élève</option>
+                      <option value="parent">parent</option>
+                      <option value="enseignant">enseignant</option>
+                    </select>
+                  </div>
+                  <div class="pt-4 text-end">
+                      <span style="display: none;" type="button" class="precedentCli">Précédent</span>
+                      <span class="btn-connexion suivant suivantCli" onclick="choisirFoum();" type="button">Suivant</span>
+                  </div>
+              </div>
+          </div>
+          <div class="py-2 text-center">
+              <span id="type" style="color: orange; font-size: 20px;"></span>
+          </div>  
+    </div>
+  </div>
+
+  <style>
+    .formPreview{
+      opacity: .8;
+    }
+    .formPreview h4{
+      opacity: .1;
+    }
+    span{
+      color: rgb(99, 99, 99);
+      font-size: 14px;
+    }
+    span:hover{
+      color: rgb(173, 169, 147);
+    }
+  </style>
+
+  <div class="formPreview">
+    <div class="etape"><span class="numEtape">2</span></div>
+    <div  class="form-enregistrement">
+      <h4 class="text-center">Informations personnelles</h4>
+    </div>
+    <div class="etape"><span class="numEtape">3</span></div>
+    <div  class="form-enregistrement">
+      <h4 class="text-center">Informations professionnelles</h4>
+    </div>
+    <div class="etape"><span class="numEtape">4</span></div>
+    <div  class="form-enregistrement">
+      <h4 class="text-center">Informations de connexion</h4> 
+    </div>
+  </div>
+  
+  <div class="formCli">
+    <div class="etape"><span class="numEtape">2</span></div>
+    <div  class="form-enregistrement">
+        <h4 class="text-center">Informations personnelles</h4>
+        <div class="etapeCli">
+            <div class="contentCli">
+                <div class="row">
+                    <div class="col-md-6 mt-3 text-center">
+                        <div class="form-group">
+                          <label style="padding-bottom: 5px;" for="civilite">Civilité &emsp;</label><br>
+                          {{form2.civilite}}
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-3">
+                        <div class="form-group">
+                          <label for="photoProfil">Photo de profil </label>
+                          <!-- <input class="form-control" type="file" name="photoProfil" id="photoProfil"> -->
+                          {{form2.photoProfil}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mt-1">
+                        <div class="form-group">
+                          <label for="last_name">Nom </label>
+                          <!-- <input class="form-control" type="text" name="last_name" id="last_nameCli"> -->
+                          {{form1.last_name}}
+                          <p><span class="errorform" id="error_last_nameCli"></span></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-1">
+                        <div class="form-group">
+                          <label for="first_name">Prénom </label>
+                          <!-- <input class="form-control" type="text" name="first_name" id="first_nameCli"> -->
+                          {{form1.first_name}}
+                          <p><span class="errorform" id="error_first_nameCli"></span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mt-1">
+                        <div class="form-group">
+                          <label for="age">Âge </label>
+                          <!-- <input class="form-control" type="number" name="age" id="ageCli"> -->
+                          {{form2.age}}
+                          <p><span class="errorform" id="error_ageCli"></span></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-1">
+                        <div class="form-group">
+                          <label for="telephone1">Téléphone </label>
+                          {{form2.telephone1}}
+                          <!-- <input class="form-control" type="text" name="telephone1" id="telephone1Cli"> -->
+                          <p><span class="errorform" id="error_telephone1Cli"></span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="pt-2 text-end">
+                    <span type="button" class="precedentCli">Précédent</span>
+                    &emsp;
+                    <span class="btn-connexion suivant suivantCli" type="button">Suivant</span>
+                </div>
+            </div>  
+      </div>
+    </div>
+    <div class="etape"><span class="numEtape">3</span></div>
+    <div  class="form-enregistrement">
+        <h4 class="text-center">Informations professionnelles</h4>
+        <div class="etapeCli">
+            <div class="contentCli">
+                <div class="row">
+                    <div class="col-md-6 mt-3 text-center">
+                      <div class="form-group">
+                        <label style="padding-bottom: 5px;" for="langue">Langue d'enseignement &emsp;</label>
+                        {{form2.langue}}
+                      </div>
+                    </div>
+                    <div class="col-md-6 mt-1">
+                        <div class="form-group">
+                          <label for="niveauEtude">Niveau d'étude </label>
+                          <!-- <input class="form-control" type="text" name="niveauEtude" id="niveauEtudeCli"> -->
+                          {{form2.niveauEtude}}
+                          <p><span class="errorform" id="error_niveauEtudeCli"></span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mt-1">
+                        <div class="form-group">
+                            <label for="telephone2">Whatsapp </label>
+                            <!-- <input class="form-control" type="text" name="telephone2" id="telephone2Cli"> -->
+                            {{form2.telephone2}}
+                            <p><span class="errorform" id="error_telephone2Cli"></span></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-1">
+                        <div class="form-group">
+                            <label for="email">Email </label>
+                            <!-- <input class="form-control" type="email" name="email" id="emailCli"> -->
+                            {{form1.email}}
+                            <p><span class="errorform" id="error_emailCli"></span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                <div class="col-md-6 mt-1">
+                    <div class="form-group">
+                        <label for="ville">Ville </label>
+                        <!-- <input class="form-control" type="text" name="ville" id="villeCli"> -->
+                        {{form2.ville}}
+                        <p><span class="errorform" id="error_villeCli"></span></p>
+                    </div>
+                </div>
+                <div class="col-md-6 mt-1">
+                    <div class="form-group">
+                        <label for="quartier">Quartier </label>
+                        <!-- <input class="form-control" type="text" name="quartier" id="quartierCli"> -->
+                        {{form2.quartier}}
+                        <p><span class="errorform" id="error_quartierCli"></span></p>
+                    </div>
+                </div>
+                </div>
+                <div class="pt-2 text-end">
+                    <span type="button" class="precedentCli">Précédent</span>
+                    &emsp;
+                    <span class="btn-connexion suivant suivantCli" type="button">Suivant</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="etape"><span class="numEtape">4</span></div>
+    <div  class="form-enregistrement">
+        <h4 class="text-center">Informations de connexion</h4>
+        <div class="etapeCli">
+            <div class="contentCli et4">
+                <div class="row">
+                    <div class="col-md-6 mt-1">
+                        <div class="form-group">
+                          <label for="username">Nom d'utilisateur</label>
+                          <!-- <input class="form-control" type="text" name="username" id="usernameCli"> -->
+                          {{form1.username}}
+                          <p><span class="errorform" id="error_usernameCli"></span></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mt-1">
+                        <div class="form-group">
+                          <label for="password1">Créez votre mot de passe </label>
+                          <!-- <input class="form-control" type="password" name="password1" id="password1Cli"> -->
+                          {{form1.password1}}
+                          <p><span class="errorform" id="error_password1Cli"></span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-1">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="password2">Ratapez le mot de passe </label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                          <!-- <input class="form-control" type="password" name="password2" id="password2Cli"> -->
+                          {{form1.password2}}
+                          <p><span class="errorform" id="error_password2Cli"></span></p>
+
+                        </div>
+                    </div>
+                </div>
+                {{err1}}
+                {{err2}}
+                <div class="pt-2 pb-1 text-center">
+                    <span type="button" class="precedentCli">Précédent</span>
+                    <a class="btn-register annuler mt-2 mb-1" href="{% url 'enregistrement' %}">Annuler</a>
+                    <input class="btn-connexion sub mt-2 mb-1" type="submit" value="Enregistrer">
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <!-- <div class="formCli">
+    <div class="etape"><span class="numEtape">2</span></div>
+    <div  class="form-enregistrement">
+      <h4 class="text-center">Informations personnelles</h4>
+      <div class="collapse etape1-2 etapeCli-1-2 etapeCli-2-3" id="etapeCli2">
+        <div class="row">
+          <div class="col-md-6 mt-3">
+              <div class="form-group">
+                <label for="last_name">Nom </label>
+                <input class="form-control" type="text" name="last_name" id="last_name">
+              </div>
+          </div>
+          <div class="col-md-6 mt-3">
+              <div class="form-group">
+                <label for="first_name">Prénom </label>
+                <input class="form-control" type="text" name="first_name" id="first_name">
+              </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mt-3">
+              <div class="form-group">
+                <label for="email">Email </label>
+                <input class="form-control" type="email" name="email" id="email">
+              </div>
+          </div>
+          <div class="col-md-6 mt-3">
+              <div class="form-group">
+                <label for="photoProfil">Photo de profil </label>
+                <input class="form-control" type="file" name="photoProfil" id="photoProfil">
+              </div>
+          </div>
+        </div>
+        <div class="pt-4 text-end">
+          <span type="button" data-bs-toggle="collapse" data-bs-target=".etapeCli-1-2" aria-expanded="false" aria-controls="etape1 etape2 etapeCli2">Précédent</span>
+          &emsp;
+          <span class="btn-connexion suivant" type="button" data-bs-toggle="collapse" data-bs-target=".etapeCli-2-3" aria-expanded="false" aria-controls="etapeCli2 etapeCli3">Suivant</span>
+        </div>
+      </div>
+    </div>
+    <div class="etape"><span class="numEtape">3</span></div>
+    <div  class="form-enregistrement">
+      <h4 class="text-center">Où habitez-vous ?</h4>
+      <div class="collapse etapeCli-2-3 etapeCli-3-4" id="etapeCli3">  
+        <div class="row">
+          <div class="col-md-6 mt-3">
+              <div class="form-group">
+                <label for="ville">Ville </label>
+                <input class="form-control" type="text" name="ville" id="ville">
+              </div>
+          </div>
+          <div class="col-md-6 mt-3">
+              <div class="form-group">
+                <label for="quartier">Quartier </label>
+                <input class="form-control" type="text" name="quartier" id="quartier">
+              </div>
+          </div>
+        </div>
+        <div class="pt-4 text-end">
+          <span type="button" data-bs-toggle="collapse" data-bs-target=".etapeCli-2-3" aria-expanded="false" aria-controls="etapeCli2 etapeCli3">Précédent</span>
+          &emsp;
+          <span class="btn-connexion suivant" type="button" data-bs-toggle="collapse" data-bs-target=".etapeCli-3-4" aria-expanded="false" aria-controls="etapeCli3 etapeCli4">Suivant</span>
+        </div>
+      </div>
+    </div>
+    <div class="etape"><span class="numEtape">4</span></div>
+    <div  class="form-enregistrement">
+      <h4 class="text-center">Informations de connexion</h4>
+      <div class="collapse etapeCli-3-4 etape1-4" id="etapeCli4">
+        <div class="row">
+          <div class="col-md-6 mt-3">
+              <div class="form-group">
+                <label for="username">Nom d'utilisateur</label>
+                <input class="form-control" type="text" name="username" id="username">
+              </div>
+          </div>
+          <div class="col-md-6 mt-3">
+              <div class="form-group">
+                <label for="password1">Créez votre mot de passe </label>
+                <input class="form-control" type="password" name="password1" id="password1">
+              </div>
+          </div>
+        </div><div class="row mt-3">
+          <div class="col-md-6">
+              <div class="form-group">
+                <label for="password2">Ratapez le mot de passe </label>
+              </div>
+          </div>
+          <div class="col-md-6">
+              <div class="form-group">
+                <input class="form-control" type="password" name="password2" id="password2">
+              </div>
+          </div>
+        </div>
+        <div class="pt-3 pb-1 text-center">
+          <span type="button" data-bs-toggle="collapse" data-bs-target=".etapeCli-3-4" aria-expanded="false" aria-controls="etapeCli3 etapeCli4">Précédent</span>
+          &emsp;
+          <a class="btn-register mt-5 mb-3" href="{% url 'enregistrement' %}">Annuler</a>
+          <input class="btn-connexion mt-5 mb-3" type="submit" value="Enregistrer">
+        </div>
+      
+      </div> 
+    </div> 
+  </div>          -->
+
+</form>

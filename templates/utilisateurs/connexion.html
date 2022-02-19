@@ -9,14 +9,14 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6 offset-md-3">
-        <div  class="form-enregistrement">
+        <div  class="form-enregistrement connect">
           <style>
-            h4{color: orange; font-size: 27px; padding: 5px 0 30px;}
+            h5{color: orange; font-size: 27px; padding: 5px 0 10px;}
           </style>
           <form name="formConnexion" onsubmit="return validateFormConnex()" action="" method="post">
             {% csrf_token %}
 
-            <h4 class="text-center">Connectez vous à votre compte</h4>
+            <h5 class="text-center">Connectez vous à votre compte</h5>
             
             <div>
               {% for message in messages %}
@@ -29,15 +29,15 @@
               </p>
               {% endif %}
             </div>
-
+            <br>
             <div class="py-2 text-center">
-              <input class="form-control usernameC" type="text" name="username" id="username" placeholder="Nom d'utilisateur">
+              <input class="form-control connect usernameC" type="text" name="username" id="username" placeholder="Nom d'utilisateur">
               <p>
                 <span class="errorform" id="error_username"></span>
               </p>
             </div>
             <div class="py-2 text-center">
-              <input class="form-control"  type="password" name="password" id="password" placeholder="Mot de passe">
+              <input class="form-control connect"  type="password" name="password" id="password" placeholder="Mot de passe">
               <p>
                 <span class="errorform" id="error_password"></span>
               </p>
@@ -46,17 +46,53 @@
             <div class="text-center">
               {% if user.is_authenticated %}
               <br>
-              <a class="btn-register" href="{% url 'user_logout' %}">Déconnexion</a>  
+              <a class="btn-register" href="{% url 'user_logout' %}">Déconnexion</a>
+              <br><br>
               {% endif %}
             </div>
             <div class="text-center">
               {% if not user.is_authenticated %}
                 <input class="btn-connexion mt-2 mb-3" type="submit" value="Connexion">
                 <br>
-                <p>Vous n'avez pas de compte ? <a href="{% url 'enregistrement' %}">S'inscrire</a></p>
+                <style>
+                  .regis{
+                    color: blue;
+                  }
+                  .regis:hover{
+                    color: orange;
+                  }
+                </style>
+                <p>
+                  Vous n'avez pas de compte ?
+                  <a class="regis" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">S'inscrire</a>
+                </p>
               {% endif %}
             </div>
           </form>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content"  style="border: rgb(56, 51, 133) solid 1px; box-shadow: 0 0 2rem rgb(56, 51, 133);">
+              <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel"><center>CRÉATION D'UN NOUVEAU COMPTE</center></h5>
+              </div>
+              <div class="modal-body">
+                <h6>Quels est votre type de compte</h6><br>
+                <div>
+                  <p>Si vous êtes <b>élève/Parent</b>, <a class="btn-connexion suivant" href="{% url 'enregistrement' %}">cliquez ici</a> 
+                    pour accéder au formulaire
+                  </p>
+                  <p>Si vous êtes un.e <b>enseignant.e</b>, <a class="btn-connexion suivant" href="{% url 'enregistrement_prof' %}">cliquez ici</a> 
+                    pour accéder au formulaire
+                  </p>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn-register annuler" data-bs-dismiss="modal">Fermer</button>
+              </div>
+            </div>
+          </div>
         </div>  
       </div>
     </div>

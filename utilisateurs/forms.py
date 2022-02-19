@@ -42,4 +42,6 @@ class ClientForm(forms.ModelForm):
             'photoProfil',
             'ville',
             'quartier',
+            'telephone1',
+            'langue'
         ]

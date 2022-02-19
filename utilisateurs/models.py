@@ -20,7 +20,11 @@ def renommer_image(instance, filename):
 class Utilisateur(models.Model):
     ville = models.CharField(max_length=200, null=True)
     quartier = models.CharField(max_length=200, null=True)
-    
+    LANGUE = [
+        ('fançais','fançais'),('anglais','anglais'),('bilingue','bilingue')
+    ]
+    langue = models.CharField(max_length=200, null=True, choices=LANGUE, default='fançais')
+    telephone1 = models.CharField(max_length=200, null=True)
     # User possede déja : username, email, first_name, last_name, (password 1 et 2)
     user = models.OneToOneField(User, on_delete=CASCADE)
     photoProfil = models.ImageField(upload_to=renommer_image, blank=True) 
@@ -61,13 +65,8 @@ class Repetiteur(Utilisateur):
         ('monsieur','monsieur'),('mademoiselle','mademoiselle'),('madame','madame')
     ]
     civilite = models.CharField(max_length=200, null=True, choices=CIVILITE, default='Monsieur')
-    LANGUE = [
-        ('fançais','fançais'),('anglais','anglais'),('bilingue','bilingue')
-    ]
-    langue = models.CharField(max_length=200, null=True, choices=LANGUE, default='fançais')
     age = models.IntegerField(null=True)
-    telephone1 = models.CharField(max_length=200, null=True)
-    telephone2 = models.CharField(max_length=200, null=True)
+    telephone2 = models.CharField(max_length=200, blank=True)
     niveauEtude = models.CharField(max_length=200, null=True) 
 
     def __str__(self):

@@ -1,0 +1,247 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} FindRepeater | Créer un compte {% endblock %}
+
+{% block content %}
+
+<section class="py-5 my-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-5">
+        <p class="pt-4">
+          Céez un compte en tant que <b>enseignant</b> afin d'être 
+          visible sur la plateforme et être contacté par toute personne désirant vos services
+        </p>
+        <br><br>
+        <p class="pt-4">
+          Créez un compte en tant que <b>élève</b> ou <b>parent</b> 
+          afin de rechercher un répétiteur sur mesure, adapté à vos besoins
+        </p>
+        <div class="text-center">    
+          <br>
+          <p>Vous avez déja un compte ? <a href="{% url 'connexion' %}">Connexion</a></p>
+        </div>
+        {{errUser}}
+        {{err1}}
+        {{err2}}
+      </div>
+      <div class="col-md-7"> 
+        <form name="formRegister" onsubmit="return validateFormEnreg()" action="" method="post">
+          {% csrf_token %}
+          
+          <div class="etape"><span class="numEtape">1</span></div>
+            <div  class="form-enregistrement">
+              <h4 class="text-center">Type de compte</h4>
+              <div class="etapeRep">
+                  <div class="contentRep text-center">
+                    <span id="type" style="color: orange; font-size: 17px;">enseignant</span>
+                  </div> 
+            </div>
+          </div>
+
+          <style>
+            span{
+              color: rgb(99, 99, 99);
+              font-size: 14px;
+            }
+            span:hover{
+              color: rgb(173, 169, 147);
+            }
+            .form-group{
+                font-size: 14px;
+                text-align: center !important;
+            }
+          </style>
+          
+          <div class="formRep">
+            <div class="etape"><span class="numEtape">2</span></div>
+            <div  class="form-enregistrement">
+                <h4 class="text-center">Informations personnelles</h4>
+                <div class="etapeRep mt-3">
+                    <div class="contentRep">
+                        <div class="row">
+                            <div class="col-md-6 mt-3">
+                                <div class="form-group">
+                                  <label for="civilite">Civilité &emsp;</label><br>
+                                  {{form2.civilite}}
+                                </div>
+                            </div>
+                            <div class="col-md-6 mt-3">
+                                <div class="form-group text-end">
+                                  <label for="photoProfil">Photo de profil </label>
+                                  <!-- <input class="form-control" type="file" name="photoProfil" id="photoProfil"> -->
+                                  {{form2.photoProfil}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mt-3">
+                                <div class="form-group">
+                                  <label for="last_name">Nom </label>
+                                  <!-- <input class="form-control" type="text" name="last_name" id="last_nameRep"> -->
+                                  {{form1.last_name}}
+                                  <p><span class="errorform" id="error_last_nameRep"></span></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mt-3">
+                                <div class="form-group">
+                                  <label for="first_name">Prénom </label>
+                                  <!-- <input class="form-control" type="text" name="first_name" id="first_nameRep"> -->
+                                  {{form1.first_name}}
+                                  <p><span class="errorform" id="error_first_nameRep"></span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mt-1">
+                                <div class="form-group">
+                                  <label for="age">Âge </label>
+                                  <!-- <input class="form-control" type="number" name="age" id="ageRep"> -->
+                                  {{form2.age}}
+                                  <p><span class="errorform" id="error_ageRep"></span></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mt-1">
+                                <div class="form-group">
+                                  <label for="telephone1">Téléphone </label>
+                                  {{form2.telephone1}}
+                                  <!-- <input class="form-control" type="text" name="telephone1" id="telephone1Rep"> -->
+                                  <p><span class="errorform" id="error_telephone1Rep"></span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pt-2 pb-1 mb-1 text-end">
+                            <span type="button" class="precedentRep">Précédent</span>
+                            &emsp;
+                            <span class="btn-connexion suivant suivantRep" type="button">Suivant</span>
+                        </div>
+                    </div>  
+              </div>
+            </div>
+            <div class="etape"><span class="numEtape">3</span></div>
+            <div  class="form-enregistrement">
+                <h4 class="text-center">Informations professionnelles</h4>
+                <div class="etapeRep mt-3">
+                    <div class="contentRep">
+                        <div class="row">
+                            <div class="col-md-6 mt-1">
+                              <div class="form-group">
+                                <label for="langue">Langue d'enseignement &emsp;</label>
+                                {{form2.langue}}
+                              </div>
+                            </div>
+                            <div class="col-md-6 mt-1">
+                                <div class="form-group">
+                                  <label for="niveauEtude">Niveau d'étude </label>
+                                  <!-- <input class="form-control" type="text" name="niveauEtude" id="niveauEtudeRep"> -->
+                                  {{form2.niveauEtude}}
+                                  <p><span class="errorform" id="error_niveauEtudeRep"></span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mt-1">
+                                <div class="form-group">
+                                    <label for="telephone2">Whatsapp </label>
+                                    <!-- <input class="form-control" type="text" name="telephone2" id="telephone2Rep"> -->
+                                    {{form2.telephone2}}
+                                    <p><span class="errorform" id="error_telephone2Rep"></span></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mt-1">
+                                <div class="form-group">
+                                    <label for="email">Email </label>
+                                    <!-- <input class="form-control" type="email" name="email" id="emailRep"> -->
+                                    {{form1.email}}
+                                    <p><span class="errorform" id="error_emailRep"></span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                        <div class="col-md-6 mt-1">
+                            <div class="form-group">
+                                <label for="ville">Ville </label>
+                                <!-- <input class="form-control" type="text" name="ville" id="villeRep"> -->
+                                {{form2.ville}}
+                                <p><span class="errorform" id="error_villeRep"></span></p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mt-1">
+                            <div class="form-group">
+                                <label for="quartier">Quartier </label>
+                                <!-- <input class="form-control" type="text" name="quartier" id="quartierRep"> -->
+                                {{form2.quartier}}
+                                <p><span class="errorform" id="error_quartierRep"></span></p>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="pt-2 pb-1 mb-1 text-end">
+                            <span type="button" class="precedentRep">Précédent</span>
+                            &emsp;
+                            <span class="btn-connexion suivant suivantRep" type="button">Suivant</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="etape"><span class="numEtape">4</span></div>
+            <div  class="form-enregistrement">
+                <h4 class="text-center">Informations de connexion</h4>
+                <div class="etapeRep mt-3">
+                    <div class="contentRep et4">
+                        <div class="row">
+                            <div class="col-md-6 mt-1">
+                                <div class="form-group">
+                                  <label for="username">Nom d'utilisateur</label>
+                                  <!-- <input class="form-control" type="text" name="username" id="usernameRep"> -->
+                                  {{form1.username}}
+                                  {{form1.username.errors}}
+                                </div>
+                            </div>
+                            <div class="col-md-6 mt-1">
+                                <div class="form-group">
+                                  <label for="password1">Créez votre mot de passe </label>
+                                  <!-- <input class="form-control" type="password" name="password1" id="password1Rep"> -->
+                                  {{form1.password1}}
+                                  {{form1.password2.errors}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-1">
+                            <div class="col-md-6 offset-md-3">
+                                <div class="form-group">
+                                <label for="password2">Ratapez le mot de passe </label>
+                                  <!-- <input class="form-control" type="password" name="password2" id="password2Rep"> -->
+                                  {{form1.password2}}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="pt-2 pb-1 mt-4 text-center">
+                            <span type="button" class="precedentRep">Précédent</span>
+                            <!-- <a class="btn-register annuler mt-2 mb-1" href="{% url 'enregistrement' %}">Effacer</a> -->
+                            <input class="btn-register annuler mt-2 mb-1" type="reset" value="Effacer">
+                            <input class="btn-connexion sub mt-2 mb-1" type="submit" value="Enregistrer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+    var form_fields = document.getElementsByTagName('input');
+    for (let i = 0; i < (form_fields.length-2); i++) {
+        form_fields[i].className += ' form-control';
+    }
+    var form_fieldSel = document.getElementsByTagName('select');
+    for (var fields in form_fieldSel) {
+        form_fieldSel[fields].className += ' form-control';
+    }
+</script>
+
+{% endblock %}

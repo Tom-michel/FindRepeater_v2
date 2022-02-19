@@ -89,31 +89,36 @@ h1, h2, h3, h4, h5, h6 {
 
 /* page d'enregistrement DÉBUT */
 
+
 .form-enregistrement{
   background-color: #fff;
-  padding: 10px 20px;
-  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+  /* padding: 10px 20px; */
+  /* box-shadow: 0 .5rem 1rem rgba(0,0,0,.15); */
   border-radius: 10px;
-  margin-bottom: 40px;
-  width: 90%;
-  margin-left: 5%;
-  /* border-bottom: rgb(56, 51, 133) solid 2px;
-  border-top: rgb(56, 51, 133) solid 2px; */
+  border: rgba(56, 51, 133, 0.363) solid 1px;
+  margin-bottom: 15px;
+  width: 95%;
+  margin-left: 2.5%;
 }
+.form-enregistrement:hover{
+  box-shadow: 0 .1rem 1rem rgba(0,0,0,.15);
+  /* transform: scale(1); */
+}
+
 
 .etape{
   position: absolute;
-  padding-left: 4px;
+  padding-left: 0px;
   padding-top: 20px;
 }
 .etape .numEtape{
   /* position: absolute; */
-  background-color: #f8f9fa;
+  background-color: #fff; /*f8f9fa;*/
   padding: 8px 15px;
   border: rgb(56, 51, 133) solid 1px;
   border-radius: 25px;
   color: rgb(56, 51, 133);
-  font-size: 20px;
+  font-size: 13px;
   font-weight: 400;
   box-shadow: 0 0 .3rem rgb(56, 51, 133);
 }
@@ -121,13 +126,12 @@ h1, h2, h3, h4, h5, h6 {
 
 @media screen and (max-width: 992px) {
   .form-enregistrement{
-    padding: 10px 20px;
     margin-bottom: 30px;
   }
 
   .etape{
     position: absolute;
-    padding-left: 2px;
+    padding-left: 0px;
     padding-top: 15px;
   }
   .etape .numEtape{
@@ -137,36 +141,103 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+h4 {
+  background-color: #f0f0f0;
+  border-top-left-radius: 9px;
+  border-top-right-radius: 9px;
+  border-bottom: #c5c5c5 solid 1px;
+  width: 100% !important;
+  color: rgb(56, 51, 133);
+  padding: 10px 0
+}
+
+.etapeRep, .etapeCli {
+  padding: 10px 20px;
+}
+
 @media screen and (min-width: 992px) {
-  h4{color: orange; padding: 10px 0 3px;}
+  h4{font-size: 18px;}
   .form-control{
     width: 100% !important;
   }
-  .btn-register.suivant{
+  .btn-connexion.suivant, .btn-connexion.sub{
     font-size: 12px;
-    box-shadow: 0 0 .3rem rgb(56, 51, 133);
+  }
+  .btn-register.annuler {
+    font-size: 12px;
   }
 }
 @media screen and (max-width: 992px) {
-  h4{color: orange; padding: 5px 0 0px; font-size: 18px;}
+  h4{font-size: 17px;}
   label{
     padding-left: 15px;
   }
   .form-enregistrement{
     font-size: 15px;
   }
-  .btn-register.suivant{
+  .btn-connexion.suivant, .btn-connexion.sub{
     padding: 6px 11px !important;
     font-size: 12px;
-    box-shadow: 0 0 .3rem rgb(56, 51, 133);
+  }
+  .btn-register.annuler {
+    padding: 6px 11px !important;
+    font-size: 12px;
   }
 }
-span{
-  color: rgb(99, 99, 99);
+
+.modal-title{
+  color: orange !important;
+  text-align: center !important;
+  font-size: 20px !important;
 }
-span:hover{
-  color: rgb(173, 169, 147);
+
+/* effet collapse DEBUT */
+
+
+/* .form-enregistrement .etapeRep {
+  position: relative;
 }
+.form-enregistrement .etapeRep.active {
+  margin: 10px 20px;
+}
+
+.form-enregistrement .etapeRep .contentRep{
+  position: relative;
+  height: 0;
+  overflow: hidden;
+  transition: 0.5s;
+  overflow-y: auto;
+}
+
+@media screen and (min-width: 992px) {
+  .form-enregistrement .etapeRep.active .contentRep{
+    height: 320px;
+  }
+
+  .form-enregistrement .etapeRep.active .contentRep.et1{
+    height: 100px;
+  }
+  .form-enregistrement .etapeRep.active .contentRep.et4{
+    height: 250px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .form-enregistrement .etapeRep.active .contentRep{
+    height: 555px;
+  }
+
+  .form-enregistrement .etapeRep.active .contentRep.et1{
+    height: 95px;
+  }
+  .form-enregistrement .etapeRep.active .contentRep.et4{
+    height: 390px;
+  }
+} */
+
+/* effet collapse FIN */
+
+
 
 /* page d'enregistrement FIN */
 
@@ -175,7 +246,7 @@ span:hover{
 
 
 .form-control {
-  width: 80% !important;
+  width: 100% !important;
   padding: .375rem .75rem;
   font-size: 1rem;
   font-weight: 400;
@@ -192,18 +263,10 @@ span:hover{
   margin: auto;
 }
 
-
-input[type="text"],
-input[type="password"],
-input[type="email"],
-input[type="tel"],
-input[type="date"],
-input[type="number"],
-select,
-textarea {
-    /* width: 80%; */
-
-    /* height: 2.5em; */
+@media screen and (max-width: 992px) {
+  .form-control {
+    width: 100% !important;
+  }
 }
 
 input[type="text"]:hover,
@@ -217,9 +280,6 @@ input[type="number"]:hover{
   box-shadow: 0 0 0 3px #3d299475;
 }
 
-
-
-
 /* erreurs de formulaire dans les champs */
 .err {
   border: red solid 1px !important;
@@ -230,9 +290,22 @@ input[type="number"]:hover{
   padding-top: 5px;
   font-size: 14px;
   display: block;
-  margin: 0 0 10px 0;
+  margin: 0 0 0px 0;
   color: #e35f5f;
   overflow-wrap: break-word;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.errorlist {
+  padding: 3px 0 8px !important;
+  margin: 0 !important;
+}
+.errorlist >li {
+  display: block;
+  color: #e35f5f !important;
+  font-weight: 700;
+  font-size: 13px !important;
 }
 
   /* page de connexion DÉBUT */
@@ -243,7 +316,7 @@ input[type="number"]:hover{
   font-weight: 700;
   display: block;
   padding: 10px 12px;
-  color: #e35f5f;;
+  color: #e35f5f;
   border: 1px solid #e35f5f;;
   border-radius: 4px;
   background-color: rgb(255, 210, 210);
@@ -268,12 +341,24 @@ input[type="number"]:hover{
   margin: auto;
 }
 
+.form-enregistrement.connect {
+  padding: 25px 50px 5px;
+  margin: auto;
+  width: 95%;
+  box-shadow: 0 .1rem 1rem rgba(0,0,0,.15);
+}
 
+.form-control.connect {
+  width: 80% !important;
+}
 
-  /* page de connexion FIN */
 
 @media screen and (max-width: 992px) {
-  .form-control {
+  .form-enregistrement.connect {
+    box-shadow: none;
+    padding: 25px 20px 5px;
+  }
+  .form-control.connect {
     width: 95% !important;
   }
   .errornotes{
@@ -290,5 +375,50 @@ input[type="number"]:hover{
   }
 }
 
+  /* page de connexion FIN */
 
 /* formulaies FIN */
+
+
+
+/* collapse debut */
+
+
+.accordion .contentBx {
+  position: relative;
+  margin: 10px 20px;
+}
+.accordion .contentBx .label{
+  position: relative;
+  background-color: orange;
+  padding: 10px;
+  color: #fff;
+  cursor: pointer;
+}
+.accordion .contentBx .label::before{
+  content: '+';
+  position: absolute;
+  top: 10%;
+  right: 20px;
+  font-size: 1.5em;
+  transform: translateY(-10%);
+}
+.accordion .contentBx .content {
+  position: relative;
+  background-color: rgb(214, 252, 255);
+  height: 0;
+  overflow: hidden;
+  transition: 0.5s;
+  overflow-y: auto;
+}
+
+.accordion .contentBx.active .content {
+  height: 150px;
+  padding: 10px;
+}
+.accordion .contentBx.active .label::before{
+  content: '--';
+}
+
+
+/* collapse fin */
