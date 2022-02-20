@@ -190,7 +190,7 @@
             </div>
             <div class="etape"><span class="numEtape">4</span></div>
             <div  class="form-enregistrement">
-                <h4 class="text-center">Informations de connexion {{util}}</h4>
+                <h4 class="text-center">Informations de connexion</h4>
                 {% if util == " " %}
                 <div class="etapeRep mt-1">
                 {% endif %}
@@ -228,8 +228,7 @@
                         
                         <div class="pt-2 pb-1 mt-4 text-center">
                             <span type="button" class="precedentRep">Précédent</span>
-                            <!-- <a class="btn-register annuler mt-2 mb-1" href="{% url 'enregistrement' %}">Effacer</a> -->
-                            <input class="btn-register annuler mt-2 mb-1" type="reset" value="Effacer">
+                            <a class="btn-register annuler mt-2 mb-1" href="{% url 'enregistrement_prof' %}">Recommencer</a>
                             <input class="btn-connexion sub mt-2 mb-1" type="submit" value="Enregistrer">
                         </div>
                     </div>
@@ -244,7 +243,7 @@
 
 <script>
     var form_fields = document.getElementsByTagName('input');
-    for (let i = 0; i < (form_fields.length-2); i++) {
+    for (let i = 0; i < (form_fields.length-1); i++) {
         form_fields[i].className += ' form-control';
     }
     var form_fieldSel = document.getElementsByTagName('select');

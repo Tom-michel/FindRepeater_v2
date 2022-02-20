@@ -74,8 +74,6 @@ for (let i = 0; i < label.length; i++) {
 // fonctions de vérification du formulaire
 
 
-//  enregistrement REPETITEUR
-
 
 function valChapmsText(champs, errClass) {
   if (champs.value == "") {
@@ -126,6 +124,10 @@ function valChapmsTel(champs, errClass) {
     return true;
   }
 }
+
+
+
+//  enregistrement REPETITEUR
 
 
 // etape 2
@@ -227,19 +229,79 @@ for (let i = 0; i < precedentRep.length; i++) {
 
 
 // ETAPE 2 CLI
-function valCliE2() {
 
+var last_nameCli = document.getElementById('id_last_name');
+var error_last_nameCli = document.getElementById('error_last_nameCli');
+
+var first_nameCli = document.getElementById('id_first_name');
+var error_first_nameCli = document.getElementById('error_first_nameCli');
+
+var telephone1Cli = document.getElementById('id_telephone1');
+var error_telephone1Cli = document.getElementById('error_telephone1Cli');
+
+var emailCli = document.getElementById('id_email');
+var error_emailCli = document.getElementById('error_emailCli');
+
+function valEC2() {
+  if (valChapmsText(last_nameCli, error_last_nameCli) 
+      && valChapmsText(first_nameCli, error_first_nameCli)
+      && valChapmsTel(telephone1Cli, error_telephone1Cli)
+      && valChapmsEmail(emailCli, error_emailCli)) 
+  {
+    return true;
+  } else {
+    return false
+  }
 }
 
 // ETAPE 3 CLI
-function valCliE3() {
-  
+
+var villeCli = document.getElementById('id_ville');
+var error_villeCli = document.getElementById('error_villeCli');
+
+var quartierCli = document.getElementById('id_quartier');
+var error_quartierCli = document.getElementById('error_quartierCli');
+
+function valEC3() {
+  if (valChapmsText(villeCli, error_villeCli)
+      && valChapmsText(quartierCli, error_quartierCli)) 
+  {
+    return true;
+  } else {
+    return false
+  }
 }
 
 
 
-// suivant
+// suivant cli
+const suivantCli = document.getElementsByClassName('suivantCli');
+const etapeCli = document.getElementsByClassName('etapeCli');
+for (let i = 0; i < suivantCli.length; i++) {
+  suivantCli[i].addEventListener('click', function(){
+    
+
+    if (i == 0) {
+      if (valEC2()){
+        etapeCli[i+1].classList.toggle('active');
+        etapeCli[i+2].classList.toggle('active');
+      }
+    }
+    if (i == 1) {
+      if (valEC3()){
+        etapeCli[i+1].classList.toggle('active');
+        etapeCli[i+2].classList.toggle('active');
+      }
+    }
+  });
+}
 
 
-
-// précédent
+// précédent cli
+const precedentCli = document.getElementsByClassName('precedentCli');
+for (let i = 0; i < precedentCli.length; i++) {
+  precedentCli[i].addEventListener('click', function(){
+    etapeCli[i+2].classList.toggle('active');
+    etapeCli[i+1].classList.toggle('active');
+  });
+}

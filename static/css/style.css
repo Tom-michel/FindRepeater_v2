@@ -193,10 +193,12 @@ h4 {
 
 /* effet collapse DEBUT */
 
-.form-enregistrement .etapeRep {
+.form-enregistrement .etapeRep,
+.form-enregistrement .etapeCli {
   position: relative;
 }
-.form-enregistrement .etapeRep .contentRep{
+.form-enregistrement .etapeRep .contentRep,
+.form-enregistrement .etapeCli .contentCli {
   position: relative;
   height: 0;
   overflow: hidden;
@@ -204,25 +206,41 @@ h4 {
   overflow-y: auto;
 }
 
-.form-enregistrement .etapeRep.active .contentRep{
+.form-enregistrement .etapeRep.active .contentRep,
+.form-enregistrement .etapeCli.active .contentCli {
   height: 330px;
 }
-.form-enregistrement .etapeRep.active .contentRep.et1{
+.form-enregistrement .etapeRep.active .contentRep.et1,
+.form-enregistrement .etapeCli.active .contentCli.et1 {
   height: 25px;
 }
-.form-enregistrement .etapeRep.active .contentRep.et4{
-  height: 260px;
+.form-enregistrement .etapeCli.active .contentCli.et2{
+  height: 330px;
+}
+.form-enregistrement .etapeCli.active .contentCli.et3{
+  height: 230px;
+}
+.form-enregistrement .etapeRep.active .contentRep.et4,
+.form-enregistrement .etapeCli.active .contentCli.et4 {
+  height: 270px;
 }
 
 @media screen and (max-width: 992px) {
   .form-enregistrement .etapeRep.active .contentRep.et2{
     height: 550px;
   }
+  .form-enregistrement .etapeCli.active .contentCli.et2{
+    height: 500px;
+  }
   .form-enregistrement .etapeRep.active .contentRep.et3{
     height: 530px;
   }
-  .form-enregistrement .etapeRep.active .contentRep.et4{
-    height: 390px;
+  .form-enregistrement .etapeCli.active .contentCli.et3{
+    height: 300px;
+  }
+  .form-enregistrement .etapeRep.active .contentRep.et4,
+  .form-enregistrement .etapeCli.active .contentCli.et4 {
+    height: 310px;
   }
 }
 
