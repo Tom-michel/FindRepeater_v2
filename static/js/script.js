@@ -93,6 +93,11 @@ function valChapmsAge(champs, errClass) {
     champs.focus();
     champs.classList.add('err');
     return false;
+  } else if (champs.value <= "0" || champs.value >= "50") {
+    errClass.innerHTML="*entrez un âge correct (<50)";
+    champs.focus();
+    champs.classList.add('err');
+    return false;
   } else {
     errClass.innerHTML="";
     champs.classList.remove('err');
@@ -100,8 +105,14 @@ function valChapmsAge(champs, errClass) {
   }
 }
 function valChapmsEmail(champs, errClass) {
+  var valeursAcceptees = /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
   if (champs.value == "") {
-    errClass.innerHTML="*veuillez remplir une addrese correcte";
+    errClass.innerHTML="*veuillez entrer une addrese mail";
+    champs.focus();
+    champs.classList.add('err');
+    return false;
+  } else if ( ! champs.value.match(valeursAcceptees)) {
+    errClass.innerHTML="*veuillez entrer une addrese mail valide";
     champs.focus();
     champs.classList.add('err');
     return false;
@@ -118,11 +129,34 @@ function valChapmsTel(champs, errClass) {
     champs.focus();
     champs.classList.add('err');
     return false;
-  } else {
-    errClass.innerHTML="";
-    champs.classList.remove('err');
-    return true;
+  } else if (champs.value.charAt(0)!="+" || champs.value.charAt(1)!="2" || champs.value.charAt(2)!="3" || champs.value.charAt(3)!="7") {
+    errClass.style.display="";
+    errClass.innerHTML="*le numéro doit débuter par '+237'";
+    champs.focus();
+    champs.classList.add('err');
+    return false;
+  } else if (champs.value.length != 13) {
+    errClass.style.display="";
+    errClass.innerHTML="*veuillez entrer un numéro correct (12 chiffres)";
+    champs.focus();
+    champs.classList.add('err');
+    return false;
+  }  else {
+    for (let i = 1; i < champs.value.length; i++) {
+      if (champs.value.charAt(i) < "0" || champs.value.charAt(i) > "9") {
+        errClass.style.display="";
+        errClass.innerHTML="*veuillez entrer un numéro correct";
+        champs.focus();
+        champs.classList.add('err');
+        return false;
+      }
+    }
   }
+  
+  errClass.innerHTML="";
+  champs.classList.remove('err');
+  return true;
+  
 }
 
 
@@ -157,6 +191,8 @@ function valER2() {
 }
 
 //  etape 3
+var professionRep = document.getElementById('id_profession');
+var error_professionRep = document.getElementById('error_professionRep');
 
 var niveauEtudeRep = document.getElementById('id_niveauEtude');
 var error_niveauEtudeRep = document.getElementById('error_niveauEtudeRep');
@@ -174,7 +210,8 @@ var quartierRep = document.getElementById('id_quartier');
 var error_quartierRep = document.getElementById('error_quartierRep');
 
 function valER3() {
-  if (valChapmsText(niveauEtudeRep, error_niveauEtudeRep) 
+  if (valChapmsText(professionRep, error_professionRep) 
+      &&valChapmsText(niveauEtudeRep, error_niveauEtudeRep) 
       && valChapmsTel(telephone2Rep, error_telephone2Rep)
       && valChapmsEmail(emailRep, error_emailRep)
       && valChapmsText(villeRep, error_villeRep)

@@ -29,15 +29,30 @@ nav .logo{
     size: 23px;
 }
 
-nav button{
+/* bouton du menu debut */
+
+
+/* nav button{
     border-color: orange !important;
     color: orange !important;
-}
-nav button:focus{
+} */
+/* nav button:focus{
     border: #231e39 solid 2px !important;
     box-shadow: none !important;
     color: orange !important;
+} */
+nav button{
+    border: none !important;
 }
+nav button:focus{
+    border: none !important;
+}
+.navbar-light .navbar-toggler {
+    color: transparent !important;
+}
+
+/* bouton du menu fin */
+
 
 .dropdown-menu{
     width: 60% !important;

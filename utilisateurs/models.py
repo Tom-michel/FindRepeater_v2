@@ -68,6 +68,7 @@ class Repetiteur(Utilisateur):
     age = models.IntegerField(null=True)
     telephone2 = models.CharField(max_length=200, blank=True)
     niveauEtude = models.CharField(max_length=200, null=True) 
+    profession = models.CharField(max_length=200, null=True) 
 
     def __str__(self):
         info = self.civilite+" "+self.user.username

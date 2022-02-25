@@ -41,11 +41,11 @@
           </div>
 
           <style>
-            span{
+            .precedentRep{
               color: rgb(99, 99, 99);
               font-size: 14px;
             }
-            span:hover{
+            .precedentRep:hover{
               color: rgb(173, 169, 147);
             }
             .form-group{
@@ -128,7 +128,16 @@
                 <h4 class="text-center">Informations professionnelles</h4>
                 <div class="etapeRep mt-1">
                     <div class="contentRep et3">
-                        <div class="row">
+                      <div class="row">
+                        <div class="col-md-6 offset-md-3 mt-1">
+                          <div class="form-group">
+                            <label for="langue">Profession actuelle</label>
+                            {{form2.profession}}
+                            <p><span class="errorform" id="error_professionRep"></span></p>
+                          </div>
+                        </div>
+                      </div>  
+                      <div class="row">
                             <div class="col-md-6 mt-1">
                               <div class="form-group">
                                 <label for="langue">Langue d'enseignement &emsp;</label>

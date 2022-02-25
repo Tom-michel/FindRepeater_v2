@@ -31,6 +31,7 @@ class RepetiteurForm(forms.ModelForm):
             'telephone2',
             'photoProfil',
             'niveauEtude',
+            'profession',
             'ville',
             'quartier',
             'langue'
