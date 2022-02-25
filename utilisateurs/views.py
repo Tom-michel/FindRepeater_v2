@@ -6,6 +6,7 @@ from django.contrib import messages
 from .forms import UserForm, ClientForm, RepetiteurForm
 from django.contrib.auth.models import User
 from .models import Repetiteur, Client
+from cours.models import Cours
 
 # Create your views here.
 
@@ -190,7 +191,16 @@ def connexion(request):
 
 @login_required(login_url='connexion')
 def consulter_profil(request):
-    return render(request, 'utilisateurs/consulter_profil.html')
+    coursList = Cours.objects.all()
+    coursTemp = Cours.objects.all()
+    cours = []
+    for c in coursTemp:
+        cours.append(c.repetiteur.user.id)
+
+    repList = Repetiteur.objects.all()
+
+    content = {'coursList':coursList, 'cours':cours,'repList':repList}
+    return render(request, 'utilisateurs/consulter_profil.html', content)
 
 
 

@@ -5,7 +5,211 @@
 
 {% block content %}
 
-<br><br><br>
-<h1>Mon Profil</h1>
+<section class="py-5">
+
+    <style>
+        .profile-img {
+            width: 150px;
+        }
+        h6 {
+            color: rgba(0, 0, 0, 0.678);
+        }
+        .info span {
+            font-size: 16px;
+        }
+        h3 {
+            color: rgb(56, 51, 133);
+        }
+        p span {
+            color: orange;
+        }
+
+        @media screen and (min-width: 992px) {
+            .dash {
+                border-left: orange solid 4px;
+            }
+            .card-body {
+                width: 80% !important;
+                margin: auto;
+            }
+        }
+
+        @media screen and (max-width: 992px) {
+            .dash {
+                margin: 0 !important;
+                border-top: orange solid 2px;
+                /* border-top-right-radius: 10px !important;
+                border-top-left-radius: 10px !important; */
+            }
+            hr {
+                margin-top: 10px;
+            }
+            h6 {
+                font-size: 14px;
+            }
+            .info span {
+                font-size: 14px;
+            }
+            .dash-content {
+                padding: 0 0 20px !important;
+            }
+            .profile-img {
+                margin-top: 20px !important;
+            }
+            .btn-connexion {
+                font-size: 12px;
+            }
+            .btn-connexion.ajout {
+                margin-left: 20px;
+            }
+            p {
+                font-size: 15px;
+            }
+            .container {
+                width: 95%;
+                margin-right: auto;
+                margin-left: auto;
+                
+            }
+            .cours {
+                margin-top: 0 !important;
+            }
+            .container .row.r {
+                border-bottom-right-radius: 10px !important;
+                border-bottom-left-radius: 10px !important;
+            }
+        }
+    </style>
+
+    <div class="pt-4 pb-2">
+        <div class="py-2">
+            <h1 class="text-center">Mon Profil</h1>
+        </div> 
+    </div>
+    
+    <div class="container">
+        <div class="row">
+            
+            {% for rep in repList %}
+                {% if rep.user.id == user.id %}
+                    <div class="col-md-4 shadow-lg dash mx-4">
+                        <div class="d-flex flex-column align-items-center dash-content text-center p-3 py-5">
+                            <img class="rounded-circle mt-5 profile-img" src="{% static 'img/profile.jpg' %}">
+                            <span>{{rep.user.username}}</span>
+                            <span>{{rep.age}} ans</span>
+                            <span>{{rep.user.email}}</span>
+                            <span>{{rep.profession}}</span>
+                            <span>{{rep.ville}}, {{rep.quartier}}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="row p-3 bg-white shadow">
+                            <div class="col-md-12 info">
+                                <h3>À propos</h3><br>
+                                <div class="row">
+                                    <div class="col">
+                                        <h6><b>Noms et Prénoms</b></h6>
+                                    </div>
+                                    <div class="col text-end">
+                                        <span>{{rep.user.last_name}} {{rep.user.first_name}}</span>
+                                    </div>
+                                    <hr>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <h6><b>Télephone</b></h6>
+                                    </div>
+                                    <div class="col text-end">
+                                        <span>{{rep.telephone1}}</span>
+                                    </div>
+                                    <hr>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <h6><b>Whatsapp</b></h6>
+                                    </div>
+                                    <div class="col text-end">
+                                        <span>{{rep.telephone2}}</span>
+                                    </div>
+                                    <hr>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <h6><b>Niveau d'étude</b></h6>
+                                    </div>
+                                    <div class="col text-end">
+                                        <span>{{rep.niveauEtude}}</span>
+                                    </div>
+                                    <hr>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <h6><b>Langue d'enseignement</b></h6>
+                                    </div>
+                                    <div class="col text-end">
+                                        <span>{{rep.langue}}</span>
+                                    </div>
+                                    <hr>
+                                </div>
+
+                                <div class="text-center p-2">
+                                    <a class="btn-connexion" href="">Modifier</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row r p-3 mt-3 bg-white shadow cours">
+                            <h3>Cours dispensés</h3>
+                            <div class="row pt-2">
+                                <div class="col-md-6">
+                                    <p>
+                                        <span>NOMBRES : <b>04</b> cours</span> listés dans le tableau <a href="#tab">ci-dessous</a>
+                                    </p>
+                                </div>
+                                <div class="col-md-6 text-center p-2">
+                                    <a class="btn-connexion ajout" href="">Ajouter un cours</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div> 
+    </div>
+    
+    <div id="tab" class="card card-body mt-3 bg-white shadow" style="background-color: #ebeff5; padding: 5px 3px; width: 98%; margin: auto;">                    
+        <style>
+            th{border-right: orange solid 1px;}
+        </style>
+        <div class="table-responsive text-center">
+            <table class="table table-sm table-hover">
+                <tr  style="border-bottom: orange solid 3px; background-color: rgb(216, 210, 200);">
+                    <th>Matière</th>
+                    <th>Classe</th>
+                    <th>Jour</th>
+                    <th>Début</th>
+                    <th>Durée</th>
+                    <th>Ville</th>
+                    <th>Modifier</th>
+                    <th>Supprimer</th>
+                </tr>
+
+                {% for c in coursList %}
+                    {% if c.repetiteur.user.id == user.id %}
+                        <tr>
+                            <th>{{c.matiere}}</th>
+                            <th>{{c.classe}}</th>
+                            <th>{{c.jour}}</th>
+                            <th>{{c.heure_début}}</th>
+                            <th>{{c.duree}}</th>
+                            <th>{{c.repetiteur.ville}}</th>
+                            <th><a class="btn btn-sm btn-success" href="">Modifier</a></th>
+                            <th><a class="btn btn-sm btn-danger" href="">Supprimer</a></th>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</section>
 
 {% endblock %}

@@ -62,9 +62,9 @@ class Client(Utilisateur):
 
 class Repetiteur(Utilisateur):
     CIVILITE = [
-        ('monsieur','monsieur'),('mademoiselle','mademoiselle'),('madame','madame')
+        ('Mr','Mr'),('Mme','Mme')
     ]
-    civilite = models.CharField(max_length=200, null=True, choices=CIVILITE, default='Monsieur')
+    civilite = models.CharField(max_length=200, null=True, choices=CIVILITE, default='Mr')
     age = models.IntegerField(null=True)
     telephone2 = models.CharField(max_length=200, blank=True)
     niveauEtude = models.CharField(max_length=200, null=True) 
