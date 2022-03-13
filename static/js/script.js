@@ -1,3 +1,37 @@
+// changement du bouton menu après click
+
+var menuO = document.getElementById('menuO');
+var menuC = document.getElementById('menuC');
+menuC.style.display = "none";
+
+menuO.addEventListener('click', function(){
+  menuO.style.display = "none";
+  menuC.style.display = "";
+  // menuO.classList.toggle('cliq');
+  // menuC.classList.toggle('cliq');
+});
+menuC.addEventListener('click', function(){
+  menuO.style.display = "";
+  menuC.style.display = "none";
+  // menuC.classList.toggle('cliq');
+  // menuO.classList.toggle('cliq');
+});
+
+
+// baisser le menu lorsqu'on clique ailleur sur l'ecran
+
+// var navbarNavDropdown = document.getElementById('navbarNavDropdown');
+// window.addEventListener('click', function(e){
+//   if (!menuO.contains(e.target)) {
+//       if (navbarNavDropdown.classList.contains("show") == true) {
+//         navbarNavDropdown.classList.remove("show");
+//         menuC.classList.toggle('cliq');
+//         menuO.classList.toggle('cliq');
+//       }
+//   }
+// });
+
+
 // validation formulaire de connexion  
 
 function validateFormConnex() {
@@ -25,39 +59,6 @@ function validateFormConnex() {
     document.getElementById('error_password').innerHTML="";  
   }
 }
-
-
-
-
-
-// choix du formulaire en fonction du type d'utilisateur
-
-// function choisirFoum() {
-//   var type_user = document.forms["formRegister"]["type_user"];
-
-//   type = document.querySelector('#type');
-//   type.innerHTML = type_user.value;
-//   type.style.display="";
-  
-//   formRep = document.querySelector('.formRep')
-//   formCli = document.querySelector('.formCli')
-//   formPreview = document.querySelector('.formPreview')
-//   etape2 = document.getElementById('etape2');
-//   etape1 = document.getElementById('etape1');
-  
-//   if (type_user.value == "élève" || type_user.value == "parent") {
-//     formRep.style.display="none";
-//     formPreview.style.display="none";
-//     formCli.style.display=""; 
-//   }else{
-//     formRep.style.display="";
-//     formCli.style.display="none"; 
-//     formPreview.style.display="none";
-    
-    
-//   }
-
-// }
 
 
 // effect collpase (Test)
@@ -247,8 +248,6 @@ for (let i = 0; i < suivantRep.length; i++) {
 }
 
 
-
-
 // précédent
 const precedentRep = document.getElementsByClassName('precedentRep');
 for (let i = 0; i < precedentRep.length; i++) {
@@ -257,8 +256,6 @@ for (let i = 0; i < precedentRep.length; i++) {
     etapeRep[i+1].classList.toggle('active');
   });
 }
-
-
 
 
 

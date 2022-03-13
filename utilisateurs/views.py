@@ -31,16 +31,6 @@ def bienvenue(request):
     return render(request, 'utilisateurs/bienvenue.html') 
 
 
-def collapse(request):
-    user_form = UserForm()
-    repetiteur_form = RepetiteurForm()
-    content = {
-        'form1':user_form,
-        'form2':repetiteur_form,
-    }
-    return render(request, 'utilisateurs/collapse.html', content) 
-
-
 
 # crer son compte (profil) parent/eleve
 
@@ -208,8 +198,57 @@ def consulter_profil(request):
 # modifier son profil
 
 @login_required(login_url='connexion')
-def modifier_profil(request):
-    return render(request, 'utilisateurs/modifier_profil.html')
+def modifier_profil(request, id_r, id_u):
+    err = ''
+    err2 = ''
+    repList = Repetiteur.objects.all()
+
+    # identifier un répétiteur spécifique par son id
+    repetiteur = Repetiteur.objects.get(id=id_r)
+    
+    # identifier le user associé à ce répétiteur, par son id
+    for u in User.objects.all():
+        if u.id == repetiteur.user.id:
+            user = User.objects.get(id=id_u)
+    
+    # remplir le formulaire avec les info du répétiteur
+    rep_form = RepetiteurForm(instance=repetiteur)
+    user_form = UserForm(instance=user)
+    if request.method == "POST":
+        rep_form = RepetiteurForm(data=request.POST, instance=repetiteur)
+        user_form = UserForm(data=request.POST, instance=user)
+        
+        if rep_form.is_valid() and user_form.is_valid:
+            rep = rep_form.save()
+            rep.save()
+
+            use = user_form.save()
+            use.save()
+            repetit = rep_form.save(commit=False)
+            repetit.user = use
+            repetit.save()
+
+            # connecter le user
+            username = request.POST.get('username')
+            password = request.POST.get('password1')
+            user_log = authenticate(username=username, password=password)
+            if user_log:
+                if user.is_authenticated:
+                    logout(request)
+                login(request, user_log)
+            # le renvoyer vers la page Mon Profil
+            return HttpResponseRedirect('../../consulter_profil')
+        else:
+            err = rep_form.errors
+            err2 = user_form.errors
+    content = {
+        'err':err,
+        'err2':err2,
+        'rep_form':rep_form,
+        'user_form':user_form,
+        'repList':repList,
+    }
+    return render(request, 'utilisateurs/modifier_profil.html', content)
 
 
 

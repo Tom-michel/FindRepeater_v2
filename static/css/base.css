@@ -1,26 +1,100 @@
-@media screen and (min-width: 992px) {
-    .navbar{
-        height: 50px;
-    }
+
+/* bouton du menu debut */
+
+
+
+
+
+@media screen and (min-width: 768px) {
+    /* .navbar{
+        height: 60px;
+    } */
     .separer{
         margin-left: 45%;
     }
+ 
+
+    .navbar-light .navbar-toggler {
+        color: orange !important;
+        font-size: 25px !important;
+    }
+    
+    .navbar-light .navbar-toggler {
+        border: none;
+    }
+    .navbar-collapse.show {
+        margin-top: 5px !important;
+        padding-top: 20px !important;
+        border-top: orange solid 2px;;
+    }
+    nav .navbar-collapse.show  ul li a{
+        margin: 2px auto !important;
+        width: 60% !important;
+    }
+    .navbar-collapse.show  .dropdown-menu{
+        width: 60% !important;
+        margin-left: 20%;
+    }
+    /* #menuO {
+        visibility: visible;
+    }
+    #menuO.cliq {
+        visibility: hidden;
+    }
+    #menuC {
+        transition: 0.1s ease-in-out;
+        margin-right: -148px;
+        visibility: hidden;
+    }
+    #menuC.cliq {
+        transition: 0.3s ease-in-out;
+        margin-right: 0;
+        visibility: visible;
+    } */
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 767px) {
+    .navbar-collapse {
+        margin-top: 5px !important;
+        padding-top: 20px !important;
+        border-top: orange solid 2px;;
+    }
     nav ul li a{
         margin: 2px auto !important;
         width: 60% !important;
         background-color: rgba(255, 166, 0, 0.075);
-        
     }
     nav ul li a:hover{
         background-color: rgba(255, 166, 0, 0.39); 
     }
-}
+    .dropdown-menu{
+        width: 60% !important;
+        margin-left: 20%;
+    }
+    .navbar-light .navbar-toggler {
+        color: orange !important;
+        font-size: 25px !important;
+    }
     
-.navbar-toggler{
-    margin-bottom: 10px;
+    .navbar-light .navbar-toggler {
+        border: none;
+    }
+    /* #menuO {
+        visibility: visible;
+    }
+    #menuO.cliq {
+        visibility: hidden;
+    }
+    #menuC {
+        transition: 0.1s ease-in-out;
+        margin-right: -125px;
+        visibility: hidden;
+    }
+    #menuC.cliq {
+        transition: 0.3s ease-in-out;
+        margin-right: 0;
+        visibility: visible;
+    } */
 }
 
 nav .logo{
@@ -29,43 +103,47 @@ nav .logo{
     size: 23px;
 }
 
-/* bouton du menu debut */
 
+ /* bouton du menu fin */
 
-/* nav button{
-    border-color: orange !important;
-    color: orange !important;
-} */
-/* nav button:focus{
-    border: #231e39 solid 2px !important;
-    box-shadow: none !important;
-    color: orange !important;
-} */
-nav button{
-    border: none !important;
+/* 
+
+.btn-connexion, .btn-register{
+  border: none;
+  border-radius: 20px;
+  transition: 0.5s;
+  padding: 6px 15px !important;
+  font-size: 0.9rem;
+  text-decoration: none !important;
 }
-nav button:focus{
-    border: none !important;
+.btn-connexion{
+  background: orange;
+  color: #000 !important;
 }
-.navbar-light .navbar-toggler {
-    color: transparent !important;
+.btn-register {
+  background: rgb(56, 51, 133);
+  color: #fff !important;
+}
+.btn-connexion:hover{
+  background: rgb(56, 51, 133);
+  border: none;
+  color: #fff !important;
+}
+.btn-register:hover{
+  background: orange;
+  border: none;
+  color: #000 !important;
 }
 
-/* bouton du menu fin */
-
-
-.dropdown-menu{
-    width: 60% !important;
-    margin-left: 20%;
-}
+*/
 
 .btn-connexion{
     background: orange;
     border: none;
     color: #000 !important;
     border-radius: 20px;
-    transition: 0.5s;
-    padding: 8px 18px !important;
+    padding: 6px 15px !important;
+    font-size: 0.9rem;;
     text-decoration: none !important;
 }
 .btn-register{
@@ -73,7 +151,8 @@ nav button:focus{
     color: #000 !important;
     border-radius: 20px;
     transition: 0.5s;
-    padding: 8px 18px !important;
+    padding: 6px 15px !important;
+    font-size: 0.9rem;
     text-decoration:  none !important;
     font-weight: normal;
 }
@@ -108,7 +187,7 @@ nav button:focus{
 
 
 .btn-connexion:hover{
-    background: orange;
+    background: rgb(56, 51, 133);
     border: none;
     color: #fff !important;
 }

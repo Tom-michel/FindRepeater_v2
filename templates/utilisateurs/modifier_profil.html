@@ -5,6 +5,380 @@
 
 {% block content %}
 
-  <h1>Accueil</h1>
+<style>
+
+  .labels {
+    font-size: 15px;
+  }
+  .form-enregistrement {
+    margin-left: auto !important;
+  }
+
+  @media screen and (min-width: 768px) {
+    .barre{
+      box-shadow: 0 1rem 3rem rgba(0,0,0,.175) !important;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    section{
+        background-color: rgba(255, 166, 0, 0.336);
+    }
+  }
+</style> 
+
+<section class="py-5">
+
+  <div class="pt-4 pb-1">
+      <div class="py-2 titre">
+          <h1 class="text-center">Modifier Mon Profil</h1>
+      </div> 
+  </div>
+
+  <div class="container form-enregistrement mt-4 mb-3 shadow">
+      <div class="row">
+        <div class="col-md-3 barre border-right">
+          <div class="d-flex flex-column align-items-center text-center p-3">
+            {% for rep in repList %}
+              {% if rep.user.id == user.id %}
+                <img class="mt-5" width="150px" src="{% static 'img/profile.jpg' %}">
+                <span class="font-weight-bold">{{rep.user.username}}</span>
+                <span class="text-black-50">{{rep.user.email}}</span>
+                <span class="pt-4"> 
+                    {{err}}
+                    {{err2}}
+                </span>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="col-md-9">
+            <div class="py-2 px-3 m-2">
+              <form name="formModif" method="POST" action="#">
+                {% csrf_token %}
+
+                <div class="text-center pt-3 pb-3">
+                    <h4>Informations personnelles</h4>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-2 mt-2">
+                      <div class="form-group">
+                        <label for="civilite">Civilité &emsp;</label><br>
+                        {{rep_form.civilite}}
+                      </div>
+                  </div>
+                  <div class="col-md-2 mt-2">
+                    <div class="form-group">
+                      <label for="age">Âge </label>
+                      <!-- <input class="form-control" type="number" name="age" id="ageRep"> -->
+                      {{rep_form.age}}
+                      <p><span class="errorform" id="error_ageRep"></span></p>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4 mt-3">
+                      <div class="form-group">
+                        <label for="last_name">Nom </label>
+                        <!-- <input class="form-control" type="text" name="last_name" id="last_nameRep"> -->
+                        {{user_form.last_name}}
+                        <p><span class="errorform" id="error_last_nameRep"></span></p>
+                      </div>
+                  </div>
+                  <div class="col-md-4 mt-3">
+                      <div class="form-group">
+                        <label for="first_name">Prénom </label>
+                        <!-- <input class="form-control" type="text" name="first_name" id="first_nameRep"> -->
+                        {{user_form.first_name}}
+                        <p><span class="errorform" id="error_first_nameRep"></span></p>
+                      </div>
+                  </div>
+                  <div class="col-md-4 mt-3">
+                    <div class="form-group">
+                      <label for="telephone1">Téléphone </label>
+                      {{rep_form.telephone1}}
+                      <!-- <input class="form-control" type="text" name="telephone1" id="telephone1Rep"> -->
+                      <p><span class="errorform" id="error_telephone1Rep"></span></p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="text-center pt-4 mt-4 pb-3">
+                  <h4>Informations professionnelles</h4>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 offset-md-3 mt-1">
+                    <div class="form-group">
+                      <label for="langue">Profession actuelle</label>
+                      {{rep_form.profession}}
+                      <p><span class="errorform" id="error_professionRep"></span></p>
+                    </div>
+                  </div>
+                </div>  
+                <div class="row">
+                    <div class="col-md-6 mt-3">
+                      <div class="form-group">
+                        <label for="langue">Langue d'enseignement &emsp;</label>
+                        {{rep_form.langue}}
+                      </div>
+                    </div>
+                    <div class="col-md-6 mt-3">
+                        <div class="form-group">
+                          <label for="niveauEtude">Niveau d'étude </label>
+                          <!-- <input class="form-control" type="text" name="niveauEtude" id="niveauEtudeRep"> -->
+                          {{rep_form.niveauEtude}}
+                          <p><span class="errorform" id="error_niveauEtudeRep"></span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 mt-1">
+                    <div class="form-group">
+                      <label for="telephone2">Whatsapp </label>
+                      <!-- <input class="form-control" type="text" name="telephone2" id="telephone2Rep"> -->
+                      {{rep_form.telephone2}}
+                      <p><span class="errorform" id="error_telephone2Rep"></span></p>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mt-1">
+                    <div class="form-group">
+                      <label for="email">Email </label>
+                      <!-- <input class="form-control" type="email" name="email" id="emailRep"> -->
+                      {{user_form.email}}
+                      <p><span class="errorform" id="error_emailRep"></span></p>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 mt-1">
+                    <div class="form-group">
+                      <label for="ville">Ville </label>
+                      <!-- <input class="form-control" type="text" name="ville" id="villeRep"> -->
+                      {{rep_form.ville}}
+                      <p><span class="errorform" id="error_villeRep"></span></p>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mt-1">
+                    <div class="form-group">
+                      <label for="quartier">Quartier </label>
+                      <!-- <input class="form-control" type="text" name="quartier" id="quartierRep"> -->
+                      {{rep_form.quartier}}
+                      <p><span class="errorform" id="error_quartierRep"></span></p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="text-center pt-4 pb-3 mt-4">
+                    <h4>Informations de connexion</h4>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-3 mt-1">
+                      <div class="form-group">
+                        <label for="username">Nom d'utilisateur</label>
+                        <!-- <input class="form-control" type="text" name="username" id="usernameRep"> -->
+                        {{user_form.username}}
+                        {{user_form.username.errors}}
+                      </div>
+                  </div>
+                  <div class="col-md-4 mt-1">
+                      <div class="form-group">
+                        <label for="password1">Créez votre mot de passe </label>
+                        <!-- <input class="form-control" type="password" name="password1" id="password1Rep"> -->
+                        {{user_form.password1}}
+                        {{user_form.password2.errors}}
+                      </div>
+                  </div>
+                  <div class="col-md-5">
+                    <div class="form-group">
+                    <label for="password2">Ratapez le mot de passe </label>
+                      <!-- <input class="form-control" type="password" name="password2" id="password2Rep"> -->
+                      {{user_form.password2}}
+                      {{user_form.password1.errors}}
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-4 offset-md-4 mt-4 text-center">
+                    <input id="sub_mod" class="btn-connexion" type="submit" onclick="return ValFormModif()" value="Sauvegarder">
+                </div>   
+              </form>
+            </div>
+
+        </div>            
+      </div>
+  </div>  
+
+</section>
+
+<script>
+  function valChapmsText(champs, errClass) {
+    if (champs.value == "") {
+      errClass.innerHTML="*veuillez remplir ce champs";
+      champs.focus();
+      champs.classList.add('err');
+      return false;
+    } else {
+      errClass.innerHTML="";
+      champs.classList.remove('err');
+      return true;
+    }
+  }
+  function valChapmsAge(champs, errClass) {
+    if (champs.value == "") {
+      errClass.innerHTML="*veuillez entrer un nombre";
+      champs.focus();
+      champs.classList.add('err');
+      return false;
+    } else if (champs.value <= "0" || champs.value >= "50") {
+      errClass.innerHTML="*entrez un âge correct (<50)";
+      champs.focus();
+      champs.classList.add('err');
+      return false;
+    } else {
+      errClass.innerHTML="";
+      champs.classList.remove('err');
+      return true;
+    }
+  }
+  function valChapmsEmail(champs, errClass) {
+    var valeursAcceptees = /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+    if (champs.value == "") {
+      errClass.innerHTML="*veuillez entrer une addrese mail";
+      champs.focus();
+      champs.classList.add('err');
+      return false;
+    } else if ( ! champs.value.match(valeursAcceptees)) {
+      errClass.innerHTML="*veuillez entrer une addrese mail valide";
+      champs.focus();
+      champs.classList.add('err');
+      return false;
+    } else {
+      errClass.innerHTML="";
+      champs.classList.remove('err');
+      return true;
+    }
+  }
+  function valChapmsTel(champs, errClass) {
+    if (champs.value == "") {
+      errClass.style.display="";
+      errClass.innerHTML="*veuillez entrer un numéro correct";
+      champs.focus();
+      champs.classList.add('err');
+      return false;
+    } else if (champs.value.charAt(0)!="+" || champs.value.charAt(1)!="2" || champs.value.charAt(2)!="3" || champs.value.charAt(3)!="7") {
+      errClass.style.display="";
+      errClass.innerHTML="*le numéro doit débuter par '+237'";
+      champs.focus();
+      champs.classList.add('err');
+      return false;
+    } else if (champs.value.length != 13) {
+      errClass.style.display="";
+      errClass.innerHTML="*veuillez entrer un numéro correct (12 chiffres)";
+      champs.focus();
+      champs.classList.add('err');
+      return false;
+    }  else {
+      for (let i = 1; i < champs.value.length; i++) {
+        if (champs.value.charAt(i) < "0" || champs.value.charAt(i) > "9") {
+          errClass.style.display="";
+          errClass.innerHTML="*veuillez entrer un numéro correct";
+          champs.focus();
+          champs.classList.add('err');
+          return false;
+        }
+      }
+    }
+    
+    errClass.innerHTML="";
+    champs.classList.remove('err');
+    return true;
+    
+  }
+
+  // etape 2
+
+  var last_nameRep = document.getElementById('id_last_name');
+  var error_last_nameRep = document.getElementById('error_last_nameRep');
+
+  var first_nameRep = document.getElementById('id_first_name');
+  var error_first_nameRep = document.getElementById('error_first_nameRep');
+
+  var ageRep = document.getElementById('id_age');
+  var error_ageRep = document.getElementById('error_ageRep');
+
+  var telephone1Rep = document.getElementById('id_telephone1');
+  var error_telephone1Rep = document.getElementById('error_telephone1Rep');
+
+  function valER2() {
+    if (valChapmsText(last_nameRep, error_last_nameRep) 
+        && valChapmsText(first_nameRep, error_first_nameRep)
+        && valChapmsAge(ageRep, error_ageRep)
+        && valChapmsTel(telephone1Rep, error_telephone1Rep)) 
+    {
+      return true;
+    } else {
+      return false
+    }
+  }
+
+  //  etape 3
+  var professionRep = document.getElementById('id_profession');
+  var error_professionRep = document.getElementById('error_professionRep');
+
+  var niveauEtudeRep = document.getElementById('id_niveauEtude');
+  var error_niveauEtudeRep = document.getElementById('error_niveauEtudeRep');
+
+  var telephone2Rep = document.getElementById('id_telephone2');
+  var error_telephone2Rep = document.getElementById('error_telephone2Rep');
+
+  var emailRep = document.getElementById('id_email');
+  var error_emailRep = document.getElementById('error_emailRep');
+
+  var villeRep = document.getElementById('id_ville');
+  var error_villeRep = document.getElementById('error_villeRep');
+
+  var quartierRep = document.getElementById('id_quartier');
+  var error_quartierRep = document.getElementById('error_quartierRep');
+
+  function valER3() {
+    if (valChapmsText(professionRep, error_professionRep) 
+        &&valChapmsText(niveauEtudeRep, error_niveauEtudeRep) 
+        && valChapmsTel(telephone2Rep, error_telephone2Rep)
+        && valChapmsEmail(emailRep, error_emailRep)
+        && valChapmsText(villeRep, error_villeRep)
+        && valChapmsText(quartierRep, error_quartierRep)) 
+    {
+      return true;
+    } else {
+      return false
+    }
+  }
+
+
+  function ValFormModif() {
+    // if (valER2() && valER3()) {
+    //   document.formModif.submit();
+    // }
+    if (!(valER2() && valER3())) {
+      return false
+    }else {
+      return true;
+    }
+  }
+
+  var form_fields = document.getElementsByTagName('input');
+  for (let i = 0; i < (form_fields.length-1); i++) {
+      form_fields[i].className += ' form-control';
+  }
+  var form_fieldSel = document.getElementsByTagName('select');
+  for (var fields in form_fieldSel) {
+      form_fieldSel[fields].className += ' form-control';
+  }
+  document.getElementById('id_civilite').focus();
+</script>
 
 {% endblock %}
