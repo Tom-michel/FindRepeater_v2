@@ -339,3 +339,29 @@ for (let i = 0; i < precedentCli.length; i++) {
     etapeCli[i+1].classList.toggle('active');
   });
 }
+
+
+// valider l'ajout d'une matière
+
+function valAjoutMatiere(){
+  var intitule = document.getElementById('id_intitule');
+  var error_intituleCours = document.getElementById('error_intituleCours');
+  if (valChapmsText(intitule, error_intituleCours)) {
+    return true;
+  }else {
+    return false;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+  }
+}
+
+
+// valider l'ajout d'une classe
+
+function valAjoutClasse(){
+  var niveau = document.getElementById('id_niveau');
+  var error_niveauClasse = document.getElementById('error_niveauClasse');
+  if (valChapmsText(niveau, error_niveauClasse)) {
+    return true;
+  }else {
+    return false;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+  }
+}

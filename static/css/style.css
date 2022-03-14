@@ -8,6 +8,10 @@ img {
   border-radius: 50% !important;
 }
 
+#lien_devProf {
+  display: none;
+}
+
 .section_page {
   display: flex;
   justify-content: center;
@@ -48,6 +52,19 @@ img {
 .container, #footer {
   position: relative;
   z-index: 10;
+}
+
+.reseaux i{
+  font-size: 25px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  transition: .5s;
+  color: orange;
+}
+.reseaux i:hover{
+  color: rgb(56, 51, 133);
+  transform: scale(1.2);
 }
 
 

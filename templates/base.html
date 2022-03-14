@@ -44,7 +44,10 @@
                     <li class="nav-item">
                       <a class="nav-link" href="">Rechercher un prof</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" id="lien_devProf">
+                      <a class="nav-link" href="{% url 'enregistrement_prof' %}">Devenir prof</a>
+                    </li>
+                    <li class="nav-item" id="lien_inscrip">
                       <a type="button" class="nav-link btn-register" data-bs-toggle="modal" data-bs-target="#staticBackdrop">S'inscrire</a>
                     </li>
                     {% if not user.is_authenticated %}

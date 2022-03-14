@@ -171,15 +171,16 @@
                             </div>
                         </div>
                         <div class="row r p-3 mt-3 bg-white shadow cours">
-                            <h3>Cours dispensés</h3>
                             <div class="row pt-2">
-                                <div class="col-md-6">
-                                    <p>
-                                        <span>NOMBRES : <b>04</b> cours</span> listés dans le tableau <a href="#tab">ci-dessous</a>
-                                    </p>
+                                <div class="col-md-6 pb-2">
+                                    <h3>Réseaux</h3>
+                                    <p></p>
+                                    <a class="btn-connexion ajout" href="{% url 'voir_profil' rep.id user.id %}">Partager</a>
                                 </div>
-                                <div class="col-md-6 text-center p-2">
-                                    <a class="btn-connexion ajout" href="">Ajouter un cours</a>
+                                <div class="col-md-6">
+                                    <h3>Cours dispensés</h3>
+                                    <p>Liste des cours dans le tableau <a href="#tab">ci-dessous</a></p>
+                                    <a class="btn-connexion ajout" href="{% url 'ajouter_cours' %}">Ajouter un cours</a>
                                 </div>
                             </div>
                         </div>
@@ -194,7 +195,7 @@
             th, td {border: orange solid 1px; border-top: none; align-items: center;}
         </style>
         <div class="table_cours table-responsive text-center">
-            <table class="table table-sm">
+            <table class="table table-hover table-sm">
                 <tr  style="border-bottom: orange solid 3px; background-color: rgb(216, 210, 200);">
                     <th>Matière</th>
                     <th>Classe</th>
@@ -213,8 +214,8 @@
                             <td>{{c.jour}}</td>
                             <td>{{c.heure_début}}</td>
                             <td>{{c.duree}}</td>
-                            <td><a href=""><i style="color: green;" class="bi-pencil-square"></i></a></td>
-                            <td><a href=""><i style="color: red;" class="bi-x-circle"></i></a></td>
+                            <td><a href="{% url 'modifier_cours' c.id %}"><i style="color: green;" class="bi-pencil-square"></i></a></td>
+                            <td><a href="{% url 'supprimer_cours' c.id %}"><i style="color: red;" class="bi-x-circle"></i></a></td>
                         </tr>
                     {% endif %}
                 {% endfor %}

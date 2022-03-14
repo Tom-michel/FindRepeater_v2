@@ -1,10 +1,108 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %} FindRepeater | Trouvez facilement et rapidement des profs sur mesures | Accueil {% endblock %}
+{% block title %} FindRepeater | Ajouter un cours {% endblock %}
 
 {% block content %}
+ 
+<style>
+  @media screen and (min-width: 768px) {}
+  
+  .bi-plus-lg {
+    color: orange;
+    margin-left: 5px;
+  }
+</style>
 
-  <h1>Accueil</h1>
+<section class="py-5">
+  <div class="pt-4 pb-2">
+    <div class="py-2 titre">
+      <h1 class="text-center">Ajout/Modification d'un cours</h1>
+    </div> 
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 offset-md-1">
+        <div class="row form-enregistrement">
+          <div class="col-md-12">
+            <p class=" mt-2 pt-3 text-center" style="color: rgb(56, 51, 133); font-style: italic; font-size: 14px;">
+              <i style="font-size: 20px;" class="bi-question-circle"></i> 
+              - Changez les informations désirées puis cliquez sur "<b>Ajouter/Modifier</b>"<br>
+              - Cliquez sur le bouton <b>"+"</b> pour ajouter un nouvel élément à la liste
+            </p>
+            <form method="POST" action="#">
+              {% csrf_token %}
+              
+              <div class="row mt-3">
+                <div class="col-md-6 offset-md-3 col-10 offset-1">
+                  <div class="form-group">
+                    <label for="repetiteur">Confirmez votre identité</label>
+                    {{cours_form.repetiteur}}
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="mt-3 col-md-4 offset-md-2 col-10 offset-1">
+                  <div class="form-group">
+                    <label for="id_matiere">Matière</label>
+                    <div class="d-flex align-items-center">
+                      {{cours_form.matiere}}
+                      <a href="{% url 'ajouter_matiere' %}"><i class="bi-plus-lg"></i></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="mt-3 col-md-4 offset-md-0 col-10 offset-1">
+                  <div class="form-group">
+                    <label for="id_classe">Classe</label>
+                    <div class="d-flex align-items-center">
+                      {{cours_form.classe}}
+                      <a href="{% url 'ajouter_classe' %}"><i class="bi-plus-lg"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="mt-3 col-md-3 offset-md-2 col-10 offset-1">
+                  <div class="form-group">
+                    <label for="id_jour">Jours</label>
+                    {{cours_form.jour}}
+                  </div>
+                </div>
+                <div class="mt-3 col-md-2 offset-md-0 col-10 offset-1">
+                  <div class="form-group">
+                    <label for="id_heure_début">Heure</label>
+                    {{cours_form.heure_début}}
+                  </div>
+                </div>
+                <div class="mt-3 col-md-3 offset-md-0 col-10 offset-1">
+                  <div class="form-group">
+                    <label for="id_duree">Durée</label>
+                    {{cours_form.duree}}
+                  </div>
+                </div>
+              </div>
+              {{err}}
+              <div class="d-flex justify-content-center my-5">
+                <input class="btn-connexion" type="submit" value="Ajouter / Mofifier">
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  var form_fields = document.getElementsByTagName('select')
+
+  for (var field in form_fields){
+      form_fields[field].className += ' form-control'
+  }
+
+</script>
 
 {% endblock %}

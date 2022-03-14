@@ -1,10 +1,250 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %} FindRepeater | Trouvez facilement et rapidement des profs sur mesures | Accueil {% endblock %}
+{% block title %} FindRepeater | Profil Enseignant {% endblock %}
 
 {% block content %}
 
-  <h1>Accueil</h1>
+<style>
+  #lien_inscrip {
+    display: none;
+  }
+  #lien_devProf {
+    display: inline;
+  }
+  .reseaux i{
+    font-size: 25px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    transition: .5s;
+    color: orange;
+  }
+  .reseaux i:hover{
+    color: rgb(56, 51, 133);
+    transform: scale(1.2);
+  }
+
+  #menuO, #menuC, .dropdown {
+    display: none !important;
+  } 
+  .profile-img {
+      width: 150px;
+  }
+  h6 {
+      color: rgba(0, 0, 0, 0.678);
+  }
+  .info span {
+      font-size: 16px;
+  }
+  h3 {
+      color: rgb(56, 51, 133);
+  }
+  p span {
+      color: orange;
+  }
+
+  .bg_profile {
+      background: rgba(255, 166, 0, 0.24);
+  }
+
+  .bg_profile, #tab, .titre {
+      position: relative;
+      z-index: 10;
+  }
+
+  .dash {
+      background: #fff;
+  }
+
+  @media screen and (min-width: 768px) {
+    .dash {
+        border-left: orange solid 4px;
+    }
+    .card-body {
+        width: 80% !important;
+        margin: auto;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .dash {
+          margin: 0 !important;
+          border-top: orange solid 2px;
+          /* border-top-right-radius: 10px !important;
+          border-top-left-radius: 10px !important; */
+      }
+      hr {
+          margin-top: 10px;
+      }
+      h6 {
+          font-size: 14px;
+      }
+      .info span {
+          font-size: 14px;
+      }
+      .dash-content {
+          padding: 0 0 20px !important;
+      }
+      .profile-img {
+          margin-top: 20px !important;
+      }
+      .btn-connexion {
+          font-size: 12px;
+      }
+      .btn-connexion.ajout {
+          margin-left: 20px;
+      }
+      p {
+          font-size: 15px;
+      }
+      .container {
+          width: 95%;
+          margin-right: auto;
+          margin-left: auto;
+          
+      }
+      .cours {
+          margin-top: 0 !important;
+      }
+      .container .row.r {
+          border-bottom-right-radius: 10px !important;
+          border-bottom-left-radius: 10px !important;
+      }
+  }
+</style>
+
+
+<section class="py-5 bg_profile">
+
+    <div class="pt-4 pb-2">
+        <div class="py-2 titre">
+            <h1 class="text-center">Profil Enseignant</h1>
+        </div> 
+    </div>
+    
+    <div class="container">
+        <div class="row">
+            
+            <div class="col-md-4 shadow-lg dash mx-4">
+                <div class="d-flex flex-column align-items-center dash-content text-center p-3 py-5">
+                    <img class="rounded-circle mt-5 profile-img" src="{% static 'img/profile.jpg' %}">
+                    <span>{{rep.user.username}}</span>
+                    <span>{{rep.age}} ans</span>
+                    <span>{{rep.profession}}</span>
+                    <span>{{rep.ville}}, {{rep.quartier}}</span>
+                    <span>{{rep.user.email}}</span>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="row p-3 bg-white shadow">
+                    <div class="col-md-12 info">
+                        <h3>À propos</h3><br>
+                        <div class="row">
+                            <div class="col">
+                                <h6><b>Noms et Prénoms</b></h6>
+                            </div>
+                            <div class="col text-end">
+                                <span>{{rep.user.last_name}} {{rep.user.first_name}}</span>
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <h6><b>Télephone</b></h6>
+                            </div>
+                            <div class="col text-end">
+                                <span>{{rep.telephone1}}</span>
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <h6><b>Whatsapp</b></h6>
+                            </div>
+                            <div class="col text-end">
+                                <span>{{rep.telephone2}}</span>
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <h6><b>Niveau d'étude</b></h6>
+                            </div>
+                            <div class="col text-end">
+                                <span>{{rep.niveauEtude}}</span>
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <h6><b>Langue d'enseignement</b></h6>
+                            </div>
+                            <div class="col text-end">
+                                <span>{{rep.langue}}</span>
+                            </div>
+                            <hr>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row r p-3 mt-3 bg-white shadow cours">
+                    <div class="row pt-2">
+                      <div class="col-md-6 pb-2">
+                        <h3>Contacts</h3>
+                        <div class="reseaux text-center">
+                          <a style="text-decoration: none; color: silver;" href="https://wa.me/{{rep.telephone2}}?text=Salut prof, j'ai visité la plateforme findrepeater.com et je suis intéressé par vous services de répétition; Pouvons-nous en discuter ?">
+                              <i class="fab fa-whatsapp"></i>
+                          </a>&emsp;
+                          <a style="text-decoration: none; color: silver;" href="tel:{{rep.telephone1}}">
+                              <i class="fas fa-mobile-alt"></i>
+                          </a>&emsp;
+                          <a style="text-decoration: none; color: silver;" href="mailto:{{rep.user.email}}?subject=Recherche d'un répétiteur | FindRepeater&body=Salut prof, j'ai visité la plateforme findrepeater.com et je suis intéressé.e par vos services de répétition; Pouvons-nous en discuter ?">
+                              <i class="far fa-envelope"></i>
+                          </a>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <h3>Cours dispensés</h3>
+                        <p>Liste des cours dans le tableau <a href="#tab">ci-dessous</a></p>
+                      </div>
+                    </div>
+                </div>
+            </div>
+          
+        </div> 
+    </div>
+    
+    <div id="tab" class="card card-body mt-3 bg-white shadow" style="background-color: #ebeff5; padding: 5px 3px; width: 98%; margin: auto;">                    
+        <style>
+            th, td {border: orange solid 1px; border-top: none; align-items: center;}
+        </style>
+        <div class="table_cours table-responsive text-center">
+            <table class="table table-hover table-sm">
+                <tr  style="border-bottom: orange solid 3px; background-color: rgb(216, 210, 200);">
+                    <th>Matière</th>
+                    <th>Classe</th>
+                    <th>Jour</th>
+                    <th>Début</th>
+                    <th>Durée</th>
+                </tr>
+
+                {% for c in coursL %}
+                        <tr>
+                            <td>{{c.matiere}}</td>
+                            <td>{{c.classe}}</td>
+                            <td>{{c.jour}}</td>
+                            <td>{{c.heure_début}}</td>
+                            <td>{{c.duree}}</td>
+                        </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- <script>
+  document.getElementById('lien_devProf').style.display="";
+</script> -->
 
 {% endblock %}

@@ -32,7 +32,7 @@ def bienvenue(request):
 
 
 
-# crer son compte (profil) parent/eleve
+# créer son compte (profil) parent/eleve
 
 def enregistrement(request):
     registered = False
@@ -78,6 +78,10 @@ def enregistrement(request):
         'util':util,
     }
     return render(request, 'utilisateurs/enregistrement.html', content)
+
+
+
+# créer son compte (profil) Enseignant
 
 def enregistrement_prof(request):
     registered = False
@@ -218,7 +222,7 @@ def modifier_profil(request, id_r, id_u):
         rep_form = RepetiteurForm(data=request.POST, instance=repetiteur)
         user_form = UserForm(data=request.POST, instance=user)
         
-        if rep_form.is_valid() and user_form.is_valid:
+        if rep_form.is_valid() and user_form.is_valid():
             rep = rep_form.save()
             rep.save()
 
@@ -254,9 +258,29 @@ def modifier_profil(request, id_r, id_u):
 
 # voir un profil (par le client)
 
-@login_required(login_url='connexion')
-def voir_profil(request):
-    return render(request, 'utilisateurs/voir_profil.html')
+def voir_profil(request, id_r, id_u):
+    repList = Repetiteur.objects.all()
+    coursList = Cours.objects.all()
+
+    # identifier un répétiteur spécifique par son id
+    rep = Repetiteur.objects.get(id=id_r)
+    
+    # identifier le user associé à ce répétiteur, par son id
+    for u in User.objects.all():
+        if u.id == rep.user.id:
+            use = User.objects.get(id=id_u)
+    
+    coursL = []
+    for c in coursList:
+        if c.repetiteur.user.id == rep.user.id:
+            coursL.append(c)
+    content = {
+        'rep':rep,
+        'user':use,
+        'repList':repList,
+        'coursL':coursL,
+    }
+    return render(request, 'utilisateurs/voir_profil.html', content)
 
 
 
@@ -278,7 +302,6 @@ def recherche_repetiteur(request):
 
 # afficher la liste de tous les répétiteurs en enregistrés sur la plateforme
 
-@login_required(login_url='connexion')
 def liste_repetiteurs(request):
     return render(request, 'utilisateurs/liste_repetiteurs.html')
 
