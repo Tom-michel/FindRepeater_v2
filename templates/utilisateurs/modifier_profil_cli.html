@@ -1,0 +1,311 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} FindRepeater | Modifier mon profil {% endblock %}
+
+{% block content %}
+
+<style>
+
+  label {
+    font-size: 15px;
+  }
+
+  #lien_inscrip {
+    display: none;
+  }
+  #lien_devProf {
+    display: inline;
+  }
+  #menuO, #menuC, .dropdown {
+    display: none !important;
+  } 
+
+  @media screen and (min-width: 768px) {
+    .barre{
+      box-shadow: 0 1rem 3rem rgba(0,0,0,.175) !important;
+    }
+    img {
+      margin-top: 5rem !important;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    section{
+        background-color: rgba(255, 166, 0, 0.336);
+    }
+    img {
+      margin-top: 1rem !important;
+    }
+  }
+</style> 
+
+<section class="py-5 bg_profile">
+
+  <div class="pt-4 pb-1">
+      <div class="py-2 titre">
+          <h1 class="text-center">Modifier Mon Profil</h1>
+      </div> 
+  </div>
+
+  <div class="container">
+      <div class="row">
+        <div class="col-md-8 offset-md-2">
+          <div class="row form-enregistrement">
+            <div class="col-md-12">
+                <div class="py-2 px-3 m-2">
+                  <form name="formModif" method="POST" action="#">
+                    {% csrf_token %}
+
+
+                    <div class="row">
+                        <div class="col-md-6 mt-1">
+                            <div class="form-group">
+                                <label for="id_telephone1">Téléphone</label>
+                                {{cli_form.telephone1}}
+                                <p><span class="errorform" id="error_telephone1Cli"></span></p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mt-1">
+                            <div class="form-group">
+                                <label for="id_email">Email </label>
+                                {{user_form.email}}
+                                <p><span class="errorform" id="error_emailCli"></span></p>
+                            </div>
+                        </div>
+                    </div>  
+                    <div class="row">
+                        <div class="col-md-6 mt-3">
+                          <div class="form-group">
+                            <label for="langue">Classe</label>
+                            <div class="d-flex align-items-center">
+                                {{cli_form.classe}}
+                                <a href="{% url 'ajouter_classe_cli_Modif' %}"><i class="bi-plus-lg"></i></a>
+                            </div>
+                            <p></p>
+                          </div>
+                        </div>
+                        <div class="col-md-6 mt-3">
+                            <div class="form-group">
+                              <label for="niveauEtude">Langue d'étude </label>
+                              {{cli_form.langue}}
+                              <p></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6 mt-1">
+                        <div class="form-group">
+                          <label for="ville">Ville </label>
+                          {{cli_form.ville}}
+                          <p><span class="errorform" id="error_villeCli"></span></p>
+                        </div>
+                      </div>
+                      <div class="col-md-6 mt-1">
+                        <div class="form-group">
+                          <label for="quartier">Quartier </label>
+                          {{cli_form.quartier}}
+                          <p><span class="errorform" id="error_quartierCli"></span></p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row" style="display: none;">
+                      <div class="col-md-3 mt-2">
+                          <div class="form-group">
+                            <label for="username">Nom d'utilisateur</label>
+                            {{user_form.username}}
+                            {{user_form.username.errors}}
+                          </div>
+                      </div>
+                      <div class="col-md-4 mt-2">
+                          <div class="form-group">
+                            <label for="password1">Créez votre mot de passe</label>
+                            {{user_form.password1}}
+                            {{user_form.password1.errors}}
+                          </div>
+                      </div>
+                    </div>
+
+                    <div class="row mt-4 mb-2">
+                      <div class="col-md-6 text-center">
+                        <style>
+                          .form-group {
+                            position: relative;
+                          }
+                          .far {
+                            position: absolute;
+                            top: 65%;
+                            right: 5%;
+                            cursor: pointer;
+                            color: rgb(48, 48, 48);
+                            font-size: 20px;
+                          }
+                        </style>
+                        <div class="form-group">
+                          <label for="password2">Confirmez les mofications en entrant votre mot de passe</label>
+                          <!-- <input class="form-control" type="password" name="password2" id="password2Rep"> -->
+                          {{user_form.password2}} <i class="far fa-eye" onclick="affiMdp()"></i> <i class="far fa-eye-slash" onclick="affiMdp()"></i>
+                          {{user_form.password2.errors}}
+                        </div>
+                      </div>
+                      <div class="col-md-4 offset-md-1  mt-4 text-center align-self-end">
+                        <input id="sub_mod" class="btn-connexion" type="submit" onclick="return ValFormModif()" value="Sauvegarder">
+                      </div>
+                    </div>
+
+                      
+                  </form>
+                </div>
+
+            </div>
+          </div>
+        </div>           
+      </div>
+  </div>  
+
+</section>
+
+<script>
+  
+  var password1 = document.getElementById('id_password1');
+  var password2 = document.getElementById('id_password2');
+  password1.autocomplete="current-password";
+  
+  // let mdp = prompt("Tapez votre mot de passe pour valider les mofications");
+  // password2.value = mdp;
+
+  function valChapmsText(champs, errClass) {
+    if (champs.value == "") {
+      errClass.innerHTML="*veuillez remplir ce champs";
+      champs.focus();
+      champs.classList.add('err');
+      return false;
+    } else {
+      errClass.innerHTML="";
+      champs.classList.remove('err');
+      return true;
+    }
+  }
+  function valChapmsEmail(champs, errClass) {
+    var valeursAcceptees = /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+    if (champs.value == "") {
+      errClass.innerHTML="*veuillez entrer une addrese mail";
+      champs.focus();
+      champs.classList.add('err');
+      return false;
+    } else if ( ! champs.value.match(valeursAcceptees)) {
+      errClass.innerHTML="*veuillez entrer une addrese mail valide";
+      champs.focus();
+      champs.classList.add('err');
+      return false;
+    } else {
+      errClass.innerHTML="";
+      champs.classList.remove('err');
+      return true;
+    }
+  }
+  function valChapmsTel(champs, errClass) {
+    if (champs.value == "") {
+      errClass.style.display="";
+      errClass.innerHTML="*veuillez entrer un numéro correct";
+      champs.focus();
+      champs.classList.add('err');
+      return false;
+    } else if (champs.value.charAt(0)!="+" || champs.value.charAt(1)!="2" || champs.value.charAt(2)!="3" || champs.value.charAt(3)!="7") {
+      errClass.style.display="";
+      errClass.innerHTML="*le numéro doit débuter par '+237'";
+      champs.focus();
+      champs.classList.add('err');
+      return false;
+    } else if (champs.value.length != 13) {
+      errClass.style.display="";
+      errClass.innerHTML="*veuillez entrer un numéro correct (12 chiffres)";
+      champs.focus();
+      champs.classList.add('err');
+      return false;
+    }  else {
+      for (let i = 1; i < champs.value.length; i++) {
+        if (champs.value.charAt(i) < "0" || champs.value.charAt(i) > "9") {
+          errClass.style.display="";
+          errClass.innerHTML="*veuillez entrer un numéro correct";
+          champs.focus();
+          champs.classList.add('err');
+          return false;
+        }
+      }
+    }
+    
+    errClass.innerHTML="";
+    champs.classList.remove('err');
+    return true;
+    
+  }
+
+  // etape 2
+
+  var telephone1Cli = document.getElementById('id_telephone1');
+  var error_telephone1Cli = document.getElementById('error_telephone1Cli');
+
+  var emailCli = document.getElementById('id_email');
+  var error_emailCli = document.getElementById('error_emailCli');
+
+  var villeCli = document.getElementById('id_ville');
+  var error_villeCli = document.getElementById('error_villeCli');
+
+  var quartierCli = document.getElementById('id_quartier');
+  var error_quartierCli = document.getElementById('error_quartierCli');
+
+  function valEC() {
+    if (valChapmsTel(telephone1Cli, error_telephone1Cli)
+        && valChapmsEmail(emailCli, error_emailCli)
+        && valChapmsText(villeCli, error_villeCli)
+        && valChapmsText(quartierCli, error_quartierCli)) 
+    {
+      return true;
+    } else {
+      return false
+    }
+  }
+
+
+  function ValFormModif() {
+    if (!valEC()) {
+      return false
+    }else {
+      return true;
+    }
+  }
+
+  var form_fields = document.getElementsByTagName('input');
+  for (let i = 0; i < (form_fields.length-1); i++) {
+      form_fields[i].className += ' form-control';
+  }
+  var form_fieldSel = document.getElementsByTagName('select');
+  for (var fields in form_fieldSel) {
+      form_fieldSel[fields].className += ' form-control';
+  }
+  document.getElementById('id_telephone1').focus();
+
+
+  // affichage/masquage du mdp
+  var eyeVisible = document.querySelector('.fa-eye');
+  var eyeHidden = document.querySelector('.fa-eye-slash');
+  var password2 = document.getElementById('id_password2');
+
+  eyeHidden.style.display = "none";
+  
+  function affiMdp() {
+    if (password2.type === "password") {
+      eyeHidden.style.display = "";
+      eyeVisible.style.display = "none";
+      password2.type = 'text';
+    } else {
+      eyeHidden.style.display = "none";
+      eyeVisible.style.display = "";
+      password2.type = 'password';
+    }
+  }
+</script>
+
+{% endblock %}

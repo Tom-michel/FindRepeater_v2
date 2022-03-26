@@ -22,10 +22,6 @@
         color: orange;
     }
 
-    .bg_profile {
-        background: rgba(255, 166, 0, 0.24);
-    }
-
     .bg_profile, #tab, .titre {
         position: relative;
         z-index: 10;
@@ -70,9 +66,6 @@
         .btn-connexion {
             font-size: 12px;
         }
-        .btn-connexion.ajout {
-            margin-left: 20px;
-        }
         p {
             font-size: 15px;
         }
@@ -108,9 +101,7 @@
                     <div class="col-md-4 shadow-lg dash mx-4">
                         <div class="d-flex flex-column align-items-center dash-content text-center p-3 py-5">
                             <img class="rounded-circle mt-5 profile-img" src="{% static 'img/profile.jpg' %}">
-                            <span>{{rep.user.username}}</span>
-                            <span>{{rep.age}} ans</span>
-                            <span>{{rep.profession}}</span>
+                            <span>{{rep.user.username}} | {{rep.age}} ans | {{rep.profession}}</span>
                             <span>{{rep.ville}}, {{rep.quartier}}</span>
                             <span>{{rep.user.email}}</span>
                         </div>
@@ -118,7 +109,7 @@
                     <div class="col-md-7">
                         <div class="row p-3 bg-white shadow">
                             <div class="col-md-12 info">
-                                <h3>À propos</h3><br>
+                                <h3 class="text-center">À propos</h3><br>
                                 <div class="row">
                                     <div class="col">
                                         <h6><b>Noms et Prénoms</b></h6>
@@ -172,56 +163,123 @@
                         </div>
                         <div class="row r p-3 mt-3 bg-white shadow cours">
                             <div class="row pt-2">
-                                <div class="col-md-6 pb-2">
-                                    <h3>Réseaux</h3>
-                                    <p></p>
-                                    <a class="btn-connexion ajout" href="{% url 'voir_profil' rep.id user.id %}">Partager</a>
-                                </div>
-                                <div class="col-md-6">
-                                    <h3>Cours dispensés</h3>
-                                    <p>Liste des cours dans le tableau <a href="#tab">ci-dessous</a></p>
-                                    <a class="btn-connexion ajout" href="{% url 'ajouter_cours' %}">Ajouter un cours</a>
+                                <div class="col-md-12 text-center">
+                                    <h3>Partager</h3>
+                                    <p class="mb-0">Partagez votre profil sur <b>Whatsapp</b>, ou <b>Copiez</b> le lien afin de le distribuer ailleurs</p>
+                                    <style>
+                                        .fa-whatsapp {
+                                            color: #25d366;
+                                        }
+                                        .fa-facebook {
+                                            color: #273c75;
+                                        }
+                                        .fa-clone, .fa-copy {
+                                            color: #000;
+                                        }
+                                    </style>
+                                    <div class="partage">
+                                        <span class="wha">
+                                            <a style="text-decoration: none;" href="https://wa.me/?text=Salut, je suis {{rep.civilite}} {{rep.user.last_name}} {{rep.user.first_name}}, {{rep.profession}} et également enseignant des cours répétion. Pour plus d'information bien vouloir consulter mon *Profil Enseignant* sur la plateforme findrepeater via le lien suivant : {% url 'voir_profil' rep.id user.id %}">
+                                                <i class="fab fa-whatsapp"></i>
+                                            </a>&emsp;
+                                        </span>
+                                        <span class="tel">
+                                            <a style="text-decoration: none;" >
+                                                <span style="position: absolute; margin-bottom: 20px; opacity: 1; height: 0; width: 0; overflow: hidden;" id="tocopy">Salut, je suis {{rep.civilite}} {{rep.user.last_name}} {{rep.user.first_name}}, {{rep.profession}} et également enseignant des cours répétion. Pour plus d'information bien vouloir consulter mon *Profil Enseignant* sur la plateforme findrepeater via le lien suivant : {% url 'voir_profil' rep.id user.id %}</span>
+                                                <i class="far fa-clone js-copy" data-target="#tocopy"></i>
+                                            </a>
+                                        </span>&emsp;
+                                        <span>
+                                            <a style="text-decoration: none;" href="{% url 'voir_profil' rep.id user.id %}">voir<i class="fas fa-eye"></i></a> 
+                                        </span>
+                                        
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 {% endif %}
             {% endfor %}
-        </div> 
-    </div>
     
-    <div id="tab" class="card card-body mt-3 bg-white shadow" style="background-color: #ebeff5; padding: 5px 3px; width: 98%; margin: auto;">                    
-        <style>
-            th, td {border: orange solid 1px; border-top: none; align-items: center;}
-        </style>
-        <div class="table_cours table-responsive text-center">
-            <table class="table table-hover table-sm">
-                <tr  style="border-bottom: orange solid 3px; background-color: rgb(216, 210, 200);">
-                    <th>Matière</th>
-                    <th>Classe</th>
-                    <th>Jour</th>
-                    <th>Début</th>
-                    <th>Durée</th>
-                    <th>Modifier</th>
-                    <th>Retirer</th>
-                </tr>
-
-                {% for c in coursList %}
-                    {% if c.repetiteur.user.id == user.id %}
-                        <tr>
-                            <td>{{c.matiere}}</td>
-                            <td>{{c.classe}}</td>
-                            <td>{{c.jour}}</td>
-                            <td>{{c.heure_début}}</td>
-                            <td>{{c.duree}}</td>
-                            <td><a href="{% url 'modifier_cours' c.id %}"><i style="color: green;" class="bi-pencil-square"></i></a></td>
-                            <td><a href="{% url 'supprimer_cours' c.id %}"><i style="color: red;" class="bi-x-circle"></i></a></td>
+            <div id="tab" class="card card-body mt-3 bg-white shadow text-center" style="background-color: #ebeff5; padding: 5px 3px;">                    
+                <h3>Cours dispensés</h3>
+                <a class="btn-connexion ajout mb-1" href="{% url 'ajouter_cours' %}">Ajouter un cours</a>
+                <style>
+                    th, td {border: orange solid 1px; border-top: none; align-items: center;}
+                </style>
+                <div class="table_cours table-responsive">
+                    <table class="table table-hover table-sm">
+                        <tr  style="border-bottom: orange solid 3px; background-color: rgb(216, 210, 200);">
+                            <th>Matière</th>
+                            <th>Classe</th>
+                            <th>Jour.s disponible.s</th>
+                            <!-- <th>Début</th>
+                            <th>Durée</th> -->
+                            <th>Modifier</th>
+                            <th>Retirer</th>
                         </tr>
-                    {% endif %}
-                {% endfor %}
-            </table>
-        </div>
-    </div>
+
+                        {% for c in coursList %}
+                            {% if c.repetiteur.user.id == user.id %}
+                                <tr>
+                                    <td>{{c.matiere}}</td>
+                                    <td>{{c.classe}}</td>
+                                    <td>{{c.jour}}</td>
+                                    <!-- <td>{{c.heure_début}}</td>
+                                    <td>{{c.duree}}</td> -->
+                                    <td><a href="{% url 'modifier_cours' c.id %}"><i style="color: green;" class="bi-pencil-square"></i></a></td>
+                                    <td><a href="{% url 'supprimer_cours' c.id %}"><i style="color: red;" class="bi-x-circle"></i></a></td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+
+        </div> 
+    </div>    
 </section>
+
+<script>
+
+
+    var btncopy = document.querySelector('.js-copy');
+    if(btncopy) {
+        btncopy.addEventListener('click', docopy);
+    }
+    
+    function docopy() {
+        var range = document.createRange();
+        var target = this.dataset.target;
+        var fromElement = document.querySelector(target);
+        var selection = window.getSelection();
+    
+        range.selectNode(fromElement);
+        selection.removeAllRanges();
+        selection.addRange(range);
+    
+        try {
+            var result = document.execCommand('copy');
+            if (result) {
+                // La copie a réussi
+                alert("Lien Copié !");
+            }
+        }
+        catch(err) {
+            // Une erreur est surevnue lors de la tentative de copie
+            alert(err);
+        }
+    
+        selection = window.getSelection();
+    
+        if (typeof selection.removeRange === 'function') {
+            selection.removeRange(range);
+        } else if (typeof selection.removeAllRanges === 'function') {
+            selection.removeAllRanges();
+        }
+    }
+    
+    
+</script>
 
 {% endblock %}

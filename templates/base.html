@@ -65,6 +65,10 @@
                             <li><a class="dropdown-item" href="{% url 'consulter_profil' %}">Mon profil</a></li>
                             <li><hr class="dropdown-divider" style="border: orange solid 2px;"></li>
                           {% endif %}
+                          {% if user.username in listCli %}  
+                            <li><a class="dropdown-item" href="{% url 'bienvenue' %}">Bienvenue</a></li>
+                            <li><hr class="dropdown-divider" style="border: orange solid 2px;"></li>
+                          {% endif %}
                             <li><a class="dropdown-item" href="{% url 'user_logout' %}">Déconnexion</a></li>
                         </ul>
                       </li>
@@ -75,20 +79,47 @@
         </nav>
         <!-- Modal -->
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content"  style="border: rgb(56, 51, 133) solid 1px; box-shadow: 0 0 2rem rgb(56, 51, 133);">
               <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel"><center>CRÉATION D'UN NOUVEAU COMPTE</center></h5>
+                <h5 class="modal-title" id="staticBackdropLabel">CRÉATION D'UN NOUVEAU COMPTE</h5>
               </div>
+              <style>
+                .cEleve, .cProf {
+                  padding: 10px 20px;
+                  box-shadow: 0 0 1rem rgba(0, 0, 0, .2);
+                }
+                .cEleve {
+                  background: #1da0f21f;
+                }
+                .cProf {
+                  background: rgba(255, 166, 0, 0.11);
+                }
+                @media screen and (max-width: 767px) {
+                  .cEleve {
+                    margin-bottom: 20px;
+                  }
+                }
+              </style>
               <div class="modal-body">
-                <h6>Quels est votre type de compte</h6><br>
-                <div>
-                  <p>Si vous êtes <b>élève/Parent</b>, <a class="btn-connexion suivant" href="{% url 'enregistrement' %}">cliquez ici</a> 
-                    pour accéder au formulaire
-                  </p>
-                  <p>Si vous êtes un.e <b>enseignant.e</b>, <a class="btn-connexion suivant" href="{% url 'enregistrement_prof' %}">cliquez ici</a> 
-                    pour accéder au formulaire
-                  </p>
+                <div class="container-fluid">
+                  <div class="row text-center">
+                    <div class="col-md-6">
+                      <div class="cEleve">
+                        <p><b> Vous êtes Élève/Parent</b></p>
+                        <p>Créez votre compte afin de voir les répétiteurs comptibles avec votre profil ou rechercher des recpétiteurs sur mesure</p>
+                        <p><a class="btn-connexion" href="{% url 'enregistrement' %}">cliquez ici</a></p>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="cProf">
+                        <p><b>Vous êtes Répétiteur/Enseignant.e</b></p>
+                        <p>Créez votre profil afin d'être visible par les personnes ayant besoin de vos services ou Partagez le avec votre entourage</p>
+                        <p><a class="btn-connexion" href="{% url 'enregistrement_prof' %}">cliquez ici</a></p>
+                      </div>
+                    </div>
+                  </div>
+                  
                 </div>
               </div>
               <div class="modal-footer">
@@ -110,7 +141,7 @@
 
         <!-- Start Footer -->
         
-        <!-- <footer id="footer">
+        <footer id="footer" class="bg-white">
             <div class="footer-top">
               <div class="container">
                 <div class="row">
@@ -173,9 +204,9 @@
                 <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
               </div>
             </div>
-        </footer> -->
+        </footer>
         
-        <h1 id="footer">Footer</h1>
+        <!-- <h1 id="footer">Footer</h1> -->
         
 
         
@@ -187,6 +218,7 @@
         
         <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script> -->
         <script src="../static/js/script.js"></script>
+        <script src="../static/js/clipboard.min.js"></script>
         <script src="../static/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
       </body>
 </html>

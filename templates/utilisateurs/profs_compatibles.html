@@ -1,0 +1,438 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} FindRepeater | Enseignants correspondant à vos besoins {% endblock %}
+
+{% block content %}
+
+
+<style>
+  .container{
+    position: relative;
+    z-index: 10;
+  }
+
+  /* contacts debut */
+
+  .reseaux {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .reseaux i{
+    font-size: 25px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    transition: .5s;
+    color: orange;
+  }
+  .reseaux i:hover{
+    color: rgb(56, 51, 133);
+    transform: scale(1.2);
+  }
+
+  button i{
+    color: #fff;
+    font-weight: bold;
+    font-size: 1rem;
+  }
+
+  /* contacts fin */
+
+  .btn-connexion{
+    background: orange;
+    color: #000 !important;
+    border: none;
+    border-radius: 20px;
+    transition: 0.5s;
+    padding: 6px 15px !important;
+    font-size: 0.9rem;
+    text-decoration: none !important;
+  }
+  .btn-connexion:hover{
+    background: rgb(56, 51, 133);
+    border: none;
+    color: #fff !important;
+  }
+
+  .liste {
+    margin-top: 20px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .liste .info {
+    margin-bottom: 30px;
+    /* margin-right: 10px; */
+  }
+
+  .liste .carte {
+    position: relative;
+    width: 330px;
+    height: 220px;
+    background: #fff !important;
+    margin: 30px 0px 0px 10px;
+    padding: 20px 15px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+    transition: 0.3s ease-in-out;
+  }
+
+  .liste .carte .imgBx {
+    position: relative;
+    width: 120px;
+    height: 130px;
+    top: -60px;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 1;
+    box-shadow: 0px -4px 5px 0px rgba(0, 0, 0, 0.2);
+    background: #fff;
+    border-radius: 50%;
+  }
+
+  .liste .carte .imgBx img {
+    max-height: 100%;
+    border-radius: 50%;
+  }
+
+  .liste .carte .content_info {
+    position: relative;
+    text-align: center;
+    top: -70px;
+  }
+
+  .liste .carte:hover,
+  .liste .carte.active {
+    height: 400px;
+  }
+
+  .liste .info .carte .contentV {
+    margin-top: -110px;
+    transition: 0.3s ease-in-out;
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  .liste .info .carte.active .contentV,
+  .liste .info .carte:hover .contentV {
+    margin-top: 0px;
+    visibility: visible;
+    opacity: 1;
+  }
+
+  @media screen and (min-width: 768px) {
+    .liste .info .carte.active_lg,
+    .liste .info .carte.active_lg:hover {
+      height: 535px;
+      width: 500px;
+    }
+
+
+    .liste .info .carte.active_lg .content {
+      display: none;
+    }
+
+    .liste .info .carte .content_info .contentV_lg .nom_prenom2 {
+      margin-top: -100px;
+      position: absolute;
+      visibility: hidden;
+      opacity: 0;
+    }
+
+    .liste .info .carte.active_lg .content_info .contentV_lg .nom_prenom2 {
+      position: relative;
+      left: 0px;
+      top: 5%;
+      width: 50%;
+      margin-top: auto;
+      text-align: end;
+      border-right: orange solid 3px;
+      padding-right: 10px;
+      visibility: visible;
+      opacity: 1;
+      transition: 0.3s ease-in-out;
+    }
+
+    .liste .info .carte .content_info .contentV_lg .matieres {
+      margin-top: -100px;
+      position: absolute;
+      visibility: hidden;
+      opacity: 0;
+    }
+
+    .liste .info .carte.active_lg .content_info .contentV_lg .matieres {
+      position: relative;
+      right: 0px;
+      top: 5px;
+      margin-top: auto;
+      margin-bottom: auto;
+      margin-left: 5px;
+      width: 48%;
+      text-align: start;
+      visibility: visible;
+      opacity: 1;
+      transition: 0.3s ease-in-out;
+    }
+
+    .liste .info .carte .contentV_lg .reseaux {
+      margin-top: -250px;
+      visibility: hidden;
+      opacity: 0;
+    }
+
+    .liste .info .carte.active_lg .contentV_lg .reseaux {
+      position: relative;
+      margin-top: 5px;
+      margin-bottom: 0;
+      visibility: visible;
+      opacity: 1;
+    }
+    
+    .liste .info .carte .contentH {
+      background: #fff;
+      width: 330px;
+      height: 0px;
+      margin-left: -15px !important;
+      padding: 0px 15px 20px;
+      transition: 0.3s ease-in-out;
+      margin-top: 0px !important;
+      visibility: hidden;
+      opacity: 0;
+    }
+
+    .liste .info .carte.active_lg .contentH {
+      background: #fff;
+      width: 500px;
+      margin-left: -15px !important;
+      padding: 0px 15px 5px;
+      margin-top: 5px !important;
+      visibility: visible;
+      opacity: 1;
+      height: 180px;
+      overflow: scroll;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .liste .info .carte .contentH {
+      width: 330px;
+      height: 0px;
+      margin-left: -15px !important;
+      margin-top: -120px !important;
+      transition: 0.3s ease-in-out;
+      box-shadow: 0 5px 5px 0px rgba(0, 0, 0, 0.1);
+      padding: 0px 10px 20px;
+      visibility: hidden;
+      opacity: 0;
+      height: 0px;
+    }
+
+    /* .liste .carte.active_tab {
+      height: 550px;
+    } */
+
+    .liste .info .carte.active_tab {
+      height: 550px;
+    }
+
+    .liste .info .carte.active_tab .contentH.active {
+      background: #fff;
+      margin-top: 10px !important;
+      visibility: visible;
+      opacity: 1;
+      height: 200px;
+      overflow: scroll;
+    } 
+  }
+
+  .oups {
+    height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .oups i {
+      color: orangered;
+      font-size: 50px;
+  }
+
+</style>
+
+ <section class="py-5 bg_profile">
+    <div class="container">
+        <div class="pt-4 pb-2">
+            <div class="pt-3 titre">
+                <h1 class="text-center">Professeurs Compatibles</h1>
+            </div> 
+        </div>
+
+        {% if not repComp %}
+            <div class="col-md-6 offset-md-3 text-center oups">
+                <i class="bi-exclamation-triangle"></i>
+                <p class="py-4 px-2" style="border: orangered solid 2px; border-radius: 10px; background: rgba(255, 0, 0, 0.062);">
+                    <b>Oups</b>, aucun enseignant enregistré ne correspond à votre profil pour le moment, Veuillez réessayer ultérieurement !
+                </p>
+            </div>
+        {% endif %}
+        {% if repComp %}
+            <p style="color: rgb(56, 51, 133);" class="text-center align-items-center mt-4">
+                <i style="font-size: 20px;" class="bi-question-circle"></i> 
+                <span style="font-style: italic;">cliquez sur une image ou survolez un cadre pour voir plus</span> <br>
+            </p>
+            <div class="liste">
+                {% for rep in repComp %}
+                        <div class="info d-md-flex">
+                            <div class="carte">
+                                <div class="imgBx text-center">
+                                    <img class="img-reponsive" src="{% static 'img/profile.jpg' %}" alt="">
+                                </div>
+                                <div class="content_info">
+                                    <div class="content">
+                                        <div class="nom_prenom">
+                                            <p>
+                                                <h6><span style="font-size: 0.7rem;">{{rep.civilite}}</span> | {{rep.user.first_name}}</h6>
+                                                <h5>{{rep.user.last_name}}</h5>
+                                                <h6>A {{rep.age}} ans, vit à 
+                                                    <span style="color: rgb(56, 51, 133);">{{rep.quartier}}, {{rep.ville}}</span>
+                                                </h6>
+                                            </p>
+                                        </div>
+                                        <div class="contentV">
+                                            <p></p>
+                                            <div>
+                                                <h6><span style="color: rgb(56, 51, 133);"><b>{{rep.profession}}</b></span> et répétiteur en:
+                                                    {% for cours in coursCompU %}
+                                                        <u>{{cours}}</u>,
+                                                    {% endfor %}
+                                                </h6>
+                                                <h6>Enseigne en <span style="color: rgb(56, 51, 133);"><b>{{rep.langue}}</b></span></h6>
+                                            </div>
+                                            <div class="reseaux">
+                                              <a style="text-decoration: none; color: silver;" href="https://wa.me/{{rep.telephone2}}?text=Recherche d'un répétiteur | FindRepeater        Salut {{rep.civilite}} {{rep.user.last_name}}, j'ai visité la plateforme en ligne findrepeater et je suis intéressé.e par vous services de répétition; Pouvons-nous en discuter ?">
+                                                <i class="fab fa-whatsapp"></i>
+                                              </a>&emsp;
+                                              <a style="text-decoration: none; color: silver;" href="tel:{{rep.telephone1}}">
+                                                  <i class="fas fa-mobile-alt"></i>
+                                              </a>&emsp;
+                                              <a style="text-decoration: none; color: silver;" href="mailto:{{rep.user.email}}?subject=Recherche d'un répétiteur | FindRepeater&body=Salut {{rep.civilite}} {{rep.user.last_name}}, j'ai visité la plateforme en ligne findrepeater et je suis intéressé.e par vos services de répétition; Pouvons-nous en discuter ?">
+                                                  <i class="far fa-envelope"></i>
+                                              </a>
+                                            </div>
+                                            <button class="btn-connexion details d-none d-sm-none d-md-inline">Voir plus <i class="bi-question-circle"></i></button>
+                                            <button class="btn-connexion v_plus d-inline d-sm-inline d-md-none">Voir plus <i class="bi-arrows-expand"></i></button>
+                                        </div>
+                                    </div>
+                                    <div class="contentV_lg d-none d-sm-none d-md-inline">
+                                        <p></p>
+                                        <div class="d-md-flex align-items-center">
+                                            <div class="nom_prenom2">
+                                                <p>
+                                                    <h6><span style="font-size: 0.7rem;">{{rep.civilite}}</span> | {{rep.user.first_name}}</h6>
+                                                    <h5>{{rep.user.last_name}}</h5>
+                                                    <h6>A {{rep.age}} ans, vit à 
+                                                        <span style="color: rgb(56, 51, 133);">{{rep.quartier}}, {{rep.ville}}</span>
+                                                    </h6>
+                                                </p>
+                                            </div>
+                                            <div class="matieres">
+                                                <h6><span style="color: rgb(56, 51, 133);"><b>{{rep.profession}}</b></span> et répétiteur en:
+                                                    {% for cours in coursCompU %}
+                                                        <u>{{cours}}</u>,
+                                                    {% endfor %}
+                                                </h6>
+                                                <h6>Enseigne en <span style="color: rgb(56, 51, 133);"><b>{{rep.langue}}</b></span></h6>
+                                            </div>
+                                        </div>
+                                        <div class="reseaux">
+                                            <a style="text-decoration: none; color: silver;" href="https://wa.me/{{rep.telephone2}}?text=Recherche d'un répétiteur | FindRepeater        Salut {{rep.civilite}} {{rep.user.last_name}}, j'ai visité la plateforme en ligne findrepeater et je suis intéressé.e par vous services de répétition; Pouvons-nous en discuter ?">
+                                                <i class="fab fa-whatsapp"></i>
+                                            </a>&emsp;
+                                            <a style="text-decoration: none; color: silver;" href="tel:{{rep.telephone1}}">
+                                                <i class="fas fa-mobile-alt"></i>
+                                            </a>&emsp;
+                                            <a style="text-decoration: none; color: silver;" href="mailto:{{rep.user.email}}?subject=Recherche d'un répétiteur | FindRepeater&body=Salut {{rep.civilite}} {{rep.user.last_name}}, j'ai visité la plateforme en ligne findrepeater et je suis intéressé.e par vos services de répétition; Pouvons-nous en discuter ?">
+                                                <i class="far fa-envelope"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="contentH text-center">
+                                        <p style="color: rgb(56, 51, 133); font-weight: bold; margin-bottom: 5px !important;">Cours enseignés | Emploi de temps</p>
+                                        <style>
+                                            th, td {border: orange solid 1px; border-top: none; align-items: center;}
+                                        </style>
+                                        <div class="table_cours table-responsive text-center">
+                                            <table class="table table-sm">
+                                                <tr  style="border-bottom: orange solid 3px; background-color: rgb(216, 210, 200);">
+                                                    <th>Matière</th>
+                                                    <th>Classe</th>
+                                                    <th>Jour.s</th>
+                                                </tr>
+                            
+                                                {% for c in coursComp %}
+                                                        <tr>
+                                                            <td>{{c.matiere}}</td>
+                                                            <td>{{c.classe}}</td>
+                                                            <td>{{c.jour}}</td>
+                                                        </tr>
+                                                {% endfor %}
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <button class="btn-connexion m_details mt-3">Voir moins <i class="bi-question-circle"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                {% endfor %}
+            </div>
+        {% endif %}  
+    </div>
+</section>
+<script type="text/javascript">
+    const img = document.getElementsByTagName('img');
+    const carte = document.getElementsByClassName('carte');
+    for (let i = 0; i < img.length; i++) {
+        img[i].addEventListener('click', function(){
+        carte[i].classList.toggle('active');
+        });
+    }
+
+    const v_plus = document.getElementsByClassName('v_plus');
+    const contentH = document.getElementsByClassName('contentH');
+    for (let i = 0; i < v_plus.length; i++) {
+        v_plus[i].addEventListener('click', function(){
+            contentH[i].classList.toggle('active');
+            carte[i].classList.toggle('active_tab');
+        });
+    }
+
+    const details = document.getElementsByClassName('details');
+    const m_details = document.getElementsByClassName('m_details');
+    for (let i = 0; i < m_details.length; i++) {
+        m_details[i].style.display = "none";
+    }
+
+    const content = document.getElementsByClassName('content');
+    for (let i = 0; i < details.length; i++) {
+        details[i].addEventListener('click', function(){
+            content[i].classList.toggle('active_lg');
+            carte[i].classList.toggle('active_lg');
+            m_details[i].style.display = "";
+        });
+        m_details[i].addEventListener('click', function(){
+            content[i].classList.toggle('active_lg');
+            carte[i].classList.toggle('active_lg');
+            m_details[i].style.display = "none";
+        });
+    }
+</script>
+
+
+{% endblock %}

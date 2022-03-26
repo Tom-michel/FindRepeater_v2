@@ -12,6 +12,10 @@
   #lien_devProf {
     display: inline;
   }
+  #menuO, #menuC, .dropdown {
+    display: none !important;
+  } 
+  
   .reseaux i{
     font-size: 25px;
     margin-top: 15px;
@@ -25,9 +29,6 @@
     transform: scale(1.2);
   }
 
-  #menuO, #menuC, .dropdown {
-    display: none !important;
-  } 
   .profile-img {
       width: 150px;
   }
@@ -44,9 +45,6 @@
       color: orange;
   }
 
-  .bg_profile {
-      background: rgba(255, 166, 0, 0.24);
-  }
 
   .bg_profile, #tab, .titre {
       position: relative;
@@ -69,48 +67,72 @@
 
   @media screen and (max-width: 767px) {
     .dash {
-          margin: 0 !important;
-          border-top: orange solid 2px;
-          /* border-top-right-radius: 10px !important;
-          border-top-left-radius: 10px !important; */
-      }
-      hr {
-          margin-top: 10px;
-      }
-      h6 {
-          font-size: 14px;
-      }
-      .info span {
-          font-size: 14px;
-      }
-      .dash-content {
-          padding: 0 0 20px !important;
-      }
-      .profile-img {
-          margin-top: 20px !important;
-      }
-      .btn-connexion {
-          font-size: 12px;
-      }
-      .btn-connexion.ajout {
-          margin-left: 20px;
-      }
-      p {
-          font-size: 15px;
-      }
-      .container {
-          width: 95%;
-          margin-right: auto;
-          margin-left: auto;
-          
-      }
-      .cours {
-          margin-top: 0 !important;
-      }
-      .container .row.r {
-          border-bottom-right-radius: 10px !important;
-          border-bottom-left-radius: 10px !important;
-      }
+        margin: 0 !important;
+        border-top: orange solid 2px;
+    }
+    hr {
+        margin-top: 10px;
+    }
+    h6 {
+        font-size: 14px;
+    }
+    .info span {
+        font-size: 14px;
+    }
+    .dash-content {
+        padding: 0 0 20px !important;
+    }
+    .profile-img {
+        margin-top: 20px !important;
+    }
+    .btn-connexion {
+        font-size: 12px;
+    }
+    .btn-connexion.ajout {
+        margin-left: 20px;
+    }
+    p {
+        font-size: 15px;
+    }
+    .container {
+        width: 95%;
+        margin-right: auto;
+        margin-left: auto;
+        
+    }
+    .cours {
+        margin-top: 0 !important;
+    }
+    .container .row.r {
+        border-bottom-right-radius: 10px !important;
+        border-bottom-left-radius: 10px !important;
+    }
+  }
+
+  .cont_part {
+      transition: 0.3s ease-in-out;
+      padding: 5px 20px;
+      /* box-shadow: 0 0 1rem rgba(0,0,0,.15); */
+      /* margin-left: 20px; */
+  }
+  .cont_part:hover {
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.2);
+  }
+  .cont {
+    background: #1da0f21f;
+  }
+  .part {
+    background: rgba(255, 166, 0, 0.11);
+  }
+
+  @media screen and (max-width: 767px) {
+    .cont_part {
+      padding: 5px 20px;
+      box-shadow: 0 0 1rem rgba(0, 0, 0, .2);
+    }
+    .cont {
+        margin-bottom: 15px;
+    }
   }
 </style>
 
@@ -129,9 +151,7 @@
             <div class="col-md-4 shadow-lg dash mx-4">
                 <div class="d-flex flex-column align-items-center dash-content text-center p-3 py-5">
                     <img class="rounded-circle mt-5 profile-img" src="{% static 'img/profile.jpg' %}">
-                    <span>{{rep.user.username}}</span>
-                    <span>{{rep.age}} ans</span>
-                    <span>{{rep.profession}}</span>
+                    <span>{{rep.user.username}} | {{rep.age}} ans | {{rep.profession}}</span>
                     <span>{{rep.ville}}, {{rep.quartier}}</span>
                     <span>{{rep.user.email}}</span>
                 </div>
@@ -139,7 +159,7 @@
             <div class="col-md-7">
                 <div class="row p-3 bg-white shadow">
                     <div class="col-md-12 info">
-                        <h3>À propos</h3><br>
+                        <h3 class="text-center">À propos</h3><br>
                         <div class="row">
                             <div class="col">
                                 <h6><b>Noms et Prénoms</b></h6>
@@ -188,63 +208,137 @@
 
                     </div>
                 </div>
-                <div class="row r p-3 mt-3 bg-white shadow cours">
-                    <div class="row pt-2">
-                      <div class="col-md-6 pb-2">
-                        <h3>Contacts</h3>
-                        <div class="reseaux text-center">
-                          <a style="text-decoration: none; color: silver;" href="https://wa.me/{{rep.telephone2}}?text=Salut prof, j'ai visité la plateforme findrepeater.com et je suis intéressé par vous services de répétition; Pouvons-nous en discuter ?">
-                              <i class="fab fa-whatsapp"></i>
-                          </a>&emsp;
-                          <a style="text-decoration: none; color: silver;" href="tel:{{rep.telephone1}}">
-                              <i class="fas fa-mobile-alt"></i>
-                          </a>&emsp;
-                          <a style="text-decoration: none; color: silver;" href="mailto:{{rep.user.email}}?subject=Recherche d'un répétiteur | FindRepeater&body=Salut prof, j'ai visité la plateforme findrepeater.com et je suis intéressé.e par vos services de répétition; Pouvons-nous en discuter ?">
-                              <i class="far fa-envelope"></i>
-                          </a>
+                <div class="row p-3 mt-3 bg-white shadow cours">
+                        <div class="col-lg-5 offset-lg-1 text-center cont_part cont">
+                            <h3>Contacts</h3>
+                            <p>Contacter cet enseignant pour en savoir plus ou bien pour le recruter comme <b>répétiteur</b></p>
+                            <div class="reseaux">
+                                <a style="text-decoration: none; color: silver;" href="https://wa.me/{{rep.telephone2}}?text=Recherche d'un répétiteur | FindRepeater        Salut {{rep.civilite}} {{rep.user.last_name}}, j'ai visité la plateforme en ligne findrepeater et je suis intéressé.e par vous services de répétition; Pouvons-nous en discuter ?">
+                                    <i class="fab fa-whatsapp"></i>
+                                </a>&emsp;
+                                <a style="text-decoration: none; color: silver;" href="tel:{{rep.telephone1}}">
+                                    <i class="fas fa-mobile-alt"></i>
+                                </a>&emsp;
+                                <a style="text-decoration: none; color: silver;" href="mailto:{{rep.user.email}}?subject=Recherche d'un répétiteur | FindRepeater&body=Salut {{rep.civilite}} {{rep.user.last_name}}, j'ai visité la plateforme en ligne findrepeater et je suis intéressé.e par vos services de répétition; Pouvons-nous en discuter ?">
+                                    <i class="far fa-envelope"></i>
+                                </a>
+                            </div>
                         </div>
-                      </div>
-                      <div class="col-md-6">
-                        <h3>Cours dispensés</h3>
-                        <p>Liste des cours dans le tableau <a href="#tab">ci-dessous</a></p>
-                      </div>
-                    </div>
+                        <div class="col-lg-5 text-center cont_part part">
+                            <h3>Partager</h3>
+                            <p>Partager ce profil avec votre entourage sur <b>Whatsapp</b>, ou ailleurs en <b>copiant</b> le lien</p>
+                            <style>
+                                /* .partage {
+                                    background: #dee1e9;
+                                }
+                                .wha, .face, .tel {
+                                    padding: 15px;
+                                }
+                                .partage .wha {
+                                    background: #25d36556;
+                                }
+                                .partage .face {
+                                    background: #273c755e;
+                                }
+                                .partage .tel {
+                                    background: #1da0f271;
+                                } */
+                                .fa-whatsapp {
+                                    color: #25d366;
+                                }
+                                .fa-facebook {
+                                    color: #273c75;
+                                }
+                                .fa-clone, .fa-copy {
+                                    color: #000;
+                                }
+                            </style>
+                            <div class="partage">
+                                <span class="wha">
+                                    <a style="text-decoration: none;" href="https://wa.me/?text=Salut, je me nomme {{rep.civilite}} {{rep.user.last_name}} {{rep.user.first_name}}, je suis {{rep.profession}} et également enseignant des cours répétion. Pour plus d'information bien vouloir consulter mon *Profil Enseignant* sur la plateforme findrepeater via le lien suivant : {% url 'voir_profil' rep.id user.id %}">
+                                        <i class="fab fa-whatsapp"></i>
+                                    </a>&emsp;
+                                </span>
+                                <span class="tel">
+                                    <a style="text-decoration: none;" >
+                                        <span style="position: absolute; margin-bottom: 20px; opacity: 1; height: 0; width: 0; overflow: hidden;" id="tocopy">Salut, je me nomme {{rep.civilite}} {{rep.user.last_name}} {{rep.user.first_name}}, je suis {{rep.profession}} et également enseignant des cours répétion. Pour plus d'information bien vouloir consulter mon *Profil Enseignant* sur la plateforme findrepeater via le lien suivant : {% url 'voir_profil' rep.id user.id %}</span>
+                                        <i class="far fa-clone js-copy" data-target="#tocopy"></i>
+                                    </a>
+                                </span>
+                                
+                            </div>
+                        </div>
                 </div>
             </div>
           
-        </div> 
-    </div>
-    
-    <div id="tab" class="card card-body mt-3 bg-white shadow" style="background-color: #ebeff5; padding: 5px 3px; width: 98%; margin: auto;">                    
-        <style>
-            th, td {border: orange solid 1px; border-top: none; align-items: center;}
-        </style>
-        <div class="table_cours table-responsive text-center">
-            <table class="table table-hover table-sm">
-                <tr  style="border-bottom: orange solid 3px; background-color: rgb(216, 210, 200);">
-                    <th>Matière</th>
-                    <th>Classe</th>
-                    <th>Jour</th>
-                    <th>Début</th>
-                    <th>Durée</th>
-                </tr>
-
-                {% for c in coursL %}
-                        <tr>
-                            <td>{{c.matiere}}</td>
-                            <td>{{c.classe}}</td>
-                            <td>{{c.jour}}</td>
-                            <td>{{c.heure_début}}</td>
-                            <td>{{c.duree}}</td>
+            <div id="tab" class="card card-body mt-3 bg-white shadow" style="background-color: #ebeff5; padding: 5px 3px;">                    
+                <h3 class="text-center">Cours dispensés ({{n}})</h3>
+                <style>
+                    th, td {border: orange solid 1px; border-top: none; align-items: center;}
+                </style>
+                <div class="table_cours table-responsive text-center">
+                    <table class="table table-hover table-sm">
+                        <tr  style="border-bottom: orange solid 3px; background-color: rgb(216, 210, 200);">
+                            <th>Matière</th>
+                            <th>Classe</th>
+                            <th>Jour.s disponibles</th>
                         </tr>
-                {% endfor %}
-            </table>
-        </div>
+
+                        {% for c in coursL %}
+                                <tr>
+                                    <td>{{c.matiere}}</td>
+                                    <td>{{c.classe}}</td>
+                                    <td>{{c.jour}}</td>
+                                </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+
+        </div> 
     </div>
 </section>
 
-<!-- <script>
-  document.getElementById('lien_devProf').style.display="";
-</script> -->
+<script>
+
+
+var btncopy = document.querySelector('.js-copy');
+if(btncopy) {
+    btncopy.addEventListener('click', docopy);
+}
+
+function docopy() {
+    var range = document.createRange();
+    var target = this.dataset.target;
+    var fromElement = document.querySelector(target);
+    var selection = window.getSelection();
+
+    range.selectNode(fromElement);
+    selection.removeAllRanges();
+    selection.addRange(range);
+
+    try {
+        var result = document.execCommand('copy');
+        if (result) {
+            // La copie a réussi
+            alert("Lien Copié !");
+        }
+    }
+    catch(err) {
+        // Une erreur est surevnue lors de la tentative de copie
+        alert(err);
+    }
+
+    selection = window.getSelection();
+
+    if (typeof selection.removeRange === 'function') {
+        selection.removeRange(range);
+    } else if (typeof selection.removeAllRanges === 'function') {
+        selection.removeAllRanges();
+    }
+}
+
+
+</script>
 
 {% endblock %}

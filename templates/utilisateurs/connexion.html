@@ -10,18 +10,15 @@
     <div class="row">
       <div class="col-md-6 offset-md-3">
         <div  class="form-enregistrement connect">
-          <style>
-            h5{color: orange; font-size: 27px; padding: 5px 0 10px;}
-          </style>
           <form name="formConnexion" onsubmit="return validateFormConnex()" action="" method="post">
             {% csrf_token %}
 
-            <h5 class="text-center">Connectez vous à votre compte</h5>
+            <h5 style="color: orange; font-size: 27px; padding: 5px 0 10px;" class="text-center">Connectez vous à votre compte</h5>
             
             <div>
-              {% for message in messages %}
+              <!-- {% for message in messages %}
                 <p class="errornotes">{{message}}</p>
-              {% endfor %}
+              {% endfor %} -->
 
               {% if user.is_authenticated %}
               <p class="infonotes text-center pt-2">
@@ -36,8 +33,30 @@
                 <span class="errorform" id="error_username"></span>
               </p>
             </div>
+            <style>
+              .fom {
+                position: relative;
+              }
+              .far {
+                position: absolute;
+                top: 27%;
+                right: 5%;
+                cursor: pointer;
+                color: rgb(48, 48, 48);
+                font-size: 20px;
+              }
+
+              @media screen and (min-width: 767px) {
+                .far {
+                  right: 12%;
+                }
+              }
+            </style>
             <div class="py-2 text-center">
-              <input class="form-control connect"  type="password" name="password" id="password" placeholder="Mot de passe">
+              <div class="fom">
+                <input class="form-control connect"  type="password" name="password" id="password" placeholder="Mot de passe">
+                <i class="far fa-eye" onclick="affiMdp()"></i> <i class="far fa-eye-slash" onclick="affiMdp()"></i>
+              </div>
               <p>
                 <span class="errorform" id="error_password"></span>
               </p>
@@ -70,32 +89,33 @@
             </div>
           </form>
         </div>
-        <!-- Modal -->
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content"  style="border: rgb(56, 51, 133) solid 1px; box-shadow: 0 0 2rem rgb(56, 51, 133);">
-              <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel"><center>CRÉATION D'UN NOUVEAU COMPTE</center></h5>
-              </div>
-              <div class="modal-body">
-                <h6>Quels est votre type de compte</h6><br>
-                <div>
-                  <p>Si vous êtes <b>élève/Parent</b>, <a class="btn-connexion suivant" href="{% url 'enregistrement' %}">cliquez ici</a> 
-                    pour accéder au formulaire
-                  </p>
-                  <p>Si vous êtes un.e <b>enseignant.e</b>, <a class="btn-connexion suivant" href="{% url 'enregistrement_prof' %}">cliquez ici</a> 
-                    pour accéder au formulaire
-                  </p>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button class="btn-register annuler" data-bs-dismiss="modal">Fermer</button>
-              </div>
-            </div>
-          </div>
-        </div>  
       </div>
     </div>
   </div>
 </section>
+
+<script>
+  var password = document.getElementById('password');
+
+  // affichage/masquage du mdp
+  var eyeVisible = document.querySelector('.fa-eye');
+  var eyeHidden = document.querySelector('.fa-eye-slash');
+  
+  eyeHidden.style.display = "none";
+  
+  function affiMdp() {
+    if (password.type === "password") {
+      eyeHidden.style.display = "";
+      eyeVisible.style.display = "none";
+      password.type = 'text';
+      // alert('mdp vers text');
+    } else {
+      eyeHidden.style.display = "none";
+      eyeVisible.style.display = "";
+      password.type = 'password';
+      // alert('text vers mdp');
+    }
+  }
+</script>
+
 {% endblock %}

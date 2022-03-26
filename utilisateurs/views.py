@@ -19,7 +19,12 @@ def accueil(request):
     listRep = []
     for rep in listR:
         listRep.append(rep.user.username)
-    content = {'listRep':listRep}
+
+    listC  = Client.objects.all()
+    listCli = []
+    for cli in listC:
+        listCli.append(cli.user.username)
+    content = {'listRep':listRep, 'listCli':listCli}
     return render(request, 'utilisateurs/index.html', content)
 
 
@@ -28,7 +33,9 @@ def accueil(request):
 
 @login_required(login_url='connexion')
 def bienvenue(request):
-    return render(request, 'utilisateurs/bienvenue.html') 
+    listC  = Client.objects.all()
+    content = {'listC':listC}
+    return render(request, 'utilisateurs/bienvenue.html', content) 
 
 
 
@@ -163,10 +170,14 @@ def connexion(request):
                     login(request, user)
                     return HttpResponseRedirect('consulter_profil')
                 else:
-                    msg1 = messages.info(request, "cet utilisateur ne correspond pas à un compte Parent/Élève ou Enseignant !")
-                content1 = {
-                    'msg1':msg1
-                }
+                    if user.is_authenticated:
+                        logout(request)
+                    login(request, user)
+                    return HttpResponseRedirect('admin')
+                #     msg1 = messages.info(request, "cet utilisateur ne correspond pas à un compte Parent/Élève ou Enseignant !")
+                # content1 = {
+                #     'msg1':msg1
+                # }
                 return render(request, 'utilisateurs/connexion.html', content1)
             else:
                 return HttpResponse("L'utilisateur est désactivé")
@@ -199,7 +210,7 @@ def consulter_profil(request):
 
 
 
-# modifier son profil
+# modifier son profil (le prof)
 
 @login_required(login_url='connexion')
 def modifier_profil(request, id_r, id_u):
@@ -256,6 +267,64 @@ def modifier_profil(request, id_r, id_u):
 
 
 
+# modifier son profil (le client)
+
+@login_required(login_url='connexion')
+def modifier_profil_cli(request, id_c, id_u):
+    err = ''
+    err2 = ''
+    cliList = Client.objects.all()
+
+    # identifier un client spécifique par son id
+    client = Client.objects.get(id=id_c)
+    
+    # identifier le user associé à ce client, par son id
+    for u in User.objects.all():
+        if u.id == client.user.id:
+            user = User.objects.get(id=id_u)
+    
+    # remplir le formulaire avec les info du client
+    cli_form = ClientForm(instance=client)
+    user_form = UserForm(instance=user)
+    if request.method == "POST":
+        cli_form = ClientForm(data=request.POST, instance=client)
+        user_form = UserForm(data=request.POST, instance=user)
+        
+        if cli_form.is_valid() and user_form.is_valid():
+            cli = cli_form.save()
+            cli.save()
+
+            use = user_form.save()
+            use.save()
+            client_cli = cli_form.save(commit=False)
+            client_cli.user = use
+            client_cli.save()
+
+            # connecter le user
+            username = request.POST.get('username')
+            password = request.POST.get('password1')
+            user_log = authenticate(username=username, password=password)
+            if user_log:
+                if user.is_authenticated:
+                    logout(request)
+                login(request, user_log)
+            # le renvoyer vers la page Bienvenue
+            return HttpResponseRedirect('../../bienvenue')
+        else:
+            err = cli_form.errors
+            err2 = user_form.errors
+    content = {
+        'err':err,
+        'err2':err2,
+        'cli_form':cli_form,
+        'user_form':user_form,
+        'cliList':cliList,
+    }
+
+    return render(request, 'utilisateurs/modifier_profil_cli.html', content)
+
+
+
 # voir un profil (par le client)
 
 def voir_profil(request, id_r, id_u):
@@ -274,11 +343,13 @@ def voir_profil(request, id_r, id_u):
     for c in coursList:
         if c.repetiteur.user.id == rep.user.id:
             coursL.append(c)
+    n = len(coursL)
     content = {
         'rep':rep,
-        'user':use,
+        'use':use,
         'repList':repList,
         'coursL':coursL,
+        'n':n,
     }
     return render(request, 'utilisateurs/voir_profil.html', content)
 
@@ -287,8 +358,42 @@ def voir_profil(request, id_r, id_u):
 # afficher la liste des répétiteurs disponibles (après une recherche)
 
 @login_required(login_url='connexion')
-def profs_disponibles(request):
-    return render(request, 'utilisateurs/profs_disponibles.html')
+def profs_compatibles(request, id_cli):
+    repList = Repetiteur.objects.all()
+    coursList = Cours.objects.all()
+
+    # identifier un client spécifique par son id
+    client = Client.objects.get(id=id_cli)
+
+    repComp = []
+    coursComp = []
+    coursCompU = []
+    coursCompUTemp = []
+    for rep in repList:
+        if rep.langue == client.langue and rep.ville:
+            for cou in coursList:
+                if cou.repetiteur.id == rep.id and cou.classe == client.classe:
+                    repComp.append(rep)
+                    for c in coursList:
+                        if c.repetiteur.id == rep.id:
+                            coursComp.append(c)
+                            coursCompUTemp.append(c.matiere.intitule)
+                    break
+
+    for cour in coursCompUTemp:
+        if cour not in coursCompU:
+            coursCompU.append(cour)
+
+    content = {
+        'client':client,
+        'repList':repList,
+        'coursList':coursList,
+        'repComp':repComp,
+        'coursCompU':coursCompU,
+        'coursComp':coursComp,
+    }
+
+    return render(request, 'utilisateurs/profs_compatibles.html', content)
 
 
 
@@ -308,7 +413,7 @@ def liste_repetiteurs(request):
 
 # fonction permettant de se déconnecter
 
-@login_required
+@login_required(login_url='connexion')
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect('/')

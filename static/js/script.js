@@ -88,6 +88,18 @@ function valChapmsText(champs, errClass) {
     return true;
   }
 }
+function valChapmsSelect(champs, errClass) {
+  if (champs.value == "") {
+    errClass.innerHTML="*veuillez choisir un élément de la liste";
+    champs.focus();
+    champs.classList.add('err');
+    return false;
+  } else {
+    errClass.innerHTML="";
+    champs.classList.remove('err');
+    return true;
+  }
+}
 function valChapmsAge(champs, errClass) {
   if (champs.value == "") {
     errClass.innerHTML="*veuillez entrer un nombre";
@@ -264,31 +276,11 @@ for (let i = 0; i < precedentRep.length; i++) {
 
 // ETAPE 2 CLI
 
-var last_nameCli = document.getElementById('id_last_name');
-var error_last_nameCli = document.getElementById('error_last_nameCli');
-
-var first_nameCli = document.getElementById('id_first_name');
-var error_first_nameCli = document.getElementById('error_first_nameCli');
-
-var telephone1Cli = document.getElementById('id_telephone1');
-var error_telephone1Cli = document.getElementById('error_telephone1Cli');
-
 var emailCli = document.getElementById('id_email');
 var error_emailCli = document.getElementById('error_emailCli');
 
-function valEC2() {
-  if (valChapmsText(last_nameCli, error_last_nameCli) 
-      && valChapmsText(first_nameCli, error_first_nameCli)
-      && valChapmsTel(telephone1Cli, error_telephone1Cli)
-      && valChapmsEmail(emailCli, error_emailCli)) 
-  {
-    return true;
-  } else {
-    return false
-  }
-}
-
-// ETAPE 3 CLI
+var classeCli = document.getElementById('id_classe');
+var error_classeCli = document.getElementById('error_classeCli');
 
 var villeCli = document.getElementById('id_ville');
 var error_villeCli = document.getElementById('error_villeCli');
@@ -296,9 +288,15 @@ var error_villeCli = document.getElementById('error_villeCli');
 var quartierCli = document.getElementById('id_quartier');
 var error_quartierCli = document.getElementById('error_quartierCli');
 
-function valEC3() {
-  if (valChapmsText(villeCli, error_villeCli)
-      && valChapmsText(quartierCli, error_quartierCli)) 
+var telephone1Cli = document.getElementById('id_telephone1');
+var error_telephone1Cli = document.getElementById('error_telephone1Cli');
+
+function valEC2() {
+  if (valChapmsEmail(emailCli, error_emailCli)
+      &&valChapmsSelect(classeCli, error_classeCli)
+      &&valChapmsText(villeCli, error_villeCli)
+      && valChapmsText(quartierCli, error_quartierCli)
+      && valChapmsTel(telephone1Cli, error_telephone1Cli)) 
   {
     return true;
   } else {
@@ -321,12 +319,12 @@ for (let i = 0; i < suivantCli.length; i++) {
         etapeCli[i+2].classList.toggle('active');
       }
     }
-    if (i == 1) {
-      if (valEC3()){
-        etapeCli[i+1].classList.toggle('active');
-        etapeCli[i+2].classList.toggle('active');
-      }
-    }
+    // if (i == 1) {
+    //   if (valEC3()){
+    //     etapeCli[i+1].classList.toggle('active');
+    //     etapeCli[i+2].classList.toggle('active');
+    //   }
+    // }
   });
 }
 

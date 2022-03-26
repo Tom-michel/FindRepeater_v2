@@ -11,8 +11,8 @@ class CoursForm(forms.ModelForm):
         model = Cours
         fields = [
             'jour',
-            'heure_début',
-            'duree',
+            # 'heure_début',
+            # 'duree',
             'matiere',
             'classe',
             'repetiteur'

@@ -5,6 +5,26 @@
 
 {% block content %}
 
+
+<style>
+  .form-group {
+    position: relative;
+  }
+  .far {
+    position: absolute;
+    top: 50%;
+    right: 5%;
+    cursor: pointer;
+    color: rgb(48, 48, 48);
+    font-size: 20px;
+  }
+  @media screen and (max-width: 767px) {
+    .far {
+      top: 50%;
+    }
+  }
+</style>
+
 <section class="py-5 my-5" style="background-image:url('static/img/bgform.jpg'); background-attachment: fixed; background-repeat:no-repeat; background-size: cover;">
   <div class="container">
     <div class="row">
@@ -13,6 +33,8 @@
           <div class="text-center">    
             <p>Vous avez déja un compte ?</p>
             <a class="btn-connexion mt-5" href="{% url 'connexion' %}">Connexion</a>
+            {{err1}}
+            {{err2}}
           </div>
         </div>
       </div>
@@ -48,8 +70,7 @@
           <div class="formCli">
             <div class="etape"><span class="numEtape">2</span></div>
             <div  class="form-enregistrement">
-                <h4 class="text-center">Informations personnelles</h4>
-                <!-- <div class="etapeCli mt-3"> -->
+                <h4 class="text-center">Informations professionnelles</h4>
                 {% if util == " " %}
                 <div class="etapeCli active mt-1">
                 {% endif %}
@@ -58,96 +79,69 @@
                 {% endif %}
                     <div class="contentCli et2">
                         <div class="row">
-                            <div class="col-md-6 mt-3 offset-md-3">
-                                <div class="form-group text-end">
-                                  <label for="photoProfil">Photo de profil </label>
-                                  <!-- <input class="form-control" type="file" name="photoProfil" id="photoProfil"> -->
-                                  {{form2.photoProfil}}
-                                </div>
+                          <p class=" mt-2 text-center" style="color: rgb(56, 51, 133); font-style: italic; font-size: 12px;">
+                            <i class="bi-question-circle"></i> 
+                            Cliquez sur le bouton <b>"+"</b> pour ajouter une classe à la liste
+                          </p>
+                          <div class="col-md-6 mt-1">
+                            <div class="form-group">
+                              <label for="telephone1">Téléphone </label>
+                              {{form2.telephone1}}
+                              <!-- <input class="form-control" type="text" name="telephone1" id="telephone1Cli"> -->
+                              <p><span class="errorform" id="error_telephone1Cli"></span></p>
                             </div>
+                          </div>
+                          <div class="col-md-6 mt-1">
+                            <div class="form-group">
+                              <label for="email">Email </label>
+                              {{form1.email}}
+                              <p><span class="errorform" id="error_emailCli"></span></p>
+                            </div>
+                          </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6 mt-3">
-                                <div class="form-group">
-                                  <label for="last_name">Nom </label>
-                                  <!-- <input class="form-control" type="text" name="last_name" id="last_nameCli"> -->
-                                  {{form1.last_name}}
-                                  <p><span class="errorform" id="error_last_nameCli"></span></p>
-                                </div>
-                            </div>
-                            <div class="col-md-6 mt-3">
-                                <div class="form-group">
-                                  <label for="first_name">Prénom </label>
-                                  <!-- <input class="form-control" type="text" name="first_name" id="first_nameCli"> -->
-                                  {{form1.first_name}}
-                                  <p><span class="errorform" id="error_first_nameCli"></span></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mt-1">
-                                <div class="form-group">
-                                  <label for="telephone1">Téléphone </label>
-                                  {{form2.telephone1}}
-                                  <!-- <input class="form-control" type="text" name="telephone1" id="telephone1Cli"> -->
-                                  <p><span class="errorform" id="error_telephone1Cli"></span></p>
-                                </div>
-                            </div>
-                            <div class="col-md-6 mt-1">
-                              <div class="form-group">
-                                  <label for="email">Email </label>
-                                  <!-- <input class="form-control" type="email" name="email" id="emailCli"> -->
-                                  {{form1.email}}
-                                  <p><span class="errorform" id="error_emailCli"></span></p>
+                          <div class="col-md-6 mt-1">
+                            <div class="form-group">
+                              <label for="langue">Classe</label>
+                              <div class="d-flex align-items-center">
+                                {{form2.classe}}
+                                <a href="{% url 'ajouter_classe_cli' %}"><i class="bi-plus-lg"></i></a>
                               </div>
+                              <p><span class="errorform" id="error_classeCli"></span></p>
                             </div>
-                        </div>
-                        <div class="pt-2 pb-1 mb-1 text-end">
-                            <span class="btn-connexion suivant suivantCli" type="button">Suivant</span>
-                        </div>
-                    </div>  
-              </div>
-            </div>
-            <div class="etape"><span class="numEtape">3</span></div>
-            <div  class="form-enregistrement">
-                <h4 class="text-center">Informations professionnelles</h4>
-                <div class="etapeCli mt-3">
-                    <div class="contentCli et3">
-                        <div class="row">
-                            <div class="col-md-6 mt-1 offset-md-3">
-                              <div class="form-group">
-                                <label for="langue">Langue d'étude &emsp;</label>
+                          </div>
+                          <div class="col-md-6 mt-1">
+                            <div class="form-group">
+                              <label for="langue">Langue d'étude</label>
                                 {{form2.langue}}
                               </div>
-                            </div>
+                          </div>
                         </div>
                         <div class="row">
-                        <div class="col-md-6 mt-2">
-                            <div class="form-group">
-                                <label for="ville">Ville </label>
-                                <!-- <input class="form-control" type="text" name="ville" id="villeCli"> -->
-                                {{form2.ville}}
-                                <p><span class="errorform" id="error_villeCli"></span></p>
-                            </div>
-                        </div>
-                        <div class="col-md-6 mt-2">
-                            <div class="form-group">
-                                <label for="quartier">Quartier </label>
-                                <!-- <input class="form-control" type="text" name="quartier" id="quartierCli"> -->
-                                {{form2.quartier}}
-                                <p><span class="errorform" id="error_quartierCli"></span></p>
-                            </div>
-                        </div>
+                          <div class="col-md-6 mt-2">
+                              <div class="form-group">
+                                  <label for="ville">Ville </label>
+                                  <!-- <input class="form-control" type="text" name="ville" id="villeCli"> -->
+                                  {{form2.ville}}
+                                  <p><span class="errorform" id="error_villeCli"></span></p>
+                              </div>
+                          </div>
+                          <div class="col-md-6 mt-2">
+                              <div class="form-group">
+                                  <label for="quartier">Quartier </label>
+                                  <!-- <input class="form-control" type="text" name="quartier" id="quartierCli"> -->
+                                  {{form2.quartier}}
+                                  <p><span class="errorform" id="error_quartierCli"></span></p>
+                              </div>
+                          </div>
                         </div>
                         <div class="pt-2 pb-1 mb-1 text-end">
-                            <span type="button" class="precedentCli">Précédent</span>
-                            &emsp;
                             <span class="btn-connexion suivant suivantCli" type="button">Suivant</span>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="etape"><span class="numEtape">4</span></div>
+            <div class="etape"><span class="numEtape">3</span></div>
             <div  class="form-enregistrement">
                 <h4 class="text-center">Informations de connexion</h4>
                 <!-- <div class="etapeCli mt-3"> -->
@@ -157,7 +151,7 @@
                 {% if util != " " %}
                 <div class="etapeCli active mt-1">
                 {% endif %}
-                    <div class="contentCli et4">
+                    <div class="contentCli et3">
                         <div class="row">
                             <div class="col-md-6 mt-2">
                                 <div class="form-group">
@@ -171,7 +165,7 @@
                                 <div class="form-group">
                                   <label for="password1">Créez votre mot de passe </label>
                                   <!-- <input class="form-control" type="password" name="password1" id="password1Cli"> -->
-                                  {{form1.password1}}
+                                  {{form1.password1}}<i class="far fa-eye" onclick="affiMdp()"></i> <i class="far fa-eye-slash" onclick="affiMdp()"></i>
                                   {{form1.password2.errors}}
                                 </div>
                             </div>
@@ -186,8 +180,8 @@
                             </div>
                         </div>
                         
-                        <div class="pt-2 pb-1 mt-4 text-center">
-                            <span type="button" class="precedentCli">Précédent</span>
+                        <div class="pt-2 pb-1 mt-4 text-end">
+                            <span style="color: rgba(0, 0, 0, 0.39); font-size: 13px;" type="button" class="precedentCli">Précédent</span>
                             <a class="btn-register annuler mt-2 mb-1" href="{% url 'enregistrement' %}">Recommencer</a>
                             <input class="btn-connexion sub mt-2 mb-1" type="submit" value="Enregistrer">
                         </div>
@@ -210,7 +204,33 @@
     for (var fields in form_fieldSel) {
         form_fieldSel[fields].className += ' form-control';
     }
-    document.getElementById('id_last_name').focus();
+    document.getElementById('id_email').focus();
+
+    // affichage/masquage du mdp
+  
+  var password1 = document.getElementById('id_password1');
+  var password2 = document.getElementById('id_password2');
+
+  var eyeVisible = document.querySelector('.fa-eye');
+  var eyeHidden = document.querySelector('.fa-eye-slash');
+  
+  eyeHidden.style.display = "none";
+  
+  function affiMdp() {
+    if (password1.type === "password") {
+      eyeHidden.style.display = "";
+      eyeVisible.style.display = "none";
+      password1.type = 'text';
+      password2.type = 'text';
+      // alert('mdp vers text');
+    } else {
+      eyeHidden.style.display = "none";
+      eyeVisible.style.display = "";
+      password1.type = 'password';
+      password2.type = 'password';
+      // alert('text vers mdp');
+    }
+  }
 </script>
 
 {% endblock %}

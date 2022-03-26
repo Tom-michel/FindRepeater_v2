@@ -11,6 +11,16 @@
     font-size: 15px;
   }
 
+  #lien_inscrip {
+    display: none;
+  }
+  #lien_devProf {
+    display: inline;
+  }
+  #menuO, #menuC, .dropdown {
+    display: none !important;
+  } 
+
   @media screen and (min-width: 768px) {
     .barre{
       box-shadow: 0 1rem 3rem rgba(0,0,0,.175) !important;
@@ -30,7 +40,7 @@
   }
 </style> 
 
-<section class="py-5">
+<section class="py-5 bg_profile">
 
   <div class="pt-4 pb-1">
       <div class="py-2 titre">
@@ -40,9 +50,9 @@
 
   <div class="container">
       <div class="row">
-        <div class="col-md-10 offset-md-1">
+        <div class="col-md-12">
           <div class="row form-enregistrement">
-            <div class="col-md-4 barre border-right">
+            <div class="col-md-3 barre border-right">
               <div class="d-flex flex-column align-items-center text-center px-3">
                 {% for rep in repList %}
                   {% if rep.user.id == user.id %}
@@ -68,7 +78,7 @@
               </div>
             </div>
 
-            <div class="col-md-8">
+            <div class="col-md-9">
                 <div class="py-2 px-3 m-2">
                   <form name="formModif" method="POST" action="#">
                     {% csrf_token %}
@@ -78,13 +88,13 @@
                     </div>
 
                     <div class="row">
-                      <div class="col-md-2 mt-2">
+                      <div class="col-md-4 mt-2">
                           <div class="form-group">
                             <label for="civilite">Civilité &emsp;</label><br>
                             {{rep_form.civilite}}
                           </div>
                       </div>
-                      <div class="col-md-2 mt-2">
+                      <div class="col-md-4 mt-2">
                         <div class="form-group">
                           <label for="age">Âge </label>
                           <!-- <input class="form-control" type="number" name="age" id="ageRep"> -->
@@ -207,10 +217,23 @@
 
                     <div class="row mt-4 mb-2">
                       <div class="col-md-6 text-center">
+                        <style>
+                          .form-group {
+                            position: relative;
+                          }
+                          .far {
+                            position: absolute;
+                            top: 65%;
+                            right: 5%;
+                            cursor: pointer;
+                            color: rgb(48, 48, 48);
+                            font-size: 20px;
+                          }
+                        </style>
                         <div class="form-group">
                           <label for="password2">Confirmez les mofications en entrant votre mot de passe</label>
                           <!-- <input class="form-control" type="password" name="password2" id="password2Rep"> -->
-                          {{user_form.password2}}
+                          {{user_form.password2}} <i class="far fa-eye" onclick="affiMdp()"></i> <i class="far fa-eye-slash" onclick="affiMdp()"></i>
                           {{user_form.password2.errors}}
                         </div>
                       </div>
@@ -232,10 +255,11 @@
 </section>
 
 <script>
+  
   var password1 = document.getElementById('id_password1');
   var password2 = document.getElementById('id_password2');
   password1.autocomplete="current-password";
-
+  
   // let mdp = prompt("Tapez votre mot de passe pour valider les mofications");
   // password2.value = mdp;
 
@@ -403,6 +427,27 @@
       form_fieldSel[fields].className += ' form-control';
   }
   document.getElementById('id_civilite').focus();
+
+
+  // affichage/masquage du mdp
+  var eyeVisible = document.querySelector('.fa-eye');
+  var eyeHidden = document.querySelector('.fa-eye-slash');
+  
+  eyeHidden.style.display = "none";
+  
+  function affiMdp() {
+    if (password2.type === "password") {
+      eyeHidden.style.display = "";
+      eyeVisible.style.display = "none";
+      password2.type = 'text';
+      // alert('mdp vers text');
+    } else {
+      eyeHidden.style.display = "none";
+      eyeVisible.style.display = "";
+      password2.type = 'password';
+      // alert('text vers mdp');
+    }
+  }
 </script>
 
 {% endblock %}

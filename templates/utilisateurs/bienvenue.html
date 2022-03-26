@@ -5,7 +5,498 @@
 
 {% block content %}
 
-  <br><br><br>
-  <h1>Bienvenue</h1>
+<style>
+	.salut {
+		position: relative;
+	}
+
+	h1 {
+		font-size: 60px !important;
+		color: rgb(56, 51, 133);
+		transition: 0.5s;
+	}
+
+	.btn-connexion{
+		background: orange;
+		border: none;
+		color: #000 !important;
+		border-radius: 20px;
+		padding: 6px 15px !important;
+		font-size: 0.9rem;;
+		text-decoration: none !important;
+	}
+	.btn-connexion:hover{
+		background: rgb(56, 51, 133);
+		border: none;
+		color: #fff !important;
+	}
+	.btn-register.bienv{
+		background: rgb(56, 51, 133);
+		color: #fff !important;
+		border: none;
+		border-radius: 20px;
+		transition: 0.5s;
+		padding: 8px 17px !important;
+		font-size: 1rem;
+		text-decoration: none !important;
+	}
+	.btn-register.bienv:hover{
+		background: orange;
+		border: none;
+		color: #000 !important;
+	}
+
+	
+	.dash{
+		align-items: center;
+		justify-content: center;
+		display: flex;
+	}
+	.dash i {
+		font-size: 100px;
+		color: rgb(56, 51, 133);
+	}
+
+	.contain {
+		width: 93% !important;
+		position: relative;
+		top: -150px;
+		height: 0;
+		transition: 0.3s ease-in-out;
+		visibility: hidden;
+		opacity: 0;
+	}
+	.contain.aff {
+		top: 0;
+		visibility: visible;
+		opacity: 1;
+		height: 240px;
+		margin-bottom: 30px;
+	}
+
+
+	.containerTM {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		overflow: hidden;
+		box-sizing: border-box;
+		padding: 10px 20px;
+	}
+
+	.action {
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-wrap: wrap;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	h5 {
+		color: rgb(56, 51, 133);
+	}
+	.box {
+		font-size: 14px;
+		position: relative;
+		transition: 0.2s ease-in-out;
+		margin: 10px 10px 10px;
+		padding: 10px 15px;
+		display: flex;
+		flex-direction: column;
+		width: 330px;
+		height: 240px;
+		border-radius: 10px;
+	}
+	.box i {
+		font-size: 50px;
+		transition: 0.4s ease-in-out;
+	}
+	.box hr {
+		background: #000;
+		color: #000;
+		height: 2px;
+		border: 0;
+		width: 60%;
+		width: 70%;
+		margin-left: auto;
+		margin-right: auto;
+		transition: 0.3s ease-in-out;
+	}
+	.box .content {
+		position: relative;
+		transition: 0.4s ease-in-out;
+		padding: 0px 10px 0;
+	}
+
+	.box:hover {
+		box-shadow: 0 0px 10px rgba(0, 0, 0, 0.4);
+		background: #fff;
+	}
+
+	.box i {
+		color: rgb(56, 51, 133);
+	}
+
+	@media screen and (min-width: 768px) {
+		.box .content a {
+			position: relative;
+			transition: 0s ease-in-out;
+			top: -80px;
+			visibility: hidden;
+		}
+		.box:hover .content a {
+			top: 0px;
+			visibility: visible;
+			transition: 0.3s ease-in-out;
+		}
+	}
+
+	@media screen and (max-width: 767px) {
+		h1 {
+			font-size: 50px !important;
+			color: rgb(56, 51, 133);
+		}
+		.btn-register.bienv{
+			padding: 6px 15px !important;
+			font-size: 0.8rem;
+		}
+		.box {
+			background: #fff;
+		}
+		.contain.aff {
+			height: 450px;
+			margin-bottom: 0px;
+		}
+	}
+  
+  .action, #footer {
+    position: relative;
+    z-index: 10;
+  }
+</style>
+
+<section class="pt-5 pb-5 mt-5 bg_profile">
+
+{% for cli in listC %}
+	{% if cli.user.id == user.id%}
+
+  <div class="salut text-center mb-4">
+    <h1>Salut !</h1>
+    <p>Bienvenue sur la plateforme FindRepeater</p>
+    <button id="aff" class="btn-register bienv">Mon profil</button>
+  </div>
+  <div class="container contain" id="card">
+    <div class="row">
+      <div class="col-md-4 offset-md-1 dash bg-white">
+        <div class="dash-content text-center">
+          <i class="bi-person-circle"></i>
+        </div>
+      </div>
+      <div class="col-md-7">
+        <div class="row p-3 bg-white">
+          <div class="col-md-12 info">
+            <div class="row">
+              <div class="col">
+                <h6><b>Télephone</b></h6>
+              </div>
+              <div class="col text-end">
+                <span>{{cli.telephone1}}</span>
+              </div>
+              <hr>
+            </div>
+            <div class="row">
+              <div class="col">
+                <h6><b>Email</b></h6>
+              </div>
+              <div class="col text-end">
+                <span>{{cli.user.email}}</span>
+              </div>
+              <hr>
+            </div>
+            <div class="row">
+              <div class="col">
+                <h6><b>Classe</b></h6>
+              </div>
+              <div class="col text-end">
+                <span>{{cli.classe}}</span>
+              </div>
+              <hr>
+            </div>
+            <div class="row">
+              <div class="col">
+                <h6><b>Langue d'étude</b></h6>
+              </div>
+              <div class="col text-end">
+                <span>{{cli.langue}}</span>
+              </div>
+              <hr>
+            </div>
+            <div class="row">
+              <div class="col">
+                <h6><b>Ville, Quartier</b></h6>
+              </div>
+              <div class="col text-end">
+                <span>{{cli.ville}}, {{cli.quartier}}</span>
+              </div>
+              <hr>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="containerTM">
+    <div class="action">
+      <div class="box b1 text-center">
+        <div class="header">
+          <i class="bi-person-badge"></i>
+          <h5>Professeurs Compatibles</h5>
+          <hr>
+        </div>
+        <div class="content">
+          <p>
+            Afficher les répétiteurs correspondant à votre profil <b>(classe, ville)</b>
+          </p>
+          <a class="btn-connexion" href="{% url 'profs_compatibles' cli.id %}">Consulter</a>
+        </div>
+      </div>
+      <div class="box b2 text-center">
+        <div class="header">
+          <i class="bi-search"></i>
+          <h5>Rechercher un Répétiteur</h5>
+          <hr>
+        </div>
+        <div class="content">
+          <p>
+            Rechercher un répétiteur à partir des critères que vous indiquerez
+          </p>
+          <a class="btn-connexion" data-bs-toggle="modal" data-bs-target="#typeRecherche" href="">Rechercher</a>
+        </div>
+      </div>
+      <div class="box b3 text-center">
+        <div class="header">
+          <i class="bi-person-lines-fill"></i>
+          <h5>Modifier mon Profil</h5>
+          <hr>
+        </div>
+        <div class="content">
+          <p>
+            Modifier les informations renseignées lors de la création de votre profil
+          </p>
+          <a class="btn-connexion" href="{% url 'modifier_profil_cli' cli.id user.id %}">Modifier</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+<div class="modal fade" id="typeRecherche" tabindex="-1" aria-labelledby="typeRechercheLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="typeRechercheLabel">RECHERCHE DE RÉPÉTITEURS</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+			<form action="" method="post">
+				{% csrf_token %}
+
+				<div class="modal-body">
+					<div class="container-fluid text-center">
+						<div class="row">
+							<div class="col-md-6 offset-md-3">
+								<div class="form-group">
+									<label for="typeRech">Critères de recherche</label>
+									<select class="form-control" name="typeRech" id="typeRech">
+										<option value="selected">-----------</option>
+										<option value="1">Tous les profs</option>
+										<option value="2">Matière + Ville</option>
+										<option value="3">Classe + Ville</option>
+										<option value="4">Matière + Classe + Ville</option>
+										<option value="5">Matière + Classe + Ville + Quartier</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<p id="indication" style="color: rgb(56, 51, 133);" class="text-center align-items-center mt-4">
+							<i style="font-size: 20px;" class="bi-question-circle"></i> 
+							<span style="font-style: italic;">
+								Si une <b>classe ou matière ou ville ou quartier</b> n'apparaît pas dans la liste, alors un tel répétiteur n'est pas encore enregistré !
+							</span> <br>
+						</p>
+						<div class="row mt-4" id="form2">
+							<div class="col-md-4 offset-md-2 mt-3">
+								<div class="form-group">
+									<label for="matiere2">Matière</label>
+									<select class="form-control" name="matiere2" id="matiere2">
+										<option value="">matiere</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-md-4 mt-3">
+								<div class="form-group">
+									<label for="ville2">Ville</label>
+									<select class="form-control" name="ville2" id="ville2">
+										<option value="">ville</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="row mt-4" id="form3">
+							<div class="col-md-4 offset-md-2 mt-3">
+								<div class="form-group">
+									<label for="classe3">Classe</label>
+									<select class="form-control" name="classe3" id="classe3">
+										<option value="">classe</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-md-4 mt-3">
+								<div class="form-group">
+									<label for="ville3">Ville</label>
+									<select class="form-control" name="ville3" id="ville3">
+										<option value="">ville</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="row mt-4" id="form4">
+							<div class="col-md-4 offset-md-2 mt-3">
+								<div class="form-group">
+									<label for="matiere4">Matière</label>
+									<select class="form-control" name="matiere4" id="matiere4">
+										<option value="">matiere</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-md-4 mt-3">
+								<div class="form-group">
+									<label for="classe4">Classe</label>
+									<select class="form-control" name="classe4" id="classe4">
+										<option value="">classe</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-md-4 offset-md-4 mt-3">
+								<div class="form-group">
+									<label for="ville4">Ville</label>
+									<select class="form-control" name="ville4" id="ville4">
+										<option value="">ville</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="row mt-4" id="form5">
+							<div class="col-md-4 offset-md-2 mt-3">
+								<div class="form-group">
+									<label for="matiere5">Matière</label>
+									<select class="form-control" name="matiere5" id="matiere5">
+										<option value="">matiere</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-md-4 mt-3">
+								<div class="form-group">
+									<label for="classe5">Classe</label>
+									<select class="form-control" name="classe5" id="classe5">
+										<option value="">classe</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-md-4 offset-md-2 mt-3">
+								<div class="form-group">
+									<label for="ville5">Ville</label>
+									<select class="form-control" name="ville5" id="ville5">
+										<option value="">ville</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-md-4 mt-3">
+								<div class="form-group">
+									<label for="quartier5">Quartier</label>
+									<select class="form-control" name="quartier5" id="quartier5">
+										<option value="">quartier</option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<input class="btn-connexion" type="submit" value="Rechercher">
+					<button type="button" class="btn-register annuler" data-bs-dismiss="modal">Annuler</button>
+				</div>
+			</form>
+    </div>
+  </div>
+</div>
+
+	{% endif %}
+{% endfor %}
+
+</section>
+
+<script>
+  var aff = document.getElementById('aff');
+  var card = document.getElementById('card');
+  aff.addEventListener('click', function(){
+    card.classList.toggle('aff');
+  });
+
+	// choix du formulaire de recherche
+
+	var form2 = document.getElementById('form2');
+	var form3 = document.getElementById('form3');
+	var form4 = document.getElementById('form4');
+	var form5 = document.getElementById('form5');
+	var indication = document.getElementById('indication');
+
+	form2.style.display = "none";
+	form3.style.display = "none";
+	form4.style.display = "none";
+	form5.style.display = "none";
+	indication.style.display = "none";
+
+	document.getElementById('typeRech').addEventListener('change', function(e) {
+		var selectUser = e.target.value;
+		if (selectUser == 1) {
+			form2.style.display = "none";
+			form3.style.display = "none";
+			form4.style.display = "none";
+			form5.style.display = "none";
+			indication.style.display = "none";
+		}
+		if (selectUser == 2) {
+			form2.style.display = "";
+			form3.style.display = "none";
+			form4.style.display = "none";
+			form5.style.display = "none";
+			indication.style.display = "";
+		}
+		if (selectUser == 3) {
+			form2.style.display = "none";
+			form3.style.display = "";
+			form4.style.display = "none";
+			form5.style.display = "none";
+			indication.style.display = "";
+		}
+		if (selectUser == 4) {
+			form2.style.display = "none";
+			form3.style.display = "none";
+			form4.style.display = "";
+			form5.style.display = "none";
+			indication.style.display = "";
+		}
+		if (selectUser == 5) {
+			form2.style.display = "none";
+			form3.style.display = "none";
+			form4.style.display = "none";
+			form5.style.display = "";
+			indication.style.display = "";
+		}
+	});
+</script>
 
 {% endblock %}

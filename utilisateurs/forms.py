@@ -40,7 +40,7 @@ class ClientForm(forms.ModelForm):
     class Meta():
         model = Client
         fields = [
-            'photoProfil',
+            'classe',
             'ville',
             'quartier',
             'telephone1',

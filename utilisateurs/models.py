@@ -9,14 +9,6 @@ import os
 
 # creation la classe Utilisateur
 
-def renommer_image(instance, filename):
-    upload_to = 'image/'
-    ext = filename.split('.')[-1]
-    if instance.user.username:
-        filename = "photo_profile/{}.{}".format(instance.user.username, ext)
-        return os.path.join(upload_to, filename)
-
-
 class Utilisateur(models.Model):
     ville = models.CharField(max_length=200, null=True)
     quartier = models.CharField(max_length=200, null=True)
@@ -25,9 +17,10 @@ class Utilisateur(models.Model):
     ]
     langue = models.CharField(max_length=200, null=True, choices=LANGUE, default='fançais')
     telephone1 = models.CharField(max_length=200, null=True)
+
     # User possede déja : username, email, first_name, last_name, (password 1 et 2)
     user = models.OneToOneField(User, on_delete=CASCADE)
-    photoProfil = models.ImageField(upload_to=renommer_image, blank=True) 
+    
     # s'inscrire sur la platefoerme
     def inscrire():
         pass
@@ -42,9 +35,20 @@ class Utilisateur(models.Model):
 
 
 
+# creation de la classe Classe
+
+class Classe(models.Model):
+    niveau = models.CharField(max_length=200, null=True)
+
+    def __str__(self):
+        return self.niveau
+
+
 # creation de la classe Client(élève/parent d'élève) qui est un Utilisateur
 
 class Client(Utilisateur):
+    classe = models.ForeignKey(Classe, null=True, on_delete=models.SET_NULL)
+
     def __str__(self):
         return self.user.username
 
@@ -60,6 +64,14 @@ class Client(Utilisateur):
 
 # creation de la classe Repetiteur qui est un Utilisateur
 
+def renommer_image(instance, filename):
+    upload_to = 'image/'
+    ext = filename.split('.')[-1]
+    if instance.user.username:
+        filename = "photo_profile/{}.{}".format(instance.user.username, ext)
+        return os.path.join(upload_to, filename)
+
+
 class Repetiteur(Utilisateur):
     CIVILITE = [
         ('Mr','Mr'),('Mme','Mme')
@@ -68,7 +80,8 @@ class Repetiteur(Utilisateur):
     age = models.IntegerField(null=True)
     telephone2 = models.CharField(max_length=200, blank=True)
     niveauEtude = models.CharField(max_length=200, null=True) 
-    profession = models.CharField(max_length=200, null=True) 
+    profession = models.CharField(max_length=200, null=True)
+    photoProfil = models.ImageField(upload_to=renommer_image, blank=True)  
 
     def __str__(self):
         info = self.civilite+" "+self.user.username
