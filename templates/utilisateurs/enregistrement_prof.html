@@ -206,30 +206,40 @@
                                   {{form1.username.errors}}
                                 </div>
                             </div>
+
                             <style>
-                              .form-group {
-                                position: relative;
+                              .fom {
+                                align-items: center !important;
+                                display: flex;
                               }
                               .far {
                                 position: absolute;
-                                top: 50%;
-                                right: 5%;
+                                right: 2%;
                                 cursor: pointer;
                                 color: rgb(48, 48, 48);
                                 font-size: 20px;
                               }
-
+                
+                              @media screen and (max-width: 991px) {
+                                .far {
+                                  right: 2%;
+                                }
+                              }
+                
                               @media screen and (max-width: 767px) {
                                 .far {
-                                  top: 50%;
+                                  right: 3%;
                                 }
                               }
                             </style>
+
                             <div class="col-md-6 mt-1">
                                 <div class="form-group">
                                   <label for="password1">Créez votre mot de passe </label>
                                   <!-- <input class="form-control" type="password" name="password1" id="password1Rep"> -->
-                                  {{form1.password1}}<i class="far fa-eye" onclick="affiMdp()"></i> <i class="far fa-eye-slash" onclick="affiMdp()"></i>
+                                  <div class="fom">
+                                    {{form1.password1}}<i class="far fa-eye" onclick="affiMdp()"></i> <i class="far fa-eye-slash" onclick="affiMdp()"></i>
+                                  </div>
                                   {{form1.password2.errors}}
                                 </div>
                             </div>

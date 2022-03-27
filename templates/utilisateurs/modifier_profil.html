@@ -217,23 +217,40 @@
 
                     <div class="row mt-4 mb-2">
                       <div class="col-md-6 text-center">
+
                         <style>
-                          .form-group {
-                            position: relative;
+                          .fom {
+                            /* position: relative; */
+                            align-items: center !important;
+                            display: flex;
                           }
                           .far {
                             position: absolute;
-                            top: 65%;
-                            right: 5%;
+                            right: 41%;
                             cursor: pointer;
                             color: rgb(48, 48, 48);
                             font-size: 20px;
+                          }
+
+                          @media screen and (max-width: 991px) {
+                            .far {
+                              right: 41%;
+                            }
+                          }
+
+                          @media screen and (max-width: 767px) {
+                            .far {
+                              /* right: 12%; */
+                              right: 17%;
+                            }
                           }
                         </style>
                         <div class="form-group">
                           <label for="password2">Confirmez les mofications en entrant votre mot de passe</label>
                           <!-- <input class="form-control" type="password" name="password2" id="password2Rep"> -->
-                          {{user_form.password2}} <i class="far fa-eye" onclick="affiMdp()"></i> <i class="far fa-eye-slash" onclick="affiMdp()"></i>
+                          <div class="fom">
+                            {{user_form.password2}} <i class="far fa-eye" onclick="affiMdp()"></i> <i class="far fa-eye-slash" onclick="affiMdp()"></i>
+                          </div>
                           {{user_form.password2.errors}}
                         </div>
                       </div>

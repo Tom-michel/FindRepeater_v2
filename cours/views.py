@@ -24,6 +24,7 @@ def ajouter_cours(request):
     coursList = Cours.objects.all()
     cours_form = CoursForm()
     if request.method == 'POST':
+        cours_form.jour = request.POST.get('jour')
         cours_form = CoursForm(data=request.POST)
         if cours_form.is_valid():
             cours = cours_form.save()

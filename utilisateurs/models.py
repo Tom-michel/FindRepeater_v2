@@ -13,7 +13,7 @@ class Utilisateur(models.Model):
     ville = models.CharField(max_length=200, null=True)
     quartier = models.CharField(max_length=200, null=True)
     LANGUE = [
-        ('fançais','fançais'),('anglais','anglais'),('bilingue','bilingue')
+        ('fançais','fançais'),('anglais','anglais'),('bilingue','bilingue'),('autre','autre')
     ]
     langue = models.CharField(max_length=200, null=True, choices=LANGUE, default='fançais')
     telephone1 = models.CharField(max_length=200, null=True)

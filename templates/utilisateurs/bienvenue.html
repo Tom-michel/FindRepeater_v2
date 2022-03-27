@@ -139,7 +139,7 @@
 		color: rgb(56, 51, 133);
 	}
 
-	@media screen and (min-width: 768px) {
+	@media screen and (min-width: 992px) {
 		.box .content a {
 			position: relative;
 			transition: 0s ease-in-out;
@@ -153,7 +153,7 @@
 		}
 	}
 
-	@media screen and (max-width: 767px) {
+	@media screen and (max-width: 991px) {
 		h1 {
 			font-size: 50px !important;
 			color: rgb(56, 51, 133);
@@ -291,147 +291,6 @@
       </div>
     </div>
   </div>
-
-  <!-- Modal -->
-<div class="modal fade" id="typeRecherche" tabindex="-1" aria-labelledby="typeRechercheLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="typeRechercheLabel">RECHERCHE DE RÉPÉTITEURS</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-			<form action="" method="post">
-				{% csrf_token %}
-
-				<div class="modal-body">
-					<div class="container-fluid text-center">
-						<div class="row">
-							<div class="col-md-6 offset-md-3">
-								<div class="form-group">
-									<label for="typeRech">Critères de recherche</label>
-									<select class="form-control" name="typeRech" id="typeRech">
-										<option value="selected">-----------</option>
-										<option value="1">Tous les profs</option>
-										<option value="2">Matière + Ville</option>
-										<option value="3">Classe + Ville</option>
-										<option value="4">Matière + Classe + Ville</option>
-										<option value="5">Matière + Classe + Ville + Quartier</option>
-									</select>
-								</div>
-							</div>
-						</div>
-						<p id="indication" style="color: rgb(56, 51, 133);" class="text-center align-items-center mt-4">
-							<i style="font-size: 20px;" class="bi-question-circle"></i> 
-							<span style="font-style: italic;">
-								Si une <b>classe ou matière ou ville ou quartier</b> n'apparaît pas dans la liste, alors un tel répétiteur n'est pas encore enregistré !
-							</span> <br>
-						</p>
-						<div class="row mt-4" id="form2">
-							<div class="col-md-4 offset-md-2 mt-3">
-								<div class="form-group">
-									<label for="matiere2">Matière</label>
-									<select class="form-control" name="matiere2" id="matiere2">
-										<option value="">matiere</option>
-									</select>
-								</div>
-							</div>
-							<div class="col-md-4 mt-3">
-								<div class="form-group">
-									<label for="ville2">Ville</label>
-									<select class="form-control" name="ville2" id="ville2">
-										<option value="">ville</option>
-									</select>
-								</div>
-							</div>
-						</div>
-						<div class="row mt-4" id="form3">
-							<div class="col-md-4 offset-md-2 mt-3">
-								<div class="form-group">
-									<label for="classe3">Classe</label>
-									<select class="form-control" name="classe3" id="classe3">
-										<option value="">classe</option>
-									</select>
-								</div>
-							</div>
-							<div class="col-md-4 mt-3">
-								<div class="form-group">
-									<label for="ville3">Ville</label>
-									<select class="form-control" name="ville3" id="ville3">
-										<option value="">ville</option>
-									</select>
-								</div>
-							</div>
-						</div>
-						<div class="row mt-4" id="form4">
-							<div class="col-md-4 offset-md-2 mt-3">
-								<div class="form-group">
-									<label for="matiere4">Matière</label>
-									<select class="form-control" name="matiere4" id="matiere4">
-										<option value="">matiere</option>
-									</select>
-								</div>
-							</div>
-							<div class="col-md-4 mt-3">
-								<div class="form-group">
-									<label for="classe4">Classe</label>
-									<select class="form-control" name="classe4" id="classe4">
-										<option value="">classe</option>
-									</select>
-								</div>
-							</div>
-							<div class="col-md-4 offset-md-4 mt-3">
-								<div class="form-group">
-									<label for="ville4">Ville</label>
-									<select class="form-control" name="ville4" id="ville4">
-										<option value="">ville</option>
-									</select>
-								</div>
-							</div>
-						</div>
-						<div class="row mt-4" id="form5">
-							<div class="col-md-4 offset-md-2 mt-3">
-								<div class="form-group">
-									<label for="matiere5">Matière</label>
-									<select class="form-control" name="matiere5" id="matiere5">
-										<option value="">matiere</option>
-									</select>
-								</div>
-							</div>
-							<div class="col-md-4 mt-3">
-								<div class="form-group">
-									<label for="classe5">Classe</label>
-									<select class="form-control" name="classe5" id="classe5">
-										<option value="">classe</option>
-									</select>
-								</div>
-							</div>
-							<div class="col-md-4 offset-md-2 mt-3">
-								<div class="form-group">
-									<label for="ville5">Ville</label>
-									<select class="form-control" name="ville5" id="ville5">
-										<option value="">ville</option>
-									</select>
-								</div>
-							</div>
-							<div class="col-md-4 mt-3">
-								<div class="form-group">
-									<label for="quartier5">Quartier</label>
-									<select class="form-control" name="quartier5" id="quartier5">
-										<option value="">quartier</option>
-									</select>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<input class="btn-connexion" type="submit" value="Rechercher">
-					<button type="button" class="btn-register annuler" data-bs-dismiss="modal">Annuler</button>
-				</div>
-			</form>
-    </div>
-  </div>
-</div>
 
 	{% endif %}
 {% endfor %}

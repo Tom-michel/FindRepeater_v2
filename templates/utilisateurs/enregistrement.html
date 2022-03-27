@@ -10,19 +10,6 @@
   .form-group {
     position: relative;
   }
-  .far {
-    position: absolute;
-    top: 50%;
-    right: 5%;
-    cursor: pointer;
-    color: rgb(48, 48, 48);
-    font-size: 20px;
-  }
-  @media screen and (max-width: 767px) {
-    .far {
-      top: 50%;
-    }
-  }
 </style>
 
 <section class="py-5 my-5" style="background-image:url('static/img/bgform.jpg'); background-attachment: fixed; background-repeat:no-repeat; background-size: cover;">
@@ -33,8 +20,7 @@
           <div class="text-center">    
             <p>Vous avez déja un compte ?</p>
             <a class="btn-connexion mt-5" href="{% url 'connexion' %}">Connexion</a>
-            {{err1}}
-            {{err2}}
+            
           </div>
         </div>
       </div>
@@ -161,11 +147,40 @@
                                   {{form1.username.errors}}
                                 </div>
                             </div>
+
+                            <style>
+                              .fom {
+                                align-items: center !important;
+                                display: flex;
+                              }
+                              .far {
+                                position: absolute;
+                                right: 4%;
+                                cursor: pointer;
+                                color: rgb(48, 48, 48);
+                                font-size: 20px;
+                              }
+                
+                              @media screen and (max-width: 991px) {
+                                .far {
+                                  right: 4%;
+                                }
+                              }
+                
+                              @media screen and (max-width: 767px) {
+                                .far {
+                                  right: 3%;
+                                }
+                              }
+                            </style>
+
                             <div class="col-md-6 mt-2">
                                 <div class="form-group">
                                   <label for="password1">Créez votre mot de passe </label>
                                   <!-- <input class="form-control" type="password" name="password1" id="password1Cli"> -->
-                                  {{form1.password1}}<i class="far fa-eye" onclick="affiMdp()"></i> <i class="far fa-eye-slash" onclick="affiMdp()"></i>
+                                  <div class="fom">
+                                    {{form1.password1}}<i class="far fa-eye" onclick="affiMdp()"></i> <i class="far fa-eye-slash" onclick="affiMdp()"></i>
+                                  </div>
                                   {{form1.password2.errors}}
                                 </div>
                             </div>

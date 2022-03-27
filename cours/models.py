@@ -24,7 +24,8 @@ class Cours(models.Model):
         ('vendredi','vendredi'),('samedi','samedi'),('dimanche','dimanche'),
         ('tous les jours','tous les jours')
     ]
-    jour = models.CharField(max_length=200, null=True, choices=JOURS, default='tous les jours')
+    # jour = models.CharField(max_length=200, null=True, choices=JOURS, default='tous les jours')
+    jour = models.CharField(max_length=200, null=True)
     
     # HEURES_DEBUT = [
     #     ('7H','7H'),('8H','8H'),('9H','9H'),('10H','10H'),('11H','11H'),('12H','12H'),('13H','13H'),

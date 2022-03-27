@@ -85,18 +85,6 @@
                     {{cours_form.jour}}
                   </div>
                 </div>
-                <!-- <div class="mt-3 col-md-2 offset-md-0 col-10 offset-1">
-                  <div class="form-group">
-                    <label for="id_heure_début">Heure</label>
-                    {{cours_form.heure_début}}
-                  </div>
-                </div>
-                <div class="mt-3 col-md-3 offset-md-0 col-10 offset-1">
-                  <div class="form-group">
-                    <label for="id_duree">Durée</label>
-                    {{cours_form.duree}}
-                  </div>
-                </div> -->
               </div>
               {{err}}
               <div class="d-flex justify-content-center my-5">
@@ -116,6 +104,9 @@
   for (var field in form_fields){
       form_fields[field].className += ' form-control';
   }
+  var jour = document.getElementById('id_jour');
+  jour .className += ' form-control';
+  jour.placeholder = "lundi, mardi,...";
 
 </script>
 

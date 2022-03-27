@@ -34,8 +34,40 @@ def accueil(request):
 @login_required(login_url='connexion')
 def bienvenue(request):
     listC  = Client.objects.all()
-    content = {'listC':listC}
-    return render(request, 'utilisateurs/bienvenue.html', content) 
+    content1 = {'listC':listC}
+
+    if request.method == "POST":
+        typeRech = request.POST.get('typeRech')
+        
+        if typeRech == "1":
+
+            # renvoyer tous les professeurs
+            repList = Repetiteur.objects.all()
+            coursList = Cours.objects.all()
+            repAff = []
+            coursAff = []
+            coursAffTemp = []
+            for rep in repList:
+                repAff.append(rep)
+                for c in coursList:
+                    if c.repetiteur.id == rep.id:
+                        coursAff.append(c)
+                        coursAffTemp.append(c.matiere.intitule)
+
+            # liste des matieres sans doublons
+            coursAffInti = []
+            for cour in coursAffTemp:
+                if cour not in coursAffInti:
+                    coursAffInti.append(cour)
+            content2 = {
+                'repAff':repAff,
+                'coursList':coursList,
+                'coursAff':coursAff,
+                'coursAffInti':coursAffInti,
+            }
+            return render(request, 'utilisateurs/liste_repetiteurs.html', content2)
+
+    return render(request, 'utilisateurs/bienvenue.html', content1)
 
 
 
@@ -178,7 +210,7 @@ def connexion(request):
                 # content1 = {
                 #     'msg1':msg1
                 # }
-                return render(request, 'utilisateurs/connexion.html', content1)
+                # return render(request, 'utilisateurs/connexion.html', content1)
             else:
                 return HttpResponse("L'utilisateur est désactivé")
         else:

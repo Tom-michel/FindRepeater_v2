@@ -8,7 +8,7 @@
 <section class="py-5 my-5" style="background-image:url('static/img/bgform.jpg'); background-attachment: fixed; background-repeat:no-repeat; background-size: cover;">
   <div class="container">
     <div class="row">
-      <div class="col-md-6 offset-md-3">
+      <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3">
         <div  class="form-enregistrement connect">
           <form name="formConnexion" onsubmit="return validateFormConnex()" action="" method="post">
             {% csrf_token %}
@@ -16,9 +16,9 @@
             <h5 style="color: orange; font-size: 27px; padding: 5px 0 10px;" class="text-center">Connectez vous à votre compte</h5>
             
             <div>
-              <!-- {% for message in messages %}
+              {% for message in messages %}
                 <p class="errornotes">{{message}}</p>
-              {% endfor %} -->
+              {% endfor %}
 
               {% if user.is_authenticated %}
               <p class="infonotes text-center pt-2">
@@ -33,26 +33,38 @@
                 <span class="errorform" id="error_username"></span>
               </p>
             </div>
+
             <style>
               .fom {
-                position: relative;
+                /* position: relative; */
+                align-items: center !important;
+                display: flex;
               }
               .far {
                 position: absolute;
-                top: 27%;
-                right: 5%;
+                /* top: 27%;
+                right: 0%; */
+                right: 37%;
                 cursor: pointer;
                 color: rgb(48, 48, 48);
                 font-size: 20px;
               }
 
-              @media screen and (min-width: 767px) {
+              @media screen and (max-width: 991px) {
                 .far {
-                  right: 12%;
+                  right: 33%;
+                }
+              }
+
+              @media screen and (max-width: 767px) {
+                .far {
+                  /* right: 12%; */
+                  right: 15%;
                 }
               }
             </style>
-            <div class="py-2 text-center">
+            
+            <div class="py-2">
               <div class="fom">
                 <input class="form-control connect"  type="password" name="password" id="password" placeholder="Mot de passe">
                 <i class="far fa-eye" onclick="affiMdp()"></i> <i class="far fa-eye-slash" onclick="affiMdp()"></i>
