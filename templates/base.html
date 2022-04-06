@@ -62,14 +62,14 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="border: orange solid 2px;">
                           {% if user.username in listRep %}  
-                            <li><a class="dropdown-item" href="{% url 'consulter_profil' %}">Mon profil</a></li>
+                            <li><a class="dropdown-item" href="{% url 'consulter_profil' %}"><i class="bi-person-lines-fill"></i> Mon profil</a></li>
                             <li><hr class="dropdown-divider" style="border: orange solid 2px;"></li>
                           {% endif %}
                           {% if user.username in listCli %}  
-                            <li><a class="dropdown-item" href="{% url 'bienvenue' %}">Bienvenue</a></li>
+                            <li><a class="dropdown-item" href="{% url 'bienvenue' %}"><i class="bi-person"></i> Bienvenue</a></li>
                             <li><hr class="dropdown-divider" style="border: orange solid 2px;"></li>
                           {% endif %}
-                            <li><a class="dropdown-item" href="{% url 'user_logout' %}">Déconnexion</a></li>
+                            <li><a class="dropdown-item" href="{% url 'user_logout' %}"><i class="bi-box-arrow-right"></i> Logout</a></li>
                         </ul>
                       </li>
                       {% endif %}
@@ -143,7 +143,7 @@
                 <div class="modal-body">
                   <div class="container-fluid text-center">
                     <div class="row">
-                      <div class="col-md-6 offset-md-3">
+                      <div class="col-md-8 offset-md-2">
                         <div class="form-group">
                           <label for="typeRech">Critères de recherche</label>
                           <select class="form-control" name="typeRech" id="typeRech">
@@ -157,9 +157,9 @@
                         </div>
                       </div>
                     </div>
-                    <p id="indication" style="color: rgb(56, 51, 133) !important; font-style: italic;" class="text-center align-items-center mt-4">
+                    <p id="indication" style="color: rgb(56, 51, 133) !important; font-style: italic; font-size: 13px;" class="text-center align-items-center mt-4">
                       <i style="font-size: 20px;" class="bi-question-circle"></i> 
-                        Si une <b>classe ou matière ou ville ou quartier</b> n'apparaît pas dans la liste, alors un tel répétiteur n'est pas encore enregistré !
+                        Si une <b>classe ou matière ou ville ou quartier</b> n'apparaît pas dans la liste, alors aucun répétiteur avec cette information n'est encore enregistré !
                     </p>
                     <div class="row mt-2" id="form2">
                       <div class="col-md-5 offset-md-1 mt-3">
@@ -359,5 +359,65 @@
         <script src="../static/js/script.js"></script>
         <script src="../static/js/clipboard.min.js"></script>
         <script src="../static/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <script>
+          var selects = document.getElementsByTagName('select');
+          for (let i = 0; i < selects.length; i++) {
+            selects[i].classList.add('form-select');
+            
+          }
+
+          // choix du formulaire de recherche
+
+          var form2 = document.getElementById('form2');
+          var form3 = document.getElementById('form3');
+          var form4 = document.getElementById('form4');
+          var form5 = document.getElementById('form5');
+          var indication = document.getElementById('indication');
+
+          form2.style.display = "none";
+          form3.style.display = "none";
+          form4.style.display = "none";
+          form5.style.display = "none";
+          indication.style.display = "none";
+
+          document.getElementById('typeRech').addEventListener('change', function(e) {
+            var selectUser = e.target.value;
+            if (selectUser == 1) {
+              form2.style.display = "none";
+              form3.style.display = "none";
+              form4.style.display = "none";
+              form5.style.display = "none";
+              indication.style.display = "none";
+            }
+            if (selectUser == 2) {
+              form2.style.display = "";
+              form3.style.display = "none";
+              form4.style.display = "none";
+              form5.style.display = "none";
+              indication.style.display = "";
+            }
+            if (selectUser == 3) {
+              form2.style.display = "none";
+              form3.style.display = "";
+              form4.style.display = "none";
+              form5.style.display = "none";
+              indication.style.display = "";
+            }
+            if (selectUser == 4) {
+              form2.style.display = "none";
+              form3.style.display = "none";
+              form4.style.display = "";
+              form5.style.display = "none";
+              indication.style.display = "";
+            }
+            if (selectUser == 5) {
+              form2.style.display = "none";
+              form3.style.display = "none";
+              form4.style.display = "none";
+              form5.style.display = "";
+              indication.style.display = "";
+            }
+          });
+        </script>
       </body>
 </html>

@@ -5,211 +5,100 @@
 
 {% block content %}
 
+<style>
+  .indiRech{
+    position: relative;
+    border: rgb(56, 51, 133) solid 2px;
+    border-radius: 10px;
+    padding: 20px;
+  }
 
-<section class="pt-5 pb-5 mt-5 bg_profile">
-  <a data-bs-toggle="modal" data-bs-target="#typeRecherche" href="{% url 'recherche_repetiteur' %}">Rechercher un prof</a>
+  #indicationR {
+    position: absolute;
+    color: rgb(56, 51, 133);
+    font-size: 60px;
+    top: -12%;
+    left: -3%;
+  }
+  
+  .steps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
 
-    <!-- Modal -->
-  <div class="modal fade" id="typeRecherche" tabindex="-1" aria-labelledby="typeRechercheLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="typeRechercheLabel">RECHERCHE DE RÉPÉTITEURS</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-      <form action="" method="post">
-        {% csrf_token %}
+  .step {
+    width: 250px;
+    /* box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.342); */
+    margin: 10px 20px;
+    padding: 10px;
+    border-radius: 10px;
+    position: relative;
+  }
 
-        <div class="modal-body">
-          <div class="container-fluid text-center">
-            <div class="row">
-              <div class="col-md-6 offset-md-3">
-                <div class="form-group">
-                  <label for="typeRech">Critères de recherche</label>
-                  <select class="form-control" name="typeRech" id="typeRech">
-                    <option value="selected">-----------</option>
-                    <option value="1">Tous les profs</option>
-                    <option value="2">Matière + Ville</option>
-                    <option value="3">Classe + Ville</option>
-                    <option value="4">Matière + Classe + Ville</option>
-                    <option value="5">Matière + Classe + Ville + Quartier</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <p id="indication" style="color: rgb(56, 51, 133);" class="text-center align-items-center mt-4">
-              <i style="font-size: 20px;" class="bi-question-circle"></i> 
-              <span style="font-style: italic;">
-                Si une <b>classe ou matière ou ville ou quartier</b> n'apparaît pas dans la liste, alors un tel répétiteur n'est pas encore enregistré !
-              </span>
-            </p>
-            <div class="row mt-2" id="form2">
-              <div class="col-md-5 offset-md-1 mt-3">
-                <div class="form-group">
-                  <label for="matiere2">Matière</label>
-                  <select class="form-control" name="matiere2" id="matiere2">
-                    <option value="">matiere</option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-5 mt-3">
-                <div class="form-group">
-                  <label for="ville2">Ville</label>
-                  <select class="form-control" name="ville2" id="ville2">
-                    <option value="">ville</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row mt-2" id="form3">
-              <div class="col-md-5 offset-md-1 mt-3">
-                <div class="form-group">
-                  <label for="classe3">Classe</label>
-                  <select class="form-control" name="classe3" id="classe3">
-                    <option value="">classe</option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-5 mt-3">
-                <div class="form-group">
-                  <label for="ville3">Ville</label>
-                  <select class="form-control" name="ville3" id="ville3">
-                    <option value="">ville</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row mt-2" id="form4">
-              <div class="col-md-5 offset-md-1 mt-3">
-                <div class="form-group">
-                  <label for="matiere4">Matière</label>
-                  <select class="form-control" name="matiere4" id="matiere4">
-                    <option value="">matiere</option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-5 mt-3">
-                <div class="form-group">
-                  <label for="classe4">Classe</label>
-                  <select class="form-control" name="classe4" id="classe4">
-                    <option value="">classe</option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-4 offset-md-4 mt-3">
-                <div class="form-group">
-                  <label for="ville4">Ville</label>
-                  <select class="form-control" name="ville4" id="ville4">
-                    <option value="">ville</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row mt-2" id="form5">
-              <div class="col-md-5 offset-md-1 mt-3">
-                <div class="form-group">
-                  <label for="matiere5">Matière</label>
-                  <select class="form-control" name="matiere5" id="matiere5">
-                    <option value="">matiere</option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-5 mt-3">
-                <div class="form-group">
-                  <label for="classe5">Classe</label>
-                  <select class="form-control" name="classe5" id="classe5">
-                    <option value="">classe</option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-5 offset-md-1 mt-3">
-                <div class="form-group">
-                  <label for="ville5">Ville</label>
-                  <select class="form-control" name="ville5" id="ville5">
-                    <option value="">ville</option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-5 mt-3">
-                <div class="form-group">
-                  <label for="quartier5">Quartier</label>
-                  <select class="form-control" name="quartier5" id="quartier5">
-                    <option value="">quartier</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          </div>
+  .step h4{
+    font-weight: bold;
+  }
+
+  .step p{
+    font-size: 13px;
+  }
+
+  .step i{
+    font-size: 60px;
+    color: rgb(56, 51, 133);
+  }
+
+  .step .number{
+    position: absolute;
+    font-weight: 600;
+    color: #fff;
+    background: orange;
+    border-radius: 50%;
+    padding: 5px 10px;
+  }
+</style>
+
+<section class="pb-5 mt-5 bg_profile">
+
+  <div class="pt-4 pb-2">
+    <div class="pt-3 titre">
+        <h1 class="text-center">Recherche d'un répétiteur</h1>
+    </div> 
+  </div>
+
+  <div class="container">
+    <div class="row my-4 mx-auto text-center">
+      <h4 class="mb-2" style="font-weight: bold;">Trouvez facilement le prof qu'il vous faut</h4>
+      <div class="steps">
+        <div class="step">
+          <p class="number">1</p>
+          <i class="bi-search"></i>
+          <h4>Lancer la recherche</h4>
+          <p>
+            Séléctionnez un critère parmi ceux proposés
+          </p>
         </div>
-        <div class="modal-footer">
-          <input class="btn-connexion" type="submit" value="Rechercher">
-          <button type="button" class="btn-register annuler" data-bs-dismiss="modal">Annuler</button>
+        <div class="step">
+          <p class="number">2</p>
+          <i class="bi-people-fill"></i>
+          <h4>Consulter les profils</h4>
+          <p>Visitez les profils trouvés afin de mieux faire votre choix</p>
         </div>
-      </form>
+        <div class="step">
+          <p class="number">3</p>
+          <i class="bi-person-check"></i>
+          <h4>Prendre contact</h4>
+          <p>Prennez contact avec votre prof et discutez des modalités</p>
+        </div>
+      </div>
+      <div class="mt-4">
+        <a class="btn-connexion" style="color: #fff !important;" data-bs-toggle="modal" data-bs-target="#typeRecherche" href="{% url 'recherche_repetiteur' %}">Lancer la recherche</a>
       </div>
     </div>
   </div>
+
 </section>
-  
-<script>
-  // myModal = document.getElementById('typeRecherche');
-  // $(window).on('load', function() {
-  //   $(myModal).modal('show');
-  // });
-
-  // choix du formulaire de recherche
-
-  var form2 = document.getElementById('form2');
-  var form3 = document.getElementById('form3');
-  var form4 = document.getElementById('form4');
-  var form5 = document.getElementById('form5');
-  var indication = document.getElementById('indication');
-
-  form2.style.display = "none";
-  form3.style.display = "none";
-  form4.style.display = "none";
-  form5.style.display = "none";
-  indication.style.display = "none";
-
-  document.getElementById('typeRech').addEventListener('change', function(e) {
-    var selectUser = e.target.value;
-    if (selectUser == 1) {
-      form2.style.display = "none";
-      form3.style.display = "none";
-      form4.style.display = "none";
-      form5.style.display = "none";
-      indication.style.display = "none";
-    }
-    if (selectUser == 2) {
-      form2.style.display = "";
-      form3.style.display = "none";
-      form4.style.display = "none";
-      form5.style.display = "none";
-      indication.style.display = "";
-    }
-    if (selectUser == 3) {
-      form2.style.display = "none";
-      form3.style.display = "";
-      form4.style.display = "none";
-      form5.style.display = "none";
-      indication.style.display = "";
-    }
-    if (selectUser == 4) {
-      form2.style.display = "none";
-      form3.style.display = "none";
-      form4.style.display = "";
-      form5.style.display = "none";
-      indication.style.display = "";
-    }
-    if (selectUser == 5) {
-      form2.style.display = "none";
-      form3.style.display = "none";
-      form4.style.display = "none";
-      form5.style.display = "";
-      indication.style.display = "";
-    }
-  });
-
-</script>
 
 {% endblock %}

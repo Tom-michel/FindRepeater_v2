@@ -431,7 +431,7 @@ def profs_compatibles(request, id_cli):
 
 # rechercher un repetiteurs
 
-@login_required(login_url='connexion')
+# @login_required(login_url='connexion')
 def recherche_repetiteur(request):
     return render(request, 'utilisateurs/recherche_repetiteur.html')
 
