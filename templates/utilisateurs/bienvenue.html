@@ -133,15 +133,30 @@
 
 	@media screen and (min-width: 992px) {
 		.salut h1 {
-			font-size: 40px !important;
+			font-size: 30px !important;
 			color: rgb(56, 51, 133) !important;
 			transition: 0.3s ease-in-out;
 		}
 	}
 
-	@media screen and (max-width: 991px) {
+	@media screen and (min-width: 768px) and (max-width: 991px) {
 		.salut h1 {
-			font-size: 30px !important;
+			font-size: 25px !important;
+			color: rgb(56, 51, 133) !important;
+			transition: 0.3s ease-in-out;
+		}
+		.btn-register.bienv{
+			padding: 6px 15px !important;
+			font-size: 0.8rem;
+		}
+		.contain.aff {
+			height: 250px;
+			margin-bottom: 50px;
+		}
+	}
+	@media screen and (max-width: 767px) {
+		.salut h1 {
+			font-size: 25px !important;
 			color: rgb(56, 51, 133) !important;
 			transition: 0.3s ease-in-out;
 		}
@@ -190,11 +205,11 @@
           <i class="bi-person-circle"></i>
         </div>
       </div>
-      <div class="col-md-7">
+      <div class="col-md-6">
         <div class="row p-3 bg-white">
           <div class="col-md-12 info">
             <div class="row">
-              <div class="col">
+              <div class="col text-start">
                 <h6><b>Télephone</b></h6>
               </div>
               <div class="col text-end">
@@ -203,7 +218,7 @@
               <hr>
             </div>
             <div class="row">
-              <div class="col">
+              <div class="col text-start">
                 <h6><b>Email</b></h6>
               </div>
               <div class="col text-end">
@@ -212,7 +227,7 @@
               <hr>
             </div>
             <div class="row">
-              <div class="col">
+              <div class="col text-start">
                 <h6><b>Classe</b></h6>
               </div>
               <div class="col text-end">
@@ -221,7 +236,7 @@
               <hr>
             </div>
             <div class="row">
-              <div class="col">
+              <div class="col text-start">
                 <h6><b>Langue d'étude</b></h6>
               </div>
               <div class="col text-end">
@@ -230,7 +245,7 @@
               <hr>
             </div>
             <div class="row">
-              <div class="col">
+              <div class="col text-start">
                 <h6><b>Ville, Quartier</b></h6>
               </div>
               <div class="col text-end">

@@ -41,6 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'utilisateurs',
     'cours',
+
+    # ........ #
+    'multiselectfield',
+
 ]
 
 MIDDLEWARE = [

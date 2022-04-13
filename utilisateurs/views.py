@@ -3,13 +3,35 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .forms import UserForm, ClientForm, RepetiteurForm
+from .forms import CoursEnsForm, UserForm, ClientForm, RepetiteurForm
+from cours.forms import Type_Lieu_Cours_Form
 from django.contrib.auth.models import User
-from .models import Repetiteur, Client
-from cours.models import Cours
+from .models import CoursEns, Repetiteur, Client
+from cours.models import Cours, Type_Lieu_Cours
 
 # Create your views here.
 
+
+
+# test du multiselectfiedl
+
+def testMult(request):
+    cform = CoursEnsForm()
+    if request.method == 'POST':
+        # intitule = request.POST.get('intitule')
+        # classes = request.POST.get('classes')
+        # coursE = CoursEns(intitule=intitule, classes=classes)
+        # coursE.save()
+        cform = CoursEnsForm(data=request.POST)
+        coursE = cform.save()
+        coursE.save()
+        context = {'coursE':coursE}
+        return render(request, 'utilisateurs/testMult.html', context)
+        # return HttpResponseRedirect('/')
+
+    coursEns = CoursEns.objects.all()
+    context = {'coursEns':coursEns, 'cform':cform}
+    return render(request, 'utilisateurs/testMult.html', context)
 
 
 # page d'accueil
@@ -24,8 +46,8 @@ def accueil(request):
     listCli = []
     for cli in listC:
         listCli.append(cli.user.username)
-    content = {'listRep':listRep, 'listCli':listCli}
-    return render(request, 'utilisateurs/index.html', content)
+    context = {'listRep':listRep, 'listCli':listCli}
+    return render(request, 'utilisateurs/index.html', context)
 
 
 
@@ -34,7 +56,7 @@ def accueil(request):
 @login_required(login_url='connexion')
 def bienvenue(request):
     listC  = Client.objects.all()
-    content1 = {'listC':listC}
+    context1 = {'listC':listC}
 
     if request.method == "POST":
         typeRech = request.POST.get('typeRech')
@@ -59,15 +81,15 @@ def bienvenue(request):
             for cour in coursAffTemp:
                 if cour not in coursAffInti:
                     coursAffInti.append(cour)
-            content2 = {
+            context2 = {
                 'repAff':repAff,
                 'coursList':coursList,
                 'coursAff':coursAff,
                 'coursAffInti':coursAffInti,
             }
-            return render(request, 'utilisateurs/liste_repetiteurs.html', content2)
+            return render(request, 'utilisateurs/liste_repetiteurs.html', context2)
 
-    return render(request, 'utilisateurs/bienvenue.html', content1)
+    return render(request, 'utilisateurs/bienvenue.html', context1)
 
 
 
@@ -108,7 +130,7 @@ def enregistrement(request):
     else:
         user_form = UserForm()
         client_form = ClientForm()
-    content = {
+    context = {
         'registered':registered,
         'err1':err1,
         'err2':err2,
@@ -116,7 +138,7 @@ def enregistrement(request):
         'form2':client_form,
         'util':util,
     }
-    return render(request, 'utilisateurs/enregistrement.html', content)
+    return render(request, 'utilisateurs/enregistrement.html', context)
 
 
 
@@ -160,7 +182,7 @@ def enregistrement_prof(request):
     else:
         user_form = UserForm()
         repetiteur_form = RepetiteurForm()
-    content = {
+    context = {
         'registered':registered,
         'err1':err1,
         'err2':err2,
@@ -168,7 +190,7 @@ def enregistrement_prof(request):
         'form2':repetiteur_form,
         'util':util,
     }
-    return render(request, 'utilisateurs/enregistrement_prof.html', content)
+    return render(request, 'utilisateurs/enregistrement_prof.html', context)
 
 
 # se connecter à son compte
@@ -207,18 +229,18 @@ def connexion(request):
                     login(request, user)
                     return HttpResponseRedirect('admin')
                 #     msg1 = messages.info(request, "cet utilisateur ne correspond pas à un compte Parent/Élève ou Enseignant !")
-                # content1 = {
+                # context1 = {
                 #     'msg1':msg1
                 # }
-                # return render(request, 'utilisateurs/connexion.html', content1)
+                # return render(request, 'utilisateurs/connexion.html', context1)
             else:
                 return HttpResponse("L'utilisateur est désactivé")
         else:
-            msg = messages.info(request, "votre Nom d'utilisateur ou votre Mot de passe est incorrect, veuillez réessayer !")
-            content = {
+            msg = messages.info(request, "votre Adresse mail ou votre Mot de passe est incorrect, veuillez réessayer !")
+            context = {
                 'msg':msg
             }
-            return render(request, 'utilisateurs/connexion.html', content)
+            return render(request, 'utilisateurs/connexion.html', context)
     else:
         return render(request, 'utilisateurs/connexion.html')
 
@@ -229,15 +251,22 @@ def connexion(request):
 @login_required(login_url='connexion')
 def consulter_profil(request):
     coursList = Cours.objects.all()
-    coursTemp = Cours.objects.all()
-    cours = []
-    for c in coursTemp:
-        cours.append(c.repetiteur.user.id)
-
     repList = Repetiteur.objects.all()
+    tlList = Type_Lieu_Cours.objects.all()
 
-    content = {'coursList':coursList, 'cours':cours,'repList':repList}
-    return render(request, 'utilisateurs/consulter_profil.html', content)
+    # formulaire pour ajout de types_lieux_cours (via un modal)
+    tl_form = Type_Lieu_Cours_Form()
+    if request.method == 'POST':
+        tl_form = Type_Lieu_Cours_Form(data=request.POST)
+        if tl_form.is_valid():
+            type_lieux = tl_form.save()
+            type_lieux.save()
+            tlList = Type_Lieu_Cours.objects.all()
+            context = {'coursList':coursList, 'repList':repList, 'tlList':tlList, 'tl_form':tl_form}
+            return render(request, 'utilisateurs/consulter_profil.html', context)
+
+    context = {'coursList':coursList, 'repList':repList, 'tlList':tlList, 'tl_form':tl_form}
+    return render(request, 'utilisateurs/consulter_profil.html', context)
 
 
 
@@ -288,14 +317,14 @@ def modifier_profil(request, id_r, id_u):
         else:
             err = rep_form.errors
             err2 = user_form.errors
-    content = {
+    context = {
         'err':err,
         'err2':err2,
         'rep_form':rep_form,
         'user_form':user_form,
         'repList':repList,
     }
-    return render(request, 'utilisateurs/modifier_profil.html', content)
+    return render(request, 'utilisateurs/modifier_profil.html', context)
 
 
 
@@ -345,7 +374,7 @@ def modifier_profil_cli(request, id_c, id_u):
         else:
             err = cli_form.errors
             err2 = user_form.errors
-    content = {
+    context = {
         'err':err,
         'err2':err2,
         'cli_form':cli_form,
@@ -353,7 +382,7 @@ def modifier_profil_cli(request, id_c, id_u):
         'cliList':cliList,
     }
 
-    return render(request, 'utilisateurs/modifier_profil_cli.html', content)
+    return render(request, 'utilisateurs/modifier_profil_cli.html', context)
 
 
 
@@ -362,6 +391,7 @@ def modifier_profil_cli(request, id_c, id_u):
 def voir_profil(request, id_r, id_u):
     repList = Repetiteur.objects.all()
     coursList = Cours.objects.all()
+    tlList  =Type_Lieu_Cours.objects.all()
 
     # identifier un répétiteur spécifique par son id
     rep = Repetiteur.objects.get(id=id_r)
@@ -376,14 +406,22 @@ def voir_profil(request, id_r, id_u):
         if c.repetiteur.user.id == rep.user.id:
             coursL.append(c)
     n = len(coursL)
-    content = {
+
+    typLie = []
+    for tl in tlList:
+        if tl.repetiteur.user.id == rep.user.id:
+            typLie.append(tl)
+
+    context = {
         'rep':rep,
         'use':use,
         'repList':repList,
+        'tlList':tlList,
         'coursL':coursL,
         'n':n,
+        'typLie':typLie,
     }
-    return render(request, 'utilisateurs/voir_profil.html', content)
+    return render(request, 'utilisateurs/voir_profil.html', context)
 
 
 
@@ -416,7 +454,7 @@ def profs_compatibles(request, id_cli):
         if cour not in coursCompU:
             coursCompU.append(cour)
 
-    content = {
+    context = {
         'client':client,
         'repList':repList,
         'coursList':coursList,
@@ -425,7 +463,7 @@ def profs_compatibles(request, id_cli):
         'coursComp':coursComp,
     }
 
-    return render(request, 'utilisateurs/profs_compatibles.html', content)
+    return render(request, 'utilisateurs/profs_compatibles.html', context)
 
 
 

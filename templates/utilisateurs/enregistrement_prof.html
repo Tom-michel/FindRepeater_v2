@@ -198,39 +198,39 @@
                 {% endif %}
                     <div class="contentRep et4">
                         <div class="row">
-                            <div class="col-md-6 mt-1">
+                            <div class="col-md-6 mt-1" style="display: none !important;">
                                 <div class="form-group">
                                   <label for="username">Nom d'utilisateur</label>
-                                  <!-- <input class="form-control" type="text" name="username" id="usernameRep"> -->
-                                  {{form1.username}}
+                                  <input type="text" name="username" maxlength="150" autofocus="" id="id_username">
+                                  <!-- {{form1.username}} -->
                                   {{form1.username.errors}}
                                 </div>
                             </div>
 
                             <style>
-                              .fom {
-                                align-items: center !important;
-                                display: flex;
-                              }
-                              .far {
-                                position: absolute;
-                                right: 2%;
-                                cursor: pointer;
-                                color: rgb(48, 48, 48);
-                                font-size: 20px;
-                              }
-                
-                              @media screen and (max-width: 991px) {
-                                .far {
-                                  right: 2%;
+                                .fom {
+                                  align-items: center !important;
+                                  display: flex;
                                 }
-                              }
-                
-                              @media screen and (max-width: 767px) {
                                 .far {
-                                  right: 3%;
+                                  position: absolute;
+                                  right: 4%;
+                                  cursor: pointer;
+                                  color: rgb(48, 48, 48);
+                                  font-size: 20px;
                                 }
-                              }
+                  
+                                @media screen and (max-width: 991px) {
+                                  .far {
+                                    right: 4%;
+                                  }
+                                }
+                  
+                                @media screen and (max-width: 767px) {
+                                  .far {
+                                    right: 3%;
+                                  }
+                                }
                             </style>
 
                             <div class="col-md-6 mt-1">
@@ -243,14 +243,22 @@
                                   {{form1.password2.errors}}
                                 </div>
                             </div>
-                        </div>
-                        <div class="row mt-1">
-                            <div class="col-md-6 offset-md-3">
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                <label for="password2">Ratapez le mot de passe </label>
+                                <label for="password2">Retapez le mot de passe </label>
                                   <!-- <input class="form-control" type="password" name="password2" id="password2Rep"> -->
                                   {{form1.password2}}
                                 </div>
+                            </div>
+
+                            <div class="text-center mt-1">
+                                {% if form1.username.errors %}                                    
+                                    <span style="color: #e35f5f !important;
+                                    font-weight: 700;
+                                    font-size: 13px !important;">
+                                        votre adresse mail est déja utilisé
+                                    </span>
+                                {% endif %}
                             </div>
                         </div>
                         
@@ -280,6 +288,16 @@
     }
     document.getElementById('id_civilite').focus();
 
+
+
+    function validateFormEnreg() {
+      var usernam = document.getElementById('id_username');
+      var email = document.getElementById('id_email');
+      usernam.value = email.value
+      if (usernam.value != ""){
+        return true;
+      }
+    }
 
 
     // affichage/masquage du mdp

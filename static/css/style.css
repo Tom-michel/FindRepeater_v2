@@ -193,7 +193,12 @@ h1, h2, h3, h4, h5, h6 {
     border-bottom-left-radius: 10px;
     background: rgba(241, 215, 71, 0.938);
     margin-top: 25%;
-    padding: 200px 20px;
+    padding: 170px 20px;
+    font-size: 20px;
+  }
+  .enrO.cli {
+    margin-top: 25%;
+    padding: 170px 20px;
     font-size: 20px;
   }
   .enrC {
@@ -334,7 +339,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 .form-enregistrement .etapeRep.active .contentRep.et4,
 .form-enregistrement .etapeCli.active .contentCli.et3 {
-  height: 270px;
+  height: 190px;
 }
 
 @media screen and (max-width: 767px) {
@@ -349,50 +354,9 @@ h1, h2, h3, h4, h5, h6 {
   }
   .form-enregistrement .etapeRep.active .contentRep.et4,
   .form-enregistrement .etapeCli.active .contentCli.et3 {
-    height: 330px;
+    height: 260px;
   }
 }
-
-/* .form-enregistrement .etapeRep {
-  position: relative;
-}
-.form-enregistrement .etapeRep.active {
-  margin: 10px 20px;
-}
-
-.form-enregistrement .etapeRep .contentRep{
-  position: relative;
-  height: 0;
-  overflow: hidden;
-  transition: 0.5s;
-  overflow-y: auto;
-}
-
-@media screen and (min-width: 768px) {
-  .form-enregistrement .etapeRep.active .contentRep{
-    height: 320px;
-  }
-
-  .form-enregistrement .etapeRep.active .contentRep.et1{
-    height: 100px;
-  }
-  .form-enregistrement .etapeRep.active .contentRep.et4{
-    height: 250px;
-  }
-}
-
-@media screen and (max-width: 767px) {
-  .form-enregistrement .etapeRep.active .contentRep{
-    height: 555px;
-  }
-
-  .form-enregistrement .etapeRep.active .contentRep.et1{
-    height: 95px;
-  }
-  .form-enregistrement .etapeRep.active .contentRep.et4{
-    height: 390px;
-  }
-} */
 
 /* effet collapse FIN */
 

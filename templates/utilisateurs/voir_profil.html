@@ -147,11 +147,10 @@
     
     <div class="container">
         <div class="row">
-            
             <div class="col-md-4 shadow-lg dash mx-4">
-                <div class="d-flex flex-column align-items-center dash-content text-center p-3 py-5">
+                <div class="d-flex flex-column align-items-center dash-content text-center p-3">
                     <img class="rounded-circle mt-5 profile-img" src="{% static 'img/profile.jpg' %}">
-                    <span>{{rep.user.username}} | {{rep.age}} ans | {{rep.profession}}</span>
+                    <span>{{rep.age}} ans | {{rep.profession}}</span>
                     <span>{{rep.ville}}, {{rep.quartier}}</span>
                     <span>{{rep.user.email}}</span>
                 </div>
@@ -205,97 +204,151 @@
                             </div>
                             <hr>
                         </div>
-
                     </div>
                 </div>
-                <div class="row p-3 mt-3 bg-white shadow cours">
-                        <div class="col-lg-5 offset-lg-1 text-center cont_part cont">
-                            <h3>Contacts</h3>
-                            <p>Contacter cet enseignant pour en savoir plus ou bien pour le recruter comme <b>répétiteur</b></p>
-                            <div class="reseaux">
-                                <a style="text-decoration: none; color: silver;" href="https://wa.me/{{rep.telephone2}}?text=Recherche d'un répétiteur | FindRepeater        Salut {{rep.civilite}} {{rep.user.last_name}}, j'ai visité la plateforme en ligne findrepeater et je suis intéressé.e par vous services de répétition; Pouvons-nous en discuter ?">
-                                    <i class="fab fa-whatsapp"></i>
-                                </a>&emsp;
-                                <a style="text-decoration: none; color: silver;" href="tel:{{rep.telephone1}}">
-                                    <i class="fas fa-mobile-alt"></i>
-                                </a>&emsp;
-                                <a style="text-decoration: none; color: silver;" href="mailto:{{rep.user.email}}?subject=Recherche d'un répétiteur | FindRepeater&body=Salut {{rep.civilite}} {{rep.user.last_name}}, j'ai visité la plateforme en ligne findrepeater et je suis intéressé.e par vos services de répétition; Pouvons-nous en discuter ?">
-                                    <i class="far fa-envelope"></i>
-                                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="pt-1 pb-3 mt-3 bg-white shadow cours">
+                <div class="row pt-2">
+                    <div class="col-lg-5 pb-3">
+                        <style>
+                            th, td {border: orange solid 1px; border-top: none; align-items: center;}
+                            .card {
+                                min-width: 100% !important;
+                                border: none !important;
+                            }
+                        </style>
+                        <h3 class="text-center">Cours enseignés ({{n}})</h3>
+                        <div id="tab" class="card card-body text-center" style="padding: 5px 3px;">                    
+                            <div class="table_cours table-responsive">
+                                <table class="table table-hover table-sm">
+                                    <tr  style="border-bottom: orange solid 3px; background-color: rgb(216, 210, 200);">
+                                        <th>Matière</th>
+                                        <th>Classe</th>
+                                    </tr>
+                                    {% for c in coursL %}
+                                        <tr>
+                                            <td>
+                                                {{c.matiere}} <br>
+                                            </td>
+                                            <style>
+                                                .les_classes{
+                                                    display: flex !important;
+                                                    flex-wrap: wrap;
+                                                    justify-content: center;
+                                                }
+                                            </style>
+                                            <td>
+                                                <div class="les_classes">
+                                                    {% for cla in c.classes %}
+                                                    <span style="border-radius: 20px; padding: 5px 10px;
+                                                    margin-bottom: 5px; margin-right: 3px; border: green solid 1px;" 
+                                                    class="classe">{{cla}}</span>
+                                                    {% endfor %}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
                             </div>
                         </div>
-                        <div class="col-lg-5 text-center cont_part part">
-                            <h3>Partager</h3>
-                            <p>Partager ce profil avec votre entourage sur <b>Whatsapp</b>, ou ailleurs en <b>copiant</b> le lien</p>
-                            <style>
-                                /* .partage {
-                                    background: #dee1e9;
+                    </div>
+                    <div class="col-lg-7">
+                        <div class="row pb-3">
+                            <style> 
+                                h4{font-weight: bold; padding-bottom: 10px;}
+                                .type, .lieu {
+                                    border-radius: 20px;
+                                    padding: 5px 10px;
+                                    margin-bottom: 5px;
+                                    margin-right: 3px;
+                                    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.575);
                                 }
-                                .wha, .face, .tel {
-                                    padding: 15px;
-                                }
-                                .partage .wha {
-                                    background: #25d36556;
-                                }
-                                .partage .face {
-                                    background: #273c755e;
-                                }
-                                .partage .tel {
-                                    background: #1da0f271;
-                                } */
-                                .fa-whatsapp {
-                                    color: #25d366;
-                                }
-                                .fa-facebook {
-                                    color: #273c75;
-                                }
-                                .fa-clone, .fa-copy {
-                                    color: #000;
+                                .type{border: blue solid 1px;}
+                                .lieu {border: yellow solid 1px;}
+                                .les_types{
+                                    display: flex !important;
+                                    flex-wrap: wrap;
+                                    justify-content: center;
                                 }
                             </style>
-                            <div class="partage">
-                                <span class="wha">
-                                    <a style="text-decoration: none;" href="https://wa.me/?text=Salut, je me nomme {{rep.civilite}} {{rep.user.last_name}} {{rep.user.first_name}}, je suis {{rep.profession}} et également enseignant des cours répétion. Pour plus d'information bien vouloir consulter mon *Profil Enseignant* sur la plateforme findrepeater via le lien suivant : {% url 'voir_profil' rep.id user.id %}">
+                            <div class="col-md-6 pb-4">
+                                <h3 class="text-center pb-2">Types de cours</h3>
+                                {% for tl in tlList %}
+                                {% if tl.repetiteur.user.id == rep.user.id %}
+                                    <div class="les_types">
+                                    {% for typ in tl.types %}
+                                        <span class="type">{{typ}}</span><br>
+                                    {% endfor %}
+                                    </div>
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                            <div class="col-md-6">
+                                <h3 class="text-center pb-2">Lieux de cours</h3>
+                                {% for tl in tlList %}
+                                {% if tl.repetiteur.user.id == rep.user.id %}
+                                    <div class="les_types">
+                                    {% for lie in tl.lieux %}
+                                        <span class="lieu">{{lie}}</span><br>
+                                    {% endfor %}
+                                    </div>
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div> 
+                        <div class="row">
+                            <div class="col-md-6 text-center cont_part cont">
+                                <h3>Contacts</h3>
+                                <p>Contacter cet enseignant pour en savoir plus ou bien pour le recruter comme <b>répétiteur</b></p>
+                                <div class="reseaux">
+                                    <a style="text-decoration: none; color: silver;" href="https://wa.me/{{rep.telephone2}}?text=Recherche d'un répétiteur | FindRepeater        Salut {{rep.civilite}} {{rep.user.last_name}}, j'ai visité la plateforme en ligne findrepeater et je suis intéressé.e par vous services de répétition; Pouvons-nous en discuter ?">
                                         <i class="fab fa-whatsapp"></i>
                                     </a>&emsp;
-                                </span>
-                                <span class="tel">
-                                    <a style="text-decoration: none;" >
-                                        <span style="position: absolute; margin-bottom: 20px; opacity: 1; height: 0; width: 0; overflow: hidden;" id="tocopy">Salut, je me nomme {{rep.civilite}} {{rep.user.last_name}} {{rep.user.first_name}}, je suis {{rep.profession}} et également enseignant des cours répétion. Pour plus d'information bien vouloir consulter mon *Profil Enseignant* sur la plateforme findrepeater via le lien suivant : {% url 'voir_profil' rep.id user.id %}</span>
-                                        <i class="far fa-clone js-copy" data-target="#tocopy"></i>
+                                    <a style="text-decoration: none; color: silver;" href="tel:{{rep.telephone1}}">
+                                        <i class="fas fa-mobile-alt"></i>
+                                    </a>&emsp;
+                                    <a style="text-decoration: none; color: silver;" href="mailto:{{rep.user.email}}?subject=Recherche d'un répétiteur | FindRepeater&body=Salut {{rep.civilite}} {{rep.user.last_name}}, j'ai visité la plateforme en ligne findrepeater et je suis intéressé.e par vos services de répétition; Pouvons-nous en discuter ?">
+                                        <i class="far fa-envelope"></i>
                                     </a>
-                                </span>
-                                
+                                </div>
                             </div>
-                        </div>
+                            <div class="col-md-6 text-center cont_part part">
+                                <h3>Partager</h3>
+                                <p>Partager ce profil avec votre entourage sur <b>Whatsapp</b>, ou ailleurs en <b>copiant</b> le lien</p>
+                                <style>
+                                    .fa-whatsapp {
+                                        color: #25d366;
+                                    }
+                                    .fa-facebook {
+                                        color: #273c75;
+                                    }
+                                    .fa-clone, .fa-copy {
+                                        color: #000;
+                                    }
+                                </style>
+                                <div class="partage">
+                                    <span class="wha">
+                                        <a style="text-decoration: none;" href="https://wa.me/?text=Salut, je me nomme {{rep.civilite}} {{rep.user.last_name}} {{rep.user.first_name}}, je suis {{rep.profession}} et également enseignant des cours répétion. Pour plus d'information bien vouloir consulter mon *Profil Enseignant* sur la plateforme findrepeater via le lien suivant : {% url 'voir_profil' rep.id user.id %}">
+                                            <i class="fab fa-whatsapp"></i>
+                                        </a>&emsp;
+                                    </span>
+                                    <span class="tel">
+                                        <a style="text-decoration: none;" >
+                                            <span style="position: absolute; margin-bottom: 20px; opacity: 1; height: 0; width: 0; overflow: hidden;" id="tocopy">Salut, je me nomme {{rep.civilite}} {{rep.user.last_name}} {{rep.user.first_name}}, je suis {{rep.profession}} et également enseignant des cours répétion. Pour plus d'information bien vouloir consulter mon *Profil Enseignant* sur la plateforme findrepeater via le lien suivant : {% url 'voir_profil' rep.id user.id %}</span>
+                                            <i class="far fa-clone js-copy" data-target="#tocopy"></i>
+                                        </a>
+                                    </span>
+                                    
+                                </div>
+                            </div>
+                        </div>   
+                    </div>        
                 </div>
             </div>
-          
-            <div id="tab" class="card card-body mt-3 bg-white shadow" style="background-color: #ebeff5; padding: 5px 3px;">                    
-                <h3 class="text-center">Cours dispensés ({{n}})</h3>
-                <style>
-                    th, td {border: orange solid 1px; border-top: none; align-items: center;}
-                </style>
-                <div class="table_cours table-responsive text-center">
-                    <table class="table table-hover table-sm">
-                        <tr  style="border-bottom: orange solid 3px; background-color: rgb(216, 210, 200);">
-                            <th>Matière</th>
-                            <th>Classe</th>
-                            <th>Jour.s disponibles</th>
-                        </tr>
-
-                        {% for c in coursL %}
-                                <tr>
-                                    <td>{{c.matiere}}</td>
-                                    <td>{{c.classe}}</td>
-                                    <td>{{c.jour}}</td>
-                                </tr>
-                        {% endfor %}
-                    </table>
-                </div>
-            </div>
-
-        </div> 
+        </div>
+        
     </div>
 </section>
 

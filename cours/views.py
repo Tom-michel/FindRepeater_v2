@@ -7,6 +7,65 @@ from .forms import *
 
 
 
+# types de cours
+
+def types_lieux(request):
+    err = " "
+    coursList = Cours.objects.all()
+    repList = Repetiteur.objects.all()
+    tlList = Type_Lieu_Cours.objects.all()
+
+    # formulaire pour ajout de types_lieux_cours (via un modal)
+    tl_form = Type_Lieu_Cours_Form()
+    if request.method == 'POST':
+        tl_form = Type_Lieu_Cours_Form(data=request.POST)
+        if tl_form.is_valid():
+            type_lieux = tl_form.save()
+            type_lieux.save()
+            tlList = Type_Lieu_Cours.objects.all()
+            return HttpResponseRedirect('../../consulter_profil')
+            # context = {'coursList':coursList, 'repList':repList, 'tlList':tlList, 'tl_form':tl_form}
+            # return render(request, '../../consulter_profil', context)
+        else:
+            err = messages.info(request, "Choisir au moins un type et un lieu !")
+
+    context = {'err':err,'coursList':coursList, 'repList':repList, 'tlList':tlList, 'tl_form':tl_form}
+    return render(request, 'cours/types_lieux.html', context)
+
+
+# modifier les types de cours
+
+def modifier_types_lieux(request, id_tl):
+    err = " "
+    coursList = Cours.objects.all()
+    repList = Repetiteur.objects.all()
+    tlList = Type_Lieu_Cours.objects.all()
+
+    # identifier un type_lieu par son id
+    tl = Type_Lieu_Cours.objects.get(id=id_tl)
+
+    tl_form = Type_Lieu_Cours_Form(instance=tl)
+
+    if request.method == "POST":
+        tl_form = Type_Lieu_Cours_Form(data=request.POST, instance=tl)
+        if tl_form.is_valid():
+            cours = tl_form.save()
+            cours.save()
+
+            tlList = Type_Lieu_Cours.objects.all()
+            return HttpResponseRedirect('../../consulter_profil')
+        else:
+            err = messages.info(request, "Choisir au moins un type et un lieu !")
+    context = {
+        'err':err,
+        'tl_form':tl_form,
+        'coursList':coursList,
+        'repList':repList,
+        'tlList':tlList,
+    }
+
+    return render(request, 'cours/types_lieux.html', context)
+
 
 # afficher la liste de tous les cours enseignés par les enseignats de la plateforme
 
@@ -24,7 +83,6 @@ def ajouter_cours(request):
     coursList = Cours.objects.all()
     cours_form = CoursForm()
     if request.method == 'POST':
-        cours_form.jour = request.POST.get('jour')
         cours_form = CoursForm(data=request.POST)
         if cours_form.is_valid():
             cours = cours_form.save()
@@ -32,7 +90,8 @@ def ajouter_cours(request):
             coursList = Cours.objects.all()
             return HttpResponseRedirect('../../consulter_profil')
         else:
-            err = cours_form.errors
+            # err = cours_form.errors
+            err = messages.info(request, "Choisir au moins 1 classe !")
 
     content = {
         'err':err,

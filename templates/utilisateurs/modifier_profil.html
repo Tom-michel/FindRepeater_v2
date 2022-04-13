@@ -58,7 +58,6 @@
                   {% if rep.user.id == user.id %}
                     <img width="150px" src="{% static 'img/profile.jpg' %}">
                     <span class="font-weight-bold">{{rep.user.username}}</span>
-                    <span class="text-black-50">{{rep.user.email}}</span>
                     <span class="pt-4"> 
                       <!-- {{user_form.username.errors}} -->
                       {% for err in user_form.username.errors %}

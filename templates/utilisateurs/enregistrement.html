@@ -16,7 +16,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-4 align-items-center justify-content-center px-0">
-        <div class="enrO">
+        <div class="enrO cli">
           <div class="text-center">    
             <p>Vous avez déja un compte ?</p>
             <a class="btn-connexion mt-5" href="{% url 'connexion' %}">Connexion</a>
@@ -24,7 +24,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-8 enrC"> 
+      <div class="col-md-8 enrC cli"> 
         <form name="formRegister" onsubmit="return validateFormEnreg()" action="" method="post">
           {% csrf_token %}
           
@@ -33,7 +33,7 @@
               <h4 class="text-center">Type de compte</h4>
               <div class="etapeCli active">
                   <div class="contentCli et1 text-center">
-                    <span id="type" style="color: orange; font-size: 17px;">élève/parent</span>
+                    <span id="type" style="color: orange; font-size: 17px;">élève/étudiant.e</span>
                   </div> 
             </div>
           </div>
@@ -65,10 +65,6 @@
                 {% endif %}
                     <div class="contentCli et2">
                         <div class="row">
-                          <p class=" mt-2 text-center" style="color: rgb(56, 51, 133); font-style: italic; font-size: 12px;">
-                            <i class="bi-question-circle"></i> 
-                            Cliquez sur le bouton <b>"+"</b> pour ajouter une classe à la liste
-                          </p>
                           <div class="col-md-6 mt-1">
                             <div class="form-group">
                               <label for="telephone1">Téléphone </label>
@@ -89,10 +85,7 @@
                           <div class="col-md-6 mt-1">
                             <div class="form-group">
                               <label for="langue">Classe</label>
-                              <div class="d-flex align-items-center">
-                                {{form2.classe}}
-                                <a href="{% url 'ajouter_classe_cli' %}"><i class="bi-plus-lg"></i></a>
-                              </div>
+                            {{form2.classe}}
                               <p><span class="errorform" id="error_classeCli"></span></p>
                             </div>
                           </div>
@@ -139,11 +132,11 @@
                 {% endif %}
                     <div class="contentCli et3">
                         <div class="row">
-                            <div class="col-md-6 mt-2">
+                            <div class="col-md-6 mt-2" style="display: none !important;">
                                 <div class="form-group">
                                   <label for="username">Nom d'utilisateur</label>
-                                  <!-- <input class="form-control" type="text" name="username" id="usernameCli"> -->
-                                  {{form1.username}}
+                                  <input type="text" name="username" maxlength="150" autofocus="" id="id_username">
+                                  <!-- {{form1.username}} -->
                                   {{form1.username.errors}}
                                 </div>
                             </div>
@@ -184,14 +177,22 @@
                                   {{form1.password2.errors}}
                                 </div>
                             </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col-md-6 offset-md-3">
+                            <div class="col-md-6 mt-2">
                                 <div class="form-group">
                                 <label for="password2">Ratapez le mot de passe </label>
                                   <!-- <input class="form-control" type="password" name="password2" id="password2Cli"> -->
                                   {{form1.password2}}
                                 </div>
+                            </div>
+
+                            <div class="text-center mt-1">
+                                {% if form1.username.errors %}                                    
+                                    <span style="color: #e35f5f !important;
+                                    font-weight: 700;
+                                    font-size: 13px !important;">
+                                        votre adresse mail est déja utilisé
+                                    </span>
+                                {% endif %}
                             </div>
                         </div>
                         
@@ -219,7 +220,19 @@
     for (var fields in form_fieldSel) {
         form_fieldSel[fields].className += ' form-control';
     }
-    document.getElementById('id_email').focus();
+    document.getElementById('id_telephone1').focus();
+
+
+    function validateFormEnreg() {
+      var usernam = document.getElementById('id_username');
+      var email = document.getElementById('id_email');
+      usernam.value = email.value
+      if (usernam.value != ""){
+        return true;
+      }
+    }
+
+
 
     // affichage/masquage du mdp
   

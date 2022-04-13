@@ -2,8 +2,33 @@ from django.db import models
 from django.db.models.deletion import CASCADE, SET_NULL
 from django.contrib.auth.models import User
 import os
+# from cours.models import MY_CLASSES
 
 # Create your models here.
+
+
+# model pour le test du multiselectfield
+
+from multiselectfield import MultiSelectField
+
+MY_CHOICES = (('Ecole primaire','Ecole primaire'),
+              ('6e','6e'),
+              ('5e','5e'),
+              ('4e','4e'),
+              ('3e','3e'),
+              ('Seconde','Seconde'),
+              ('Premiere','Premiere'),
+              ('Terminale','Terminale'),
+              ('Licence 1', 'Licence 1'),
+              ('Licence 2', 'Licence 2'),
+              ('Licence 3', 'Licence 3'))
+
+class CoursEns(models.Model):
+    intitule = models.CharField(max_length=100)
+    classes = MultiSelectField(choices=MY_CHOICES)
+    def __str__(self):
+        return self.intitule
+
 
 
 
@@ -47,18 +72,11 @@ class Classe(models.Model):
 # creation de la classe Client(élève/parent d'élève) qui est un Utilisateur
 
 class Client(Utilisateur):
-    classe = models.ForeignKey(Classe, null=True, on_delete=models.SET_NULL)
+    # classe = models.ForeignKey(Classe, null=True, on_delete=models.SET_NULL)
+    classe = models.CharField(max_length=200, null=True, choices=MY_CHOICES)
 
     def __str__(self):
-        return self.user.username
-
-    # rechercher un Repetiteur
-    def rechercher(self, matiere, classe, ville, quartier):
-        pass
-
-    # consulter le profil d'un Repetiteur
-    def consulterProfil(sel, repetiteur):
-        pass
+        return self.user.last_name+" "+self.user.first_name
 
 
 

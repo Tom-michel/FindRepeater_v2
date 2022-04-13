@@ -39,6 +39,9 @@
             width: 80% !important;
             margin: auto;
         }
+        .ty_li {
+            margin-top: 2.8rem !important;
+        }
     }
 
     @media screen and (max-width: 767px) {
@@ -92,152 +95,254 @@
             <h1 class="text-center">Mon Profil</h1>
         </div> 
     </div>
-    
+
+    {% for rep in repList %}
+    {% if rep.user.id == user.id %}
     <div class="container">
         <div class="row">
-            
-            {% for rep in repList %}
-                {% if rep.user.id == user.id %}
-                    <div class="col-md-4 shadow-lg dash mx-4">
-                        <div class="d-flex flex-column align-items-center dash-content text-center p-3 py-5">
-                            <img class="rounded-circle mt-5 profile-img" src="{% static 'img/profile.jpg' %}">
-                            <span>{{rep.user.username}} | {{rep.age}} ans | {{rep.profession}}</span>
-                            <span>{{rep.ville}}, {{rep.quartier}}</span>
-                            <span>{{rep.user.email}}</span>
-                        </div>
-                    </div>
-                    <div class="col-md-7">
-                        <div class="row p-3 bg-white shadow">
-                            <div class="col-md-12 info">
-                                <h3 class="text-center">À propos</h3><br>
-                                <div class="row">
-                                    <div class="col">
-                                        <h6><b>Noms et Prénoms</b></h6>
-                                    </div>
-                                    <div class="col text-end">
-                                        <span>{{rep.user.last_name}} {{rep.user.first_name}}</span>
-                                    </div>
-                                    <hr>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <h6><b>Télephone</b></h6>
-                                    </div>
-                                    <div class="col text-end">
-                                        <span>{{rep.telephone1}}</span>
-                                    </div>
-                                    <hr>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <h6><b>Whatsapp</b></h6>
-                                    </div>
-                                    <div class="col text-end">
-                                        <span>{{rep.telephone2}}</span>
-                                    </div>
-                                    <hr>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <h6><b>Niveau d'étude</b></h6>
-                                    </div>
-                                    <div class="col text-end">
-                                        <span>{{rep.niveauEtude}}</span>
-                                    </div>
-                                    <hr>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <h6><b>Langue d'enseignement</b></h6>
-                                    </div>
-                                    <div class="col text-end">
-                                        <span>{{rep.langue}}</span>
-                                    </div>
-                                    <hr>
-                                </div>
-
-                                <div class="text-center p-2">
-                                    <a class="btn-connexion" href="{% url 'modifier_profil' rep.id user.id %}">Modifier</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row r p-3 mt-3 bg-white shadow cours">
-                            <div class="row pt-2">
-                                <div class="col-md-12 text-center">
-                                    <h3>Partager</h3>
-                                    <p class="mb-0">Partagez votre profil sur <b>Whatsapp</b>, ou <b>Copiez</b> le lien afin de le distribuer ailleurs</p>
-                                    <style>
-                                        .fa-whatsapp {
-                                            color: #25d366;
-                                        }
-                                        .fa-facebook {
-                                            color: #273c75;
-                                        }
-                                        .fa-clone, .fa-copy {
-                                            color: #000;
-                                        }
-                                    </style>
-                                    <div class="partage">
-                                        <span class="wha">
-                                            <a style="text-decoration: none;" href="https://wa.me/?text=Salut, je suis {{rep.civilite}} {{rep.user.last_name}} {{rep.user.first_name}}, {{rep.profession}} et également enseignant des cours répétion. Pour plus d'information bien vouloir consulter mon *Profil Enseignant* sur la plateforme findrepeater via le lien suivant : {% url 'voir_profil' rep.id user.id %}">
-                                                <i class="fab fa-whatsapp"></i>
-                                            </a>&emsp;
-                                        </span>
-                                        <span class="tel">
-                                            <a style="text-decoration: none;" >
-                                                <span style="position: absolute; margin-bottom: 20px; opacity: 1; height: 0; width: 0; overflow: hidden;" id="tocopy">Salut, je suis {{rep.civilite}} {{rep.user.last_name}} {{rep.user.first_name}}, {{rep.profession}} et également enseignant des cours répétion. Pour plus d'information bien vouloir consulter mon *Profil Enseignant* sur la plateforme findrepeater via le lien suivant : {% url 'voir_profil' rep.id user.id %}</span>
-                                                <i class="far fa-clone js-copy" data-target="#tocopy"></i>
-                                            </a>
-                                        </span>&emsp;
-                                        <span>
-                                            <a style="text-decoration: none;" href="{% url 'voir_profil' rep.id user.id %}">voir<i class="fas fa-eye"></i></a> 
-                                        </span>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                {% endif %}
-            {% endfor %}
-    
-            <div id="tab" class="card card-body mt-3 bg-white shadow text-center" style="background-color: #ebeff5; padding: 5px 3px;">                    
-                <h3>Cours dispensés</h3>
-                <a class="btn-connexion ajout mb-1" href="{% url 'ajouter_cours' %}">Ajouter un cours</a>
-                <style>
-                    th, td {border: orange solid 1px; border-top: none; align-items: center;}
-                </style>
-                <div class="table_cours table-responsive">
-                    <table class="table table-hover table-sm">
-                        <tr  style="border-bottom: orange solid 3px; background-color: rgb(216, 210, 200);">
-                            <th>Matière</th>
-                            <th>Classe</th>
-                            <th>Jour.s disponible.s</th>
-                            <!-- <th>Début</th>
-                            <th>Durée</th> -->
-                            <th>Modifier</th>
-                            <th>Retirer</th>
-                        </tr>
-
-                        {% for c in coursList %}
-                            {% if c.repetiteur.user.id == user.id %}
-                                <tr>
-                                    <td>{{c.matiere}}</td>
-                                    <td>{{c.classe}}</td>
-                                    <td>{{c.jour}}</td>
-                                    <!-- <td>{{c.heure_début}}</td>
-                                    <td>{{c.duree}}</td> -->
-                                    <td><a href="{% url 'modifier_cours' c.id %}"><i style="color: green;" class="bi-pencil-square"></i></a></td>
-                                    <td><a href="{% url 'supprimer_cours' c.id %}"><i style="color: red;" class="bi-x-circle"></i></a></td>
-                                </tr>
-                            {% endif %}
-                        {% endfor %}
-                    </table>
+            <div class="col-md-4 shadow-lg dash mx-4">
+                <div class="d-flex flex-column align-items-center dash-content text-center p-3">
+                    <img class="rounded-circle mt-5 profile-img" src="{% static 'img/profile.jpg' %}">
+                    <span>{{rep.age}} ans | {{rep.profession}}</span>
+                    <span>{{rep.ville}}, {{rep.quartier}}</span>
+                    <span>{{rep.user.email}}</span>
                 </div>
             </div>
+            <div class="col-md-7">
+                <div class="row p-3 bg-white shadow">
+                    <div class="col-md-12 info">
+                        <h3 class="text-center">À propos</h3><br>
+                        <div class="row">
+                            <div class="col">
+                                <h6><b>Noms et Prénoms</b></h6>
+                            </div>
+                            <div class="col text-end">
+                                <span>{{rep.user.last_name}} {{rep.user.first_name}}</span>
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <h6><b>Télephone</b></h6>
+                            </div>
+                            <div class="col text-end">
+                                <span>{{rep.telephone1}}</span>
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <h6><b>Whatsapp</b></h6>
+                            </div>
+                            <div class="col text-end">
+                                <span>{{rep.telephone2}}</span>
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <h6><b>Niveau d'étude</b></h6>
+                            </div>
+                            <div class="col text-end">
+                                <span>{{rep.niveauEtude}}</span>
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <h6><b>Langue d'enseignement</b></h6>
+                            </div>
+                            <div class="col text-end">
+                                <span>{{rep.langue}}</span>
+                            </div>
+                            <hr>
+                        </div>
 
-        </div> 
-    </div>    
+                        <div class="text-center p-2">
+                            <a class="btn-connexion" href="{% url 'modifier_profil' rep.id user.id %}">Modifier</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="p-3 mt-3 bg-white shadow cours">
+                <div class="row pt-2">
+                    <div class="col-md-7">
+                        <style>
+                            th, td {border: orange solid 1px; border-top: none; align-items: center;}
+                            .card {
+                                min-width: 100% !important;
+                                border: none !important;
+                            }
+                        </style>
+                        <h3 class="text-center">Cours enseignés</h3>
+                        <div id="tab" class="card card-body text-center" style="padding: 5px 3px;">                    
+                            <a class="btn-connexion ajout mb-1" href="{% url 'ajouter_cours' %}">Ajouter un cours</a>
+                            <div class="table_cours table-responsive">
+                                <table class="table table-hover table-sm">
+                                    <tr  style="border-bottom: orange solid 3px; background-color: rgb(216, 210, 200);">
+                                        <th>Matière</th>
+                                        <th>Classe</th>
+                                    </tr>
+            
+                                    {% for c in coursList %}
+                                        {% if c.repetiteur.user.id == user.id %}
+                                            <tr>
+                                                <td>
+                                                    <span class="classe">{{c.matiere}}</span> <br>
+                                                    <a href="{% url 'modifier_cours' c.id %}"><i style="color: green;" class="bi-pencil-square"></i></a> &emsp;
+                                                    <a href="{% url 'supprimer_cours' c.id %}"><i style="color: red;" class="bi-x-circle"></i></a>
+                                                </td>
+                                                <style>
+                                                    .les_classes{
+                                                        display: flex !important;
+                                                        flex-wrap: wrap;
+                                                        justify-content: center;
+                                                    }
+                                                </style>
+                                                <td>
+                                                    <div class="les_classes">
+                                                    {% for cla in c.classes %}
+                                                    <span style="border-radius: 20px; padding: 5px 10px;
+                                                    margin-bottom: 5px; margin-right: 3px; border: green solid 1px;" 
+                                                    class="classe">{{cla}}</span>
+                                                    {% endfor %}
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 text-center">
+                        <h3>Types et Mieux de cours</h3>
+                        <div class="row px-3 pt-1">
+                            <p class=" mt-1 text-center" style="font-style: italic; font-size: 14px;">
+                                <i style="font-size: 20px;" class="bi-question-circle"></i> 
+                                - Cliquez sur "<b>Ajouter</b>" pour ajouter des types de cours et sur
+                                <b>"Modifier"</b> pour en modifier
+                            </p>
+                            <!-- <div class="d-flex"> -->
+                                <!-- <div class="flex-fill">
+                                    <div class="row px-3">
+                                        <a class="btn-connexion text-center" href="{% url 'types_lieux' %}">
+                                            Ajouter
+                                        </a>
+                                    </div>
+                                </div> -->
+                                <!-- <div class="flex-fill"> -->
+                                    <div class="row px-3">
+                                        {% for tl in tlList %}
+                                        {% if tl.repetiteur.user.id == user.id %}
+                                            <a class="btn-connexion text-center" href="{% url 'modifier_types_lieux' tl.id %}">
+                                                Modifier
+                                            </a>
+                                        {% endif %}
+                                        {% endfor %}
+                                        {% for tl in tlList %}
+                                        {% if tl.repetiteur.user.id != user.id %}
+                                            <a class="btn-connexion text-center" href="{% url 'types_lieux' %}">
+                                                Ajouter
+                                            </a>
+                                        {% endif %}
+                                        {% endfor %}
+                                        
+                                    </div>
+                                <!-- </div> -->
+                            <!-- </div> -->
+                        </div>
+                        <style> 
+                            h4{font-weight: bold; padding-bottom: 10px;}
+                            .type, .lieu {
+                                border-radius: 20px;
+                                padding: 5px 10px;
+                                margin-bottom: 5px;
+                                margin-right: 3px;
+                                box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.575);
+                            }
+                            .type{border: blue solid 1px;}
+                            .lieu {border: yellow solid 1px;}
+                            .les_types{
+                                display: flex !important;
+                                flex-wrap: wrap;
+                                justify-content: center;
+                            }
+                        </style>
+                        <div class="row m-3">
+                            <div class="d-flex justify-content-center">
+                                <div class="col">
+                                    <h4 class="text-center">Types</h4>
+                                    {% for tl in tlList %}
+                                    {% if tl.repetiteur.user.id == user.id %}
+                                        <div class="les_types">
+                                        {% for typ in tl.types %}
+                                            <span class="type">{{typ}}</span><br>
+                                        {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                                <div class="col" style="margin-left: 5px;">
+                                    <h4 class="text-center">Lieux</h4>
+                                    {% for tl in tlList %}
+                                    {% if tl.repetiteur.user.id == user.id %}
+                                        <div class="les_types">
+                                        {% for lie in tl.lieux %}
+                                            <span class="lieu">{{lie}}</span><br>
+                                        {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8 offset-md-2 text-center">
+                                <h3>Partager</h3>
+                                <p class="mb-0">Partagez votre profil sur <b>Whatsapp</b>, ou <b>Copiez</b> le lien afin de le distribuer ailleurs</p>
+                                <style>
+                                    .fa-whatsapp {
+                                        color: #25d366;
+                                    }
+                                    .fa-facebook {
+                                        color: #273c75;
+                                    }
+                                    .fa-clone, .fa-copy {
+                                        color: #000;
+                                    }
+                                </style>
+                                <div class="partage">
+                                    <span class="wha">
+                                        <a style="text-decoration: none;" href="https://wa.me/?text=Salut, je suis {{rep.civilite}} {{rep.user.last_name}} {{rep.user.first_name}}, {{rep.profession}} et également enseignant des cours répétion. Pour plus d'information bien vouloir consulter mon *Profil Enseignant* sur la plateforme findrepeater via le lien suivant : {% url 'voir_profil' rep.id user.id %}">
+                                            <i class="fab fa-whatsapp"></i>
+                                        </a>&emsp;
+                                    </span>
+                                    <span class="tel">
+                                        <a style="text-decoration: none;" >
+                                            <span style="position: absolute; margin-bottom: 20px; opacity: 1; height: 0; width: 0; overflow: hidden;" id="tocopy">Salut, je suis {{rep.civilite}} {{rep.user.last_name}} {{rep.user.first_name}}, {{rep.profession}} et également enseignant des cours répétion. Pour plus d'information bien vouloir consulter mon *Profil Enseignant* sur la plateforme findrepeater via le lien suivant : {% url 'voir_profil' rep.id user.id %}</span>
+                                            <i class="far fa-clone js-copy" data-target="#tocopy"></i>
+                                        </a>
+                                    </span>&emsp;
+                                    <span>
+                                        <a style="text-decoration: none;" href="{% url 'voir_profil' rep.id user.id %}">voir<i class="fas fa-eye"></i></a> 
+                                    </span>
+                                    
+                                </div>
+                            </div>
+                        </div>    
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+
+    </div>
+    {% endif %}
+    {% endfor %}    
 </section>
 
 <script>
