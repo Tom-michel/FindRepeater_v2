@@ -55,7 +55,8 @@ MY_TYPES = (('Individuel','Individuel'),
             ('En groupe','En groupe'))
 MY_LIEUX = (("Chez le prof","Chez le prof"),
             ("Chez l'apprenant","Chez l'apprenant"),
-            ("En ligne","En ligne"))
+            ("En ligne","En ligne"),
+            ("Autre lieu","Autre lieu"))
 
 class Type_Lieu_Cours(models.Model):
     repetiteur = models.ForeignKey(Repetiteur, null=True, on_delete=models.CASCADE)

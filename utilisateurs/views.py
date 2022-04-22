@@ -57,38 +57,6 @@ def accueil(request):
 def bienvenue(request):
     listC  = Client.objects.all()
     context1 = {'listC':listC}
-
-    if request.method == "POST":
-        typeRech = request.POST.get('typeRech')
-        
-        if typeRech == "1":
-
-            # renvoyer tous les professeurs
-            repList = Repetiteur.objects.all()
-            coursList = Cours.objects.all()
-            repAff = []
-            coursAff = []
-            coursAffTemp = []
-            for rep in repList:
-                repAff.append(rep)
-                for c in coursList:
-                    if c.repetiteur.id == rep.id:
-                        coursAff.append(c)
-                        coursAffTemp.append(c.matiere.intitule)
-
-            # liste des matieres sans doublons
-            coursAffInti = []
-            for cour in coursAffTemp:
-                if cour not in coursAffInti:
-                    coursAffInti.append(cour)
-            context2 = {
-                'repAff':repAff,
-                'coursList':coursList,
-                'coursAff':coursAff,
-                'coursAffInti':coursAffInti,
-            }
-            return render(request, 'utilisateurs/liste_repetiteurs.html', context2)
-
     return render(request, 'utilisateurs/bienvenue.html', context1)
 
 
@@ -255,17 +223,24 @@ def consulter_profil(request):
     tlList = Type_Lieu_Cours.objects.all()
 
     # formulaire pour ajout de types_lieux_cours (via un modal)
-    tl_form = Type_Lieu_Cours_Form()
-    if request.method == 'POST':
-        tl_form = Type_Lieu_Cours_Form(data=request.POST)
-        if tl_form.is_valid():
-            type_lieux = tl_form.save()
-            type_lieux.save()
-            tlList = Type_Lieu_Cours.objects.all()
-            context = {'coursList':coursList, 'repList':repList, 'tlList':tlList, 'tl_form':tl_form}
-            return render(request, 'utilisateurs/consulter_profil.html', context)
+    # tl_form = Type_Lieu_Cours_Form()
+    # if request.method == 'POST':
+    #     tl_form = Type_Lieu_Cours_Form(data=request.POST)
+    #     if tl_form.is_valid():
+    #         type_lieux = tl_form.save()
+    #         type_lieux.save()
+    #         tlList = Type_Lieu_Cours.objects.all()
+    #         tlTab = []
+    #         for tl in tlList:
+    #             tlTab.append(tl.repetiteur.user.id)
+    #         context = {'coursList':coursList, 'repList':repList, 'tlList':tlList, 'tlTab':tlTab, 'tl_form':tl_form}
+    #         return render(request, 'utilisateurs/consulter_profil.html', context)
+            
+    tlTab = []
+    for tl in tlList:
+        tlTab.append(tl.repetiteur.user.id)
 
-    context = {'coursList':coursList, 'repList':repList, 'tlList':tlList, 'tl_form':tl_form}
+    context = {'coursList':coursList, 'repList':repList, 'tlList':tlList, 'tlTab':tlTab}
     return render(request, 'utilisateurs/consulter_profil.html', context)
 
 
@@ -440,9 +415,9 @@ def profs_compatibles(request, id_cli):
     coursCompU = []
     coursCompUTemp = []
     for rep in repList:
-        if rep.langue == client.langue and rep.ville:
+        if rep.langue == client.langue and rep.ville == client.ville:
             for cou in coursList:
-                if cou.repetiteur.id == rep.id and cou.classe == client.classe:
+                if (cou.repetiteur.id == rep.id) and (client.classe in cou.classes):
                     repComp.append(rep)
                     for c in coursList:
                         if c.repetiteur.id == rep.id:
@@ -471,6 +446,48 @@ def profs_compatibles(request, id_cli):
 
 # @login_required(login_url='connexion')
 def recherche_repetiteur(request):
+    if request.method == "POST":
+        typeRech = request.POST.get('typeRech')
+        repList = Repetiteur.objects.all()
+        coursList = Cours.objects.all()
+
+        # renvoyer tous les professeurs
+        if typeRech == "1":
+            listCours = []
+            listCourEnseigne = []
+            context1 = {'coursList':coursList}
+            return render(request, 'utilisateurs/liste_repetiteurs.html', context1)
+
+
+
+
+
+
+
+
+
+            repAff = []
+            coursAff = []
+            coursAffTemp = []
+            for rep in repList:
+                repAff.append(rep)
+                for c in coursList:
+                    if c.repetiteur.id == rep.id:
+                        coursAff.append(c)
+                        coursAffTemp.append(c.matiere.intitule)
+
+            # liste des matieres sans doublons
+            coursAffInti = []
+            for cour in coursAffTemp:
+                if cour not in coursAffInti:
+                    coursAffInti.append(cour)
+            context2 = {
+                'repAff':repAff,
+                'coursList':coursList,
+                'coursAff':coursAff,
+                'coursAffInti':coursAffInti,
+            }
+            return render(request, 'utilisateurs/liste_repetiteurs.html', context2)
     return render(request, 'utilisateurs/recherche_repetiteur.html')
 
 
