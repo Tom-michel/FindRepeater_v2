@@ -188,8 +188,8 @@ nav .logo{
 
 .btn-connexion:hover{
     background: rgb(56, 51, 133);
-    border: none;
     color: #fff !important;
+    border: rgb(56, 51, 133) solid 1px;
 }
 .btn-register:hover{
     background: #231e39;

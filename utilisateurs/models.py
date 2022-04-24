@@ -85,8 +85,20 @@ class Client(Utilisateur):
 def renommer_image(instance, filename):
     upload_to = 'image/'
     ext = filename.split('.')[-1]
+    listExt = ['png', 'jpg', 'tif', 'bmp', 'jpeg', 'gif']
     if instance.user.username:
-        filename = "photo_profile/{}.{}".format(instance.user.username, ext)
+        noms = instance.user.last_name.split(' ')
+        prenoms = instance.user.first_name.split(' ')
+        n = ""
+        p = ""
+        nom_image = ""
+        for nom in noms:
+            n += (nom+"_")
+        for prenom in prenoms:
+            p += (prenom+"_")
+        nom_image = n+p
+        # filename = "photo_profile/{}.{}".format(instance.user.username, ext)
+        filename = "photo_profile/{}.{}".format(nom_image, "png")
         return os.path.join(upload_to, filename)
 
 
@@ -99,10 +111,10 @@ class Repetiteur(Utilisateur):
     telephone2 = models.CharField(max_length=200, blank=True)
     niveauEtude = models.CharField(max_length=200, null=True) 
     profession = models.CharField(max_length=200, null=True)
-    photoProfil = models.ImageField(upload_to=renommer_image, blank=True)  
+    photoProfil = models.ImageField(upload_to=renommer_image, blank=True)
 
     def __str__(self):
-        info = self.civilite+" "+self.user.username
+        info = self.civilite+" "+self.user.first_name+" "+self.user.last_name
         return info
    
     # s'inscrire : redefinir la methdode inscrire() de Utilisateur

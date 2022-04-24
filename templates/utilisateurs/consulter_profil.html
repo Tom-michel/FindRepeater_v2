@@ -6,9 +6,6 @@
 {% block content %}
 
 <style>
-    .profile-img {
-        width: 150px;
-    }
     h6 {
         color: rgba(0, 0, 0, 0.678);
     }
@@ -102,7 +99,12 @@
         <div class="row">
             <div class="col-md-4 shadow-lg dash mx-4">
                 <div class="d-flex flex-column align-items-center dash-content text-center p-3">
-                    <img class="rounded-circle mt-5 profile-img" src="{% static 'img/profile.jpg' %}">
+                    {% if not rep.photoProfil %}
+                    <img class="rounded-circle mt-5" style="width: 150px;" src="{% static 'img/profile.jpg' %}">
+                    {% endif %}
+                    {% if rep.photoProfil %}
+                    <img class="rounded-circle mt-5 profile-img" src="../../media/{{rep.photoProfil}}">
+                    {% endif %}
                     <span>{{rep.age}} ans | {{rep.profession}}</span>
                     <span>{{rep.ville}}, {{rep.quartier}}</span>
                     <span>{{rep.user.email}}</span>

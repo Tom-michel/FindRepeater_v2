@@ -23,13 +23,9 @@
         {% block header %} 
 
         <!--  ============== Navbar Start ========================-->
-        <style>
-          @media screen and (max-width: 991px) {
-            
-          }
-        </style>  
+         
 
-        <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-white shadow bg-light align-items-center">
+        <nav id="nav_scroll" class="navbar navbar-expand-lg navbar-light bg-white shadow fixed-top  align-items-center">
               <div class="container">
                 <a class="navbar-brand logo" href="{% url 'accueil' %}">FindRepeater</i></a>
                 <!-- <div class="separer"></div> -->
@@ -44,13 +40,13 @@
                   <div class="collapse navbar-collapse text-center" id="navbarNavDropdown">
                     <ul class="navbar-nav">
                       <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{% url 'accueil' %}">Accueil</a>
+                        <a class="nav-link l_scroll active " aria-current="page" href="{% url 'accueil' %}">Accueil</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="{% url 'recherche_repetiteur' %}">Rechercher un prof</a>
+                        <a class="nav-link l_scroll" href="{% url 'recherche_repetiteur' %}">Rechercher un prof</a>
                       </li>
                       <li class="nav-item" id="lien_devProf">
-                        <a class="nav-link" href="{% url 'enregistrement_prof' %}">Devenir prof</a>
+                        <a class="nav-link l_scroll" href="{% url 'enregistrement_prof' %}">Devenir prof</a>
                       </li>
                       {% if not user.is_authenticated %}
                         <li class="nav-item" id="lien_inscrip">
@@ -62,7 +58,7 @@
                       {% endif %}
                       {% if user.is_authenticated %}
                         <li class="nav-item">
-                          <a class="nav-link" href="">Liste des profs</a>
+                          <a class="nav-link l_scroll" href="{% url 'liste_repetiteurs' %}">Liste des profs</a>
                         </li>
                         <li class="nav-item dropdown">
                           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: orange;">
@@ -157,7 +153,6 @@
                         <div class="form-group">
                           <label for="typeRech">Critères de recherche</label>
                           <select class="form-control" name="typeRech" id="typeRech">
-                            <option value="selected">-----------</option>
                             <option value="1">Tous les profs</option>
                             <option value="2">Matière + Ville</option>
                             <option value="3">Classe + Ville</option>
@@ -174,9 +169,11 @@
                     <div class="row mt-2" id="form2">
                       <div class="col-md-5 offset-md-1 mt-3">
                         <div class="form-group">
-                          <label for="matiere2">Matière</label>
+                          <label for="">Matière</label>
                           <select class="form-control" name="matiere2" id="matiere2">
-                            <option value="">matiere</option>
+                            {% for mat in coursL %}
+                            <option value="{{mat}}">{{mat}}</option>
+                            {% endfor %} 
                           </select>
                         </div>
                       </div>
@@ -184,7 +181,9 @@
                         <div class="form-group">
                           <label for="ville2">Ville</label>
                           <select class="form-control" name="ville2" id="ville2">
-                            <option value="">ville</option>
+                            {% for ville in villeL %}
+                            <option value="{{ville}}">{{ville}}</option>
+                            {% endfor %}
                           </select>
                         </div>
                       </div>
@@ -194,7 +193,9 @@
                         <div class="form-group">
                           <label for="classe3">Classe</label>
                           <select class="form-control" name="classe3" id="classe3">
-                            <option value="">classe</option>
+                            {% for classe in classeL %}
+                            <option value="{{classe}}">{{classe}}</option>
+                            {% endfor %}
                           </select>
                         </div>
                       </div>
@@ -202,7 +203,9 @@
                         <div class="form-group">
                           <label for="ville3">Ville</label>
                           <select class="form-control" name="ville3" id="ville3">
-                            <option value="">ville</option>
+                            {% for ville in villeL %}
+                            <option value="{{ville}}">{{ville}}</option>
+                            {% endfor %}
                           </select>
                         </div>
                       </div>
@@ -212,7 +215,9 @@
                         <div class="form-group">
                           <label for="matiere4">Matière</label>
                           <select class="form-control" name="matiere4" id="matiere4">
-                            <option value="">matiere</option>
+                            {% for mat in coursL %}
+                            <option value="{{mat}}">{{mat}}</option>
+                            {% endfor %}
                           </select>
                         </div>
                       </div>
@@ -220,7 +225,9 @@
                         <div class="form-group">
                           <label for="classe4">Classe</label>
                           <select class="form-control" name="classe4" id="classe4">
-                            <option value="">classe</option>
+                            {% for classe in classeL %}
+                            <option value="{{classe}}">{{classe}}</option>
+                            {% endfor %}
                           </select>
                         </div>
                       </div>
@@ -228,7 +235,9 @@
                         <div class="form-group">
                           <label for="ville4">Ville</label>
                           <select class="form-control" name="ville4" id="ville4">
-                            <option value="">ville</option>
+                            {% for ville in villeL %}
+                            <option value="{{ville}}">{{ville}}</option>
+                            {% endfor %}
                           </select>
                         </div>
                       </div>
@@ -238,7 +247,9 @@
                         <div class="form-group">
                           <label for="matiere5">Matière</label>
                           <select class="form-control" name="matiere5" id="matiere5">
-                            <option value="">matiere</option>
+                            {% for mat in coursL %}
+                            <option value="{{mat}}">{{mat}}</option>
+                            {% endfor %}
                           </select>
                         </div>
                       </div>
@@ -246,7 +257,9 @@
                         <div class="form-group">
                           <label for="classe5">Classe</label>
                           <select class="form-control" name="classe5" id="classe5">
-                            <option value="">classe</option>
+                            {% for classe in classeL %}
+                            <option value="{{classe}}">{{classe}}</option>
+                            {% endfor %}
                           </select>
                         </div>
                       </div>
@@ -254,7 +267,9 @@
                         <div class="form-group">
                           <label for="ville5">Ville</label>
                           <select class="form-control" name="ville5" id="ville5">
-                            <option value="">ville</option>
+                            {% for ville in villeL %}
+                            <option value="{{ville}}">{{ville}}</option>
+                            {% endfor %}
                           </select>
                         </div>
                       </div>
@@ -262,7 +277,9 @@
                         <div class="form-group">
                           <label for="quartier5">Quartier</label>
                           <select class="form-control" name="quartier5" id="quartier5">
-                            <option value="">quartier</option>
+                            {% for qua in quartierL %}
+                            <option value="{{qua}}">{{qua}}</option>
+                            {% endfor %}
                           </select>
                         </div>
                       </div>

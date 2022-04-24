@@ -15,5 +15,6 @@ urlpatterns = [
     path('voir_profil/<str:id_r>/<str:id_u>', voir_profil, name="voir_profil"),
     path('profs_compatibles/<str:id_cli>', profs_compatibles, name="profs_compatibles"),
     path('recherche_repetiteur', recherche_repetiteur, name="recherche_repetiteur"),
+    path('resultat_recherche', resultat_recherche, name="resultat_recherche"),
     path('user_logout', user_logout, name="user_logout"),
 ]

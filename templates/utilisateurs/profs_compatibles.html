@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %} FindRepeater | Liste des Répétiteurs {% endblock %}
+{% block title %} FindRepeater | Répétiteurs Compatibles {% endblock %}
 
 {% block content %}
 
@@ -97,7 +97,7 @@
   }
 
   .liste .carte .imgBx img {
-    max-height: 100%;
+    max-height: 85%;
     border-radius: 50%;
   }
 
@@ -144,29 +144,36 @@
     <div class="container">
         <div class="pt-4 pb-2">
             <div class="pt-3 titre">
-                <h1 class="text-center">Liste de Professeurs</h1>
+                <h1 class="text-center">Professeurs Compatibles</h1>
             </div> 
         </div>
 
-        {% if not repComp %}
+        {% if not listRepe %}
             <div class="col-md-6 offset-md-3 text-center oups">
                 <i class="bi-exclamation-triangle"></i>
                 <p class="py-4 px-2" style="border: orangered solid 2px; border-radius: 10px; background: rgba(255, 0, 0, 0.062);">
-                    <b>Oups</b>, aucun enseignant n'est enregistré pour le moment, Veuillez réessayer ultérieurement !
+                    <b>Oups</b>, aucun enseignant corespondant à votre <b>classe-ville-langue d'enseignement</b> n'est enregistré pour le moment, Veuillez réessayer ultérieurement !
+                    <br><br>
+                    <a href="{% url 'recherche_repetiteur' %}">Rechercher un prof ?</a>
                 </p>
             </div>
         {% endif %}
-        {% if repComp %}
+        {% if listRepe %}
             <p style="color: rgb(56, 51, 133);" class="text-center align-items-center mt-4">
                 <i style="font-size: 20px;" class="bi-question-circle"></i> 
                 <span style="font-style: italic;">cliquez sur une image ou survolez un cadre pour voir plus</span> <br>
             </p>
             <div class="liste">
-                {% for rep in repComp %}
+                {% for rep in listRepe %}
                   <div class="info d-md-flex">
                     <div class="carte">
                       <div class="imgBx text-center">
-                          <img class="img-reponsive" src="{% static 'img/profile.jpg' %}" alt="">
+                          {% if not rep.photoProfil %}
+                          <img class="rounded-circle" src="{% static 'img/profile.jpg' %}">
+                          {% endif %}
+                          {% if rep.photoProfil %}
+                          <img class="rounded-circle mt-1" src="../../media/{{rep.photoProfil}}">
+                          {% endif %}
                       </div>
                       <div class="content_info">
                         <div class="content">
@@ -186,26 +193,33 @@
                                 <p></p>
                                 <div>
                                     <h6><span style="color: rgb(56, 51, 133);"><b>{{rep.profession}}</b></span> et répétiteur en:
-                                        {% for cours in coursCompU %}
-                                            <u>{{cours}}</u>,
-                                        {% endfor %}
+                                      {% for c in coursList %}
+                                        {% if c.repetiteur == rep %}
+                                          <u>{{c.matiere.intitule}}</u>,
+                                        {% endif %}
+                                      {% endfor %}
                                     </h6>
                                     <h6>Langue : <span style="color: rgb(56, 51, 133);"><b>{{rep.langue}}</b></span></h6>
                                 </div>
+                                {% if user.is_authenticated %}
                                 <div class="reseaux">
-                                  <a style="text-decoration: none; color: silver;" href="https://wa.me/{{rep.telephone2}}?text=Recherche d'un répétiteur | FindRepeater        Salut {{rep.civilite}} {{rep.user.last_name}}, j'ai visité la plateforme en ligne findrepeater et je suis intéressé.e par vous services de répétition; Pouvons-nous en discuter ?">
+                                  <a style="text-decoration: none; color: silver;" href="https://wa.me/{{rep.telephone2}}?text=Recherche d'un répétiteur | FindRepeater        Salut {{rep.civilite}}  {{rep.user.first_name}} {{rep.user.last_name}}, j'ai visité la plateforme en ligne findrepeater et je suis intéressé.e par vous services de répétition; Pouvons-nous en discuter ?">
                                     <i class="fab fa-whatsapp"></i>
                                   </a>&emsp;
                                   <a style="text-decoration: none; color: silver;" href="tel:{{rep.telephone1}}">
                                       <i class="fas fa-mobile-alt"></i>
                                   </a>&emsp;
-                                  <a style="text-decoration: none; color: silver;" href="mailto:{{rep.user.email}}?subject=Recherche d'un répétiteur | FindRepeater&body=Salut {{rep.civilite}} {{rep.user.last_name}}, j'ai visité la plateforme en ligne findrepeater et je suis intéressé.e par vos services de répétition; Pouvons-nous en discuter ?">
+                                  <a style="text-decoration: none; color: silver;" href="mailto:{{rep.user.email}}?subject=Recherche d'un répétiteur | FindRepeater&body=Salut {{rep.civilite}} {{rep.user.first_name}} {{rep.user.last_name}}, j'ai visité la plateforme en ligne findrepeater et je suis intéressé.e par vos services de répétition; Pouvons-nous en discuter ?">
                                       <i class="far fa-envelope"></i>
                                   </a>
                                 </div>
                                 <div class="mt-2">
                                   <a class="btn-connexion" href="{% url 'voir_profil' rep.id rep.user.id %}">voir plus</a>
                                 </div>
+                                {% endif %}
+                                {% if not user.is_authenticated %}
+                                  <p class="errornotes"><a href="{% url 'connexion' %}">Connectez</a> vous pour voir plus d'informations</p>
+                                {% endif %}
                             </div>
                         </div>
                       </div>

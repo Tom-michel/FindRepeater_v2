@@ -57,17 +57,10 @@
                 {% endif %}
                     <div class="contentRep et2">
                         <div class="row">
-                            <div class="col-md-6 mt-3">
+                            <div class="col-md-6 offset-md-3 mt-3">
                                 <div class="form-group">
                                   <label for="civilite">Civilité &emsp;</label><br>
                                   {{form2.civilite}}
-                                </div>
-                            </div>
-                            <div class="col-md-6 mt-3">
-                                <div class="form-group text-end">
-                                  <label for="photoProfil">Photo de profil </label>
-                                  <!-- <input class="form-control" type="file" name="photoProfil" id="photoProfil"> -->
-                                  {{form2.photoProfil}}
                                 </div>
                             </div>
                         </div>
@@ -78,6 +71,10 @@
                                   <!-- <input class="form-control" type="text" name="last_name" id="last_nameRep"> -->
                                   {{form1.last_name}}
                                   <p><span class="errorform" id="error_last_nameRep"></span></p>
+                                </div>
+                                <div class="form-group">
+                                  <label for="nom_image">nom_image_profil dans la BD</label>
+                                  {{form2.nom_image}}
                                 </div>
                             </div>
                             <div class="col-md-6 mt-3">

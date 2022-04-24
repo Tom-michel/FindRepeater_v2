@@ -1,3 +1,4 @@
+from multiprocessing import context
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
@@ -123,14 +124,11 @@ def enregistrement_prof(request):
         username = request.POST.get('username')
         password = request.POST.get('password1')
         if user_form.is_valid() and repetiteur_form.is_valid():
+            
             # enregistrer dans la BD
             user = user_form.save()
             user.save()
             repetiteur = repetiteur_form.save(commit=False)
-            tel1 = repetiteur.telephone1
-            tel2 = repetiteur.telephone2
-            if tel2 == "":
-                tel2 = tel1
             repetiteur.user = user
             repetiteur.save()
             registered = True
@@ -363,6 +361,7 @@ def modifier_profil_cli(request, id_c, id_u):
 
 # voir un profil (par le client)
 
+@login_required(login_url='connexion')
 def voir_profil(request, id_r, id_u):
     repList = Repetiteur.objects.all()
     coursList = Cours.objects.all()
@@ -410,92 +409,145 @@ def profs_compatibles(request, id_cli):
     # identifier un client spécifique par son id
     client = Client.objects.get(id=id_cli)
 
-    repComp = []
-    coursComp = []
-    coursCompU = []
-    coursCompUTemp = []
+    listRepe = []
+    nb = 0
     for rep in repList:
         if rep.langue == client.langue and rep.ville == client.ville:
-            for cou in coursList:
-                if (cou.repetiteur.id == rep.id) and (client.classe in cou.classes):
-                    repComp.append(rep)
-                    for c in coursList:
-                        if c.repetiteur.id == rep.id:
-                            coursComp.append(c)
-                            coursCompUTemp.append(c.matiere.intitule)
+            for cours in coursList:
+                if cours.repetiteur.id == rep.id and client.classe in cours.classes:
+                    listRepe.append(rep)
                     break
-
-    for cour in coursCompUTemp:
-        if cour not in coursCompU:
-            coursCompU.append(cour)
-
-    context = {
-        'client':client,
-        'repList':repList,
-        'coursList':coursList,
-        'repComp':repComp,
-        'coursCompU':coursCompU,
-        'coursComp':coursComp,
-    }
+    nb = len(listRepe)
+    context = {'coursList':coursList, 'repList':repList, 'listRepe':listRepe, 'nb':nb}    
 
     return render(request, 'utilisateurs/profs_compatibles.html', context)
 
 
 
-# rechercher un repetiteurs
+# page pour rechercher un repetiteurs
 
 # @login_required(login_url='connexion')
 def recherche_repetiteur(request):
+    rech = False
+    repList = Repetiteur.objects.all()
+    coursList = Cours.objects.all()
     if request.method == "POST":
+        rech = True
         typeRech = request.POST.get('typeRech')
-        repList = Repetiteur.objects.all()
-        coursList = Cours.objects.all()
 
-        # renvoyer tous les professeurs
+        listCours = []
+        listCoursRep = []
+
         if typeRech == "1":
-            listCours = []
-            listCourEnseigne = []
-            context1 = {'coursList':coursList}
-            return render(request, 'utilisateurs/liste_repetiteurs.html', context1)
+            return liste_repetiteurs(request)
+        elif typeRech == "2":
+            nb = 0
+            matiere = request.POST.get('matiere2')
+            ville = request.POST.get('ville2')
+            for cours in coursList:
+                if cours.matiere.intitule == matiere and cours.repetiteur.ville == ville and cours.repetiteur not in listCoursRep:
+                    listCours.append(cours)
+                    listCoursRep.append(cours.repetiteur)
+            nb = len(listCours)
+            context = {'rech':rech, 'coursList':coursList, 'listCours':listCours, 'nb':nb}
+        elif typeRech == "3":
+            nb = 0
+            classe = request.POST.get('classe3')
+            ville = request.POST.get('ville3')
+            for cours in coursList:
+                if classe in cours.classes and cours.repetiteur.ville == ville and cours.repetiteur not in listCoursRep:
+                    listCours.append(cours)
+                    listCoursRep.append(cours.repetiteur)
+            nb = len(listCours)
+            context = {'rech':rech, 'coursList':coursList, 'listCours':listCours, 'nb':nb}
+        elif typeRech == "4":
+            nb = 0
+            matiere = request.POST.get('matiere4')
+            classe = request.POST.get('classe4')
+            ville = request.POST.get('ville4')
+            for cours in coursList:
+                if cours.matiere.intitule == matiere and classe in cours.classes and cours.repetiteur.ville == ville and cours.repetiteur not in listCoursRep:
+                    listCours.append(cours)
+                    listCoursRep.append(cours.repetiteur)
+            nb = len(listCours)
+            context = {'rech':rech, 'coursList':coursList, 'listCours':listCours, 'nb':nb}
+        elif typeRech == "5":
+            nb = 0
+            matiere = request.POST.get('matiere5')
+            classe = request.POST.get('classe5')
+            ville = request.POST.get('ville5')
+            quartier = request.POST.get('quartier5')
+            for cours in coursList:
+                if cours.matiere.intitule == matiere and classe in cours.classes and cours.repetiteur.ville == ville and cours.repetiteur.quartier == quartier and cours.repetiteur not in listCoursRep:
+                    listCours.append(cours)
+                    listCoursRep.append(cours.repetiteur)
+            nb = len(listCours)
+            context = {'rech':rech, 'coursList':coursList, 'listCours':listCours, 'nb':nb}
+
+        return render(request, 'utilisateurs/recherche_repetiteur.html', context)
+
+
+    coursL = []
+    classeL = []
+    for c in coursList:
+        if c.matiere.intitule not in coursL:
+            coursL.append(c.matiere.intitule)
+        for clas in c.classes:
+            if clas not in classeL:
+                classeL.append(clas)
+    villeL = []
+    quartierL = []
+    for rep in repList:
+        if rep.ville not in villeL:
+            villeL.append(rep.ville)
+        if rep.quartier not in quartierL:
+            quartierL.append(rep.quartier)
+        
+    listR = Repetiteur.objects.all()
+    listRep = []
+    for rep in listR:
+        listRep.append(rep.user.username)
+
+    listC  = Client.objects.all()
+    listCli = []
+    for cli in listC:
+        listCli.append(cli.user.username)
+    context = {'coursL':coursL, 'villeL':villeL, 'classeL':classeL, 'quartierL':quartierL, 'rech':rech, 'listCli':listCli, 'listRep':listRep}
+
+    return render(request, 'utilisateurs/recherche_repetiteur.html', context)
 
 
 
+# afficher les résultats de recherche
 
-
-
-
-
-
-            repAff = []
-            coursAff = []
-            coursAffTemp = []
-            for rep in repList:
-                repAff.append(rep)
-                for c in coursList:
-                    if c.repetiteur.id == rep.id:
-                        coursAff.append(c)
-                        coursAffTemp.append(c.matiere.intitule)
-
-            # liste des matieres sans doublons
-            coursAffInti = []
-            for cour in coursAffTemp:
-                if cour not in coursAffInti:
-                    coursAffInti.append(cour)
-            context2 = {
-                'repAff':repAff,
-                'coursList':coursList,
-                'coursAff':coursAff,
-                'coursAffInti':coursAffInti,
-            }
-            return render(request, 'utilisateurs/liste_repetiteurs.html', context2)
-    return render(request, 'utilisateurs/recherche_repetiteur.html')
-
+def resultat_recherche(request):
+    return render(request, 'utilisateurs/resultat_recherche.html')
 
 
 # afficher la liste de tous les répétiteurs en enregistrés sur la plateforme
 
 def liste_repetiteurs(request):
-    return render(request, 'utilisateurs/liste_repetiteurs.html')
+    repList = Repetiteur.objects.all()
+    coursList = Cours.objects.all()
+    nbRep = 0
+    nbRep = repList.count()
+
+    listR = Repetiteur.objects.all()
+    listRep = []
+    for rep in listR:
+        listRep.append(rep.user.username)
+
+    listC  = Client.objects.all()
+    listCli = []
+    for cli in listC:
+        listCli.append(cli.user.username)
+    
+    context = {
+        'repList':repList,
+        'coursList':coursList,
+        'nbRep':nbRep, 'listCli':listCli, 'listRep':listRep
+    }
+    return render(request, 'utilisateurs/liste_repetiteurs.html', context)
 
 
 # fonction permettant de se déconnecter

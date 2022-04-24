@@ -56,10 +56,18 @@
               <div class="d-flex flex-column align-items-center text-center px-3">
                 {% for rep in repList %}
                   {% if rep.user.id == user.id %}
-                    <img width="150px" src="{% static 'img/profile.jpg' %}">
+                    {% if not rep_form.photoProfil %}
+                    <img class="rounded-circle mt-5" style="width: 150px;" src="{% static 'img/profile.jpg' %}">
+                    {% endif %}
+                    {% if rep_form.photoProfil %}
+                    <img class="rounded-circle profile-img" src="../../media/{{rep_form.photoProfil.value}}">
+                    {% endif %}
                     <span class="font-weight-bold">{{rep.user.username}}</span>
                     <span class="pt-4"> 
                       <!-- {{user_form.username.errors}} -->
+                      {% for err in rep_form.photoProfil.errors %}
+                        <p class="errornotes">{{err}}</p>
+                      {% endfor %}
                       {% for err in user_form.username.errors %}
                         <p class="errornotes">{{err}} Veuillez reéssayer !</p>
                       {% endfor %}
@@ -102,6 +110,21 @@
                         </div>
                       </div>
                     </div>
+
+
+                    <div class="row">
+                      <div class="col-md-4 mt-2">
+                        <div class="form-group">
+                          <label for="nom_image">nom_image_profil dans la BD</label>
+                          {{rep_form.nom_image}}
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                          {{rep_form.photoProfil}}
+                      </div>
+                    </div>
+
+
                     <div class="row">
                       <div class="col-md-4 mt-3">
                           <div class="form-group">

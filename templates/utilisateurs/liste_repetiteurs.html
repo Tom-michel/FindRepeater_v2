@@ -75,7 +75,7 @@
     width: 330px;
     height: 220px;
     background: #fff !important;
-    margin: 30px 0px 0px 10px;
+    margin: 30px 10px 0px 10px;
     padding: 20px 15px;
     display: flex;
     flex-direction: column;
@@ -97,7 +97,7 @@
   }
 
   .liste .carte .imgBx img {
-    max-height: 100%;
+    max-height: 85%;
     border-radius: 50%;
   }
 
@@ -140,81 +140,93 @@
 
 </style>
 
- <section class="py-5 bg_profile">
-    <div class="container">
-        <div class="pt-4 pb-2">
-            <div class="pt-3 titre">
-                <h1 class="text-center">Liste de Professeurs</h1>
-            </div> 
-        </div>
+<section class="py-5 bg_profile">
+  <div class="container">
+      <div class="pt-4 pb-2">
+          <div class="pt-3 titre">
+              <h1 class="text-center">Liste de Professeurs</span></h1>
+          </div> 
+      </div>
 
-        {% if not repAff %}
-            <div class="col-md-6 offset-md-3 text-center oups">
-                <i class="bi-exclamation-triangle"></i>
-                <p class="py-4 px-2" style="border: orangered solid 2px; border-radius: 10px; background: rgba(255, 0, 0, 0.062);">
-                    <b>Oups</b>, aucun enseignant n'est enregistré pour le moment, Veuillez réessayer ultérieurement !
-                </p>
-            </div>
-        {% endif %}
-        {% if repAff %}
-            <p style="color: rgb(56, 51, 133);" class="text-center align-items-center mt-4">
-                <i style="font-size: 20px;" class="bi-question-circle"></i> 
-                <span style="font-style: italic;">cliquez sur une image ou survolez un cadre pour voir plus</span> <br>
-            </p>
-            <div class="liste">
-                {% for rep in repAff %}
-                  <div class="info d-md-flex">
-                    <div class="carte">
-                      <div class="imgBx text-center">
-                          <img class="img-reponsive" src="{% static 'img/profile.jpg' %}" alt="">
-                      </div>
-                      <div class="content_info">
-                        <div class="content">
-                            <div class="nom_prenom">
-                                <p>
-                                  <div style="display: flex !important; flex-wrap: wrap; align-items: center; justify-content: center;">
-                                    <h6><span style="font-size: 0.7rem;">{{rep.civilite}}</span> | {{rep.user.first_name}}</h6>
-                                    &nbsp;
-                                    <h5>{{rep.user.last_name}}</h5>
-                                  </div>
-                                    <h6>A {{rep.age}} ans, vit à 
-                                        <span style="color: rgb(56, 51, 133);">{{rep.quartier}}, {{rep.ville}}</span>
-                                    </h6>
-                                </p>
-                            </div>
-                            <div class="contentV">
-                                <p></p>
-                                <div>
-                                    <h6><span style="color: rgb(56, 51, 133);"><b>{{rep.profession}}</b></span> et répétiteur en:
-                                        {% for cours in coursAffInti %}
-                                            <u>{{cours}}</u>,
-                                        {% endfor %}
-                                    </h6>
-                                    <h6>Langue : <span style="color: rgb(56, 51, 133);"><b>{{rep.langue}}</b></span></h6>
+      {% if nbRep == 0 %}
+          <div class="col-md-6 offset-md-3 text-center oups">
+              <i class="bi-exclamation-triangle"></i>
+              <p class="py-4 px-2" style="border: orangered solid 2px; border-radius: 10px; background: rgba(255, 0, 0, 0.062);">
+                  <b>Oups</b>, aucun enseignant n'est enregistré pour le moment, Veuillez réessayer ultérieurement !
+              </p>
+          </div>
+      {% endif %}
+      {% if nbRep >= 1 %}
+          <p style="color: rgb(56, 51, 133);" class="text-center align-items-center mt-4">
+              <i style="font-size: 20px;" class="bi-question-circle"></i> 
+              <span style="font-style: italic;">cliquez sur une image ou survolez un cadre pour voir plus</span> <br>
+          </p>
+          <div class="liste">
+              {% for rep in repList %}
+                <div class="info d-md-flex">
+                  <div class="carte">
+                    <div class="imgBx text-center">
+                        {% if not rep.photoProfil %}
+                        <img class="rounded-circle" src="{% static 'img/profile.jpg' %}">
+                        {% endif %}
+                        {% if rep.photoProfil %}
+                        <img class="rounded-circle mt-1" src="../../media/{{rep.photoProfil}}">
+                        {% endif %}
+                    </div>
+                    <div class="content_info">
+                      <div class="content">
+                          <div class="nom_prenom">
+                              <p>
+                                <div style="display: flex !important; flex-wrap: wrap; align-items: center; justify-content: center;">
+                                  <h6><span style="font-size: 0.7rem;">{{rep.civilite}}</span> | {{rep.user.first_name}}</h6>
+                                  &nbsp;
+                                  <h5>{{rep.user.last_name}}</h5>
                                 </div>
-                                <div class="reseaux">
-                                  <a style="text-decoration: none; color: silver;" href="https://wa.me/{{rep.telephone2}}?text=Recherche d'un répétiteur | FindRepeater        Salut {{rep.civilite}} {{rep.user.last_name}}, j'ai visité la plateforme en ligne findrepeater et je suis intéressé.e par vous services de répétition; Pouvons-nous en discuter ?">
-                                    <i class="fab fa-whatsapp"></i>
-                                  </a>&emsp;
-                                  <a style="text-decoration: none; color: silver;" href="tel:{{rep.telephone1}}">
-                                      <i class="fas fa-mobile-alt"></i>
-                                  </a>&emsp;
-                                  <a style="text-decoration: none; color: silver;" href="mailto:{{rep.user.email}}?subject=Recherche d'un répétiteur | FindRepeater&body=Salut {{rep.civilite}} {{rep.user.last_name}}, j'ai visité la plateforme en ligne findrepeater et je suis intéressé.e par vos services de répétition; Pouvons-nous en discuter ?">
-                                      <i class="far fa-envelope"></i>
-                                  </a>
-                                </div>
-                                <div class="mt-2">
-                                  <a class="btn-connexion" href="{% url 'voir_profil' rep.id rep.user.id %}">voir plus</a>
-                                </div>
-                            </div>
-                        </div>
+                                  <h6>A {{rep.age}} ans, vit à 
+                                      <span style="color: rgb(56, 51, 133);">{{rep.quartier}}, {{rep.ville}}</span>
+                                  </h6>
+                              </p>
+                          </div>
+                          <div class="contentV">
+                              <p></p>
+                              <div>
+                                  <h6><span style="color: rgb(56, 51, 133);"><b>{{rep.profession}}</b></span> et répétiteur en:
+                                      {% for c in coursList %}
+                                        {% if c.repetiteur.id == rep.id %}
+                                          <u>{{c.matiere.intitule}}</u>,
+                                        {% endif %}
+                                      {% endfor %}
+                                  </h6>
+                                  <h6>Langue : <span style="color: rgb(56, 51, 133);"><b>{{rep.langue}}</b></span></h6>
+                              </div>
+                              {% if user.is_authenticated %}
+                              <div class="reseaux">
+                                <a style="text-decoration: none; color: silver;" href="https://wa.me/{{rep.telephone2}}?text=Recherche d'un répétiteur | FindRepeater        Salut {{rep.civilite}} {{rep.user.last_name}}, j'ai visité la plateforme en ligne findrepeater et je suis intéressé.e par vous services de répétition; Pouvons-nous en discuter ?">
+                                  <i class="fab fa-whatsapp"></i>
+                                </a>&emsp;
+                                <a style="text-decoration: none; color: silver;" href="tel:{{rep.telephone1}}">
+                                    <i class="fas fa-mobile-alt"></i>
+                                </a>&emsp;
+                                <a style="text-decoration: none; color: silver;" href="mailto:{{rep.user.email}}?subject=Recherche d'un répétiteur | FindRepeater&body=Salut {{rep.civilite}} {{rep.user.last_name}}, j'ai visité la plateforme en ligne findrepeater et je suis intéressé.e par vos services de répétition; Pouvons-nous en discuter ?">
+                                    <i class="far fa-envelope"></i>
+                                </a>
+                              </div>
+                              <div class="mt-2">
+                                <a class="btn-connexion" href="{% url 'voir_profil' rep.id rep.user.id %}">voir plus</a>
+                              </div>
+                              {% endif %}
+                              {% if not user.is_authenticated %}
+                                <p class="errornotes"><a href="{% url 'connexion' %}">Connectez</a> vous pour voir plus d'informations</p>
+                              {% endif %}
+                          </div>
                       </div>
                     </div>
                   </div>
-                {% endfor %}
-            </div>
-        {% endif %}  
-    </div>
+                </div>
+              {% endfor %}
+          </div>
+      {% endif %}  
+  </div>
 </section>
 
 <script type="text/javascript">

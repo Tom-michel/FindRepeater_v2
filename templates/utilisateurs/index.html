@@ -5,6 +5,53 @@
 
 {% block content %}
 
+<style>
+  @media screen and (min-width: 767px) {
+    #nav_scroll{
+      transition: .3s ease-in-out;
+      background: none !important;
+      box-shadow: none !important;
+    }
+    #nav_scroll .l_scroll{
+      color: #fff !important;
+    }
+    #nav_scroll .l_scroll:hover{
+      color: orange !important;
+    }
+
+    #nav_scroll .btn-register{
+      border: orange solid 1px;
+      color: #fff !important;
+    }
+
+
+
+    #nav_scroll.scroll .btn-register{
+      border: #231e39 solid 1px;
+      color: #000 !important;
+    }
+    #nav_scroll.scroll .btn-register:hover{
+      color: #fff !important;
+    }
+    #nav_scroll.scroll{
+      transition: .3s ease-in-out;
+      background: #fff !important;
+      box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
+    }
+
+    #nav_scroll.scroll .l_scroll{
+      color: rgba(0,0,0,.7) !important;
+    }
+    #nav_scroll.scroll .l_scroll.active{
+      color: rgba(0,0,0,.9) !important;
+    }
+    #nav_scroll.scroll .l_scroll:hover{
+      color: #000 !important;
+    }
+
+  }
+</style> 
+
 <section id="hero" class="img-fluid bg-secondary" style="background-image:url(static/img/home.jpg); background-attachment: fixed; background-repeat:no-repeat; background-size: cover;">
   <div class="hero-container">    
     <!-- desktop -->
@@ -17,5 +64,18 @@
     <a href="" class="btn-get-started mt-3">Commencer</a>
   </div>
 </section>
+
+<script>
+  const nav = document.getElementById('nav_scroll');
+
+  window.addEventListener('scroll', () => {
+      if (window.scrollY > window.innerHeight/6) {
+        // alert(nav.id);
+          nav.classList.add('scroll');
+      }else{
+          nav.classList.remove('scroll');
+      }
+  });
+</script>
 
 {% endblock %}
