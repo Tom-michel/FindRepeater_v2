@@ -4,13 +4,38 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .forms import CoursEnsForm, UserForm, ClientForm, RepetiteurForm
+from .forms import CoursEnsForm, UserForm, ClientForm, RepetiteurForm, PersonneForm
 from cours.forms import Type_Lieu_Cours_Form
 from django.contrib.auth.models import User
-from .models import CoursEns, Repetiteur, Client
+from .models import CoursEns, Repetiteur, Client, Personne
 from cours.models import Cours, Type_Lieu_Cours
 
 # Create your views here.
+
+
+# enregistrrment multiple
+
+def personne(request):
+    persForm = PersonneForm()
+    persList = Personne.objects.all()
+    nb = [1,2]
+    if request.method == 'POST':
+        persForm = PersonneForm(data=request.POST)
+        person = persForm.save()
+        person.save()
+        
+        context = {
+            'persList':persList,
+            'persForm':persForm,'nb':nb
+        }
+        return render(request, 'utilisateurs/personne.html', context)
+    context = {
+            'persList':persList,
+            'persForm':persForm,
+            'nb':nb
+        }
+    return render(request, 'utilisateurs/personne.html', context)
+
 
 
 
@@ -264,7 +289,7 @@ def modifier_profil(request, id_r, id_u):
     rep_form = RepetiteurForm(instance=repetiteur)
     user_form = UserForm(instance=user)
     if request.method == "POST":
-        rep_form = RepetiteurForm(data=request.POST, instance=repetiteur)
+        rep_form = RepetiteurForm(request.POST, request.FILES, instance=repetiteur)
         user_form = UserForm(data=request.POST, instance=user)
         
         if rep_form.is_valid() and user_form.is_valid():

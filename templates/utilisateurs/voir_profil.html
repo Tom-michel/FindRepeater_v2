@@ -156,10 +156,10 @@
                 <div class="d-flex flex-column align-items-center dash-content text-center p-3">
                     {% comment %} <img class="rounded-circle mt-5 profile-img" src="{% static 'img/profile.jpg' %}"> {% endcomment %}
                     {% if not rep.photoProfil %}
-                    <img class="rounded-circle mt-5" style="width: 150px;" src="{% static 'img/profile.jpg' %}">
+                    <img class="rounded-circle mt-4" style="width: 150px;" src="{% static 'img/profile.jpg' %}">
                     {% endif %}
                     {% if rep.photoProfil %}
-                    <img class="rounded-circle mt-5 profile-img" src="../../media/{{rep.photoProfil}}">
+                    <img class="rounded-circle mt-4 profile-img" src="../../media/{{rep.photoProfil}}">
                     {% endif %}
                     <span>{{rep.age}} ans | {{rep.profession}}</span>
                     <span>{{rep.ville}}, {{rep.quartier}}</span>

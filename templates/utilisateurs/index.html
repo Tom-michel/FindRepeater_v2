@@ -50,6 +50,93 @@
     }
 
   }
+
+  .containerTM {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		overflow: hidden;
+		box-sizing: border-box;
+		padding: 10px 20px;
+	}
+
+	.action {
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-wrap: wrap;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.box h4 {
+		font-weight: bold;
+	}
+	.box {
+		font-size: 14px;
+		position: relative;
+		transition: 0.2s ease-in-out;
+		margin: 10px 20px;
+    padding: 10px;
+		display: flex;
+		flex-direction: column;
+		width: 300px;
+		border-radius: 10px;
+	}
+	.box .content p {
+		font-size: 14px;
+		margin-top: 3px;
+	}
+  .box i {
+		color: rgb(56, 51, 133);
+	}
+
+	.box .content a {
+		position: relative;
+		margin: 5px 0;
+		color: #fff !important;
+		font-size: 12px;
+	}
+  .box .number{
+		position: absolute;
+	}
+	.box .number i{
+		color: orange;
+		font-size: 25px;
+		border-radius: 50%;
+		font-weight: 600;
+		padding: 5px 8px;
+	}
+  
+	.action, #footer {
+		position: relative;
+		z-index: 10;
+	}
+
+  .header img{ 
+    height: 200px;
+    width: auto;
+  }
+
+  @media screen and (max-width: 991px) {
+    #situation {
+      border-top: orange solid 2px;
+      border-radius: 20px;
+      background: #fff;
+      box-shadow: 0 .2rem 1rem rgba(0,0,0,.2) !important;
+      margin: 10px 5% 50px;
+      padding: 40px 40px 0;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .header img{ 
+      height: 150px;
+      width: auto;
+    }
+  }
+ 
 </style> 
 
 <section id="hero" class="img-fluid bg-secondary" style="background-image:url(static/img/home.jpg); background-attachment: fixed; background-repeat:no-repeat; background-size: cover;">
@@ -61,8 +148,116 @@
     <!-- mobile -->
     <h1 class="text-center d-md-none">Améliorez votre niveau avec des professeurs sur mesure</h1>
     <p class="text-center text-white pb-2 d-md-none">FindRepeater vous permet de touver facilement et rapidement des professeurs sur mesure, proches de chez vous et sélectionnés en fonction de vos exigences</p>
-    <a href="" class="btn-get-started mt-3">Commencer</a>
+    <p>
+      <a href="" class="btn-get-started mt-3">Commencer</a>&emsp;
+      <a href="" class="btn-get-started rec mt-3">Trouver un prof</a>
+    </p>
   </div>
+</section>
+
+<section id="missions">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="row missionBox">
+          <div class="col-lg-4">
+            <h3>
+              <i class="bi-graph-up-arrow"></i>&nbsp;
+              Passer en classe supérieure
+            </h3>
+            <p>
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aperiam ipsam, molestiae sed aspernatur sint soluta ipsa id labore nam libero deleniti reiciendis inventore ut obcaecati esse? Corporis dolores at nemo!
+            </p>
+          </div>
+          <div class="col-lg-4">
+            <h3>
+              <i class="bi-folder-check"></i>&nbsp;
+              Préparer son dossier scolaire
+            </h3>
+            <p>
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aperiam ipsam, molestiae sed aspernatur sint soluta ipsa id labore nam libero deleniti reiciendis inventore ut obcaecati esse? Corporis dolores at nemo!
+            </p>
+          </div>
+          <div class="col-lg-4">
+            <h3>
+              <i class="bi-award"></i>&nbsp;
+              Réussir ses examens
+            </h3>
+            <p>
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aperiam ipsam, molestiae sed aspernatur sint soluta ipsa id labore nam libero deleniti reiciendis inventore ut obcaecati esse? Corporis dolores at nemo!
+            </p>
+          </div>
+
+          <hr>
+
+          <div class="dscProf">
+            <img class="img-fluid" src="{% static 'img/teach_success.svg' %}" alt="" srcset="">
+            <p>
+              Des professeurs pour vous accompagner dans la réussite et l'accomplissement de vos 
+              objetifs scolaires.
+            </p>              
+            <a class="btn-connexion" href="{% url 'liste_repetiteurs' %}">Liste des profs</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section id="situation">
+    <div class="container">
+      <h3 class="mb-2 text-center" style="font-weight: bold;">
+        Des profs sont disponibles quelque soit votre situation
+      </h3>
+    </div>
+    <div class="containerTM">
+      <div class="action">
+        <div class="box b1 text-center">
+          <div class="header">
+            <p class="number"><i class="bi-patch-check"></i></p>
+            <img src="{% static 'img/teach_home.svg' %}" alt="">
+            <h4>Répétitions à domicile</h4>
+          </div>
+          <div class="content">
+            <p>
+              Pour les parents qui souhaitent garder un oeil sur l'evolution de leur.s enfant.s
+            </p>
+          </div>
+        </div>
+        <div class="box b2 text-center">
+          <div class="header">
+            <p class="number"><i class="bi-patch-check"></i></p>
+            <img src="{% static 'img/teach_group.jpg' %}" alt="">
+            <h4>Répétiton en groupe</h4>
+          </div>
+          <div class="content">
+            <p>
+              Adhérez à un groupe de répétion afin d'echanger vos connaissances et évoluer ensemble
+            </p>
+          </div>
+        </div>
+        <div class="box b3 text-center">
+          <div class="header">
+          <p class="number"><i class="bi-patch-check"></i></p>
+            <img src="{% static 'img/teach_online.jpg' %}" alt="">
+            <h4>Répétition en ligne</h4>
+          </div>
+          <div class="content">
+            <p>
+              Pour ceux/celles qui ne preuvent pas se déplacer ou qui sont passioné.es par le virtuel
+            </p>
+          </div>
+        </div>
+        <div class="box b4 text-center">
+          <div class="header">
+            <a class="btn-connexion" href="{% url 'recherche_repetiteur' %}">Rechercher un prof</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+
 </section>
 
 <script>

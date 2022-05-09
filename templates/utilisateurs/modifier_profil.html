@@ -56,12 +56,13 @@
               <div class="d-flex flex-column align-items-center text-center px-3">
                 {% for rep in repList %}
                   {% if rep.user.id == user.id %}
-                    {% if not rep_form.photoProfil %}
-                    <img class="rounded-circle mt-5" style="width: 150px;" src="{% static 'img/profile.jpg' %}">
+                    {% comment %} {% if not rep.photoProfil %}
+                        <img class="rounded-circle mt-5" style="width: 150px;" src="{% static 'img/profile.jpg' %}">
                     {% endif %}
-                    {% if rep_form.photoProfil %}
-                    <img class="rounded-circle profile-img" src="../../media/{{rep_form.photoProfil.value}}">
-                    {% endif %}
+                    {% if rep.photoProfil %} {% endcomment %}
+                        <img class="rounded-circle mt-5 profile-img" src="{{request.user.Repetiteur.photoProfil.url}}">
+                    {% comment %} {% endif %} {% endcomment %}
+                    {{rep_form.photoProfil}}
                     <span class="font-weight-bold">{{rep.user.username}}</span>
                     <span class="pt-4"> 
                       <!-- {{user_form.username.errors}} -->
@@ -112,7 +113,7 @@
                     </div>
 
 
-                    <div class="row">
+                    {% comment %} <div class="row">
                       <div class="col-md-4 mt-2">
                         <div class="form-group">
                           <label for="nom_image">nom_image_profil dans la BD</label>
@@ -122,7 +123,7 @@
                       <div class="col-md-6">
                           {{rep_form.photoProfil}}
                       </div>
-                    </div>
+                    </div> {% endcomment %}
 
 
                     <div class="row">

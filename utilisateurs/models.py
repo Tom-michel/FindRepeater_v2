@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 from django.db.models.deletion import CASCADE, SET_NULL
 from django.contrib.auth.models import User
@@ -5,6 +6,16 @@ import os
 # from cours.models import MY_CLASSES
 
 # Create your models here.
+
+
+# test de l'enregistrement multiple
+
+class Personne(models.Model):
+    nom = models.CharField(max_length=100, null=True)
+    prenom = models.CharField(max_length=100, null=True)
+    
+    def __str__(self):
+        return self.nom+" "+self.prenom
 
 
 # model pour le test du multiselectfield
@@ -38,13 +49,10 @@ class Utilisateur(models.Model):
     ville = models.CharField(max_length=200, null=True)
     quartier = models.CharField(max_length=200, null=True)
     LANGUE = [
-        ('fançais','fançais'),('anglais','anglais'),('bilingue','bilingue'),('autre','autre')
+        ('français','français'),('anglais','anglais'),('français et anglais','français et anglais'),('autre','autre')
     ]
     langue = models.CharField(max_length=200, null=True, choices=LANGUE, default='fançais')
     telephone1 = models.CharField(max_length=200, null=True)
-
-    # User possede déja : username, email, first_name, last_name, (password 1 et 2)
-    user = models.OneToOneField(User, on_delete=CASCADE)
     
     # s'inscrire sur la platefoerme
     def inscrire():
@@ -75,6 +83,9 @@ class Client(Utilisateur):
     # classe = models.ForeignKey(Classe, null=True, on_delete=models.SET_NULL)
     classe = models.CharField(max_length=200, null=True, choices=MY_CHOICES)
 
+    # User possede déja : username, email, first_name, last_name, (password 1 et 2)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
     def __str__(self):
         return self.user.last_name+" "+self.user.first_name
 
@@ -93,16 +104,22 @@ def renommer_image(instance, filename):
         p = ""
         nom_image = ""
         for nom in noms:
-            n += (nom+"_")
+            n += ("_"+nom)
         for prenom in prenoms:
-            p += (prenom+"_")
-        nom_image = n+p
+            p += ("_"+prenom)
+        idUser = instance.user.id
+        nom_image = (str(idUser)+n+p)
         # filename = "photo_profile/{}.{}".format(instance.user.username, ext)
         filename = "photo_profile/{}.{}".format(nom_image, "png")
         return os.path.join(upload_to, filename)
 
 
 class Repetiteur(Utilisateur):
+
+    # User possede déja : username, email, first_name, last_name, (password 1 et 2)
+    # user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='Repetiteur')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='Repetiteur')
+
     CIVILITE = [
         ('Mr','Mr'),('Mme','Mme')
     ]
@@ -111,7 +128,10 @@ class Repetiteur(Utilisateur):
     telephone2 = models.CharField(max_length=200, blank=True)
     niveauEtude = models.CharField(max_length=200, null=True) 
     profession = models.CharField(max_length=200, null=True)
-    photoProfil = models.ImageField(upload_to=renommer_image, blank=True)
+
+    
+    photoProfil = models.ImageField(default='default_img.jpg', upload_to='image/photo_profile', null=True, blank=True)
+    # photoProfil = models.ImageField(upload_to=renommer_image, blank=True)
 
     def __str__(self):
         info = self.civilite+" "+self.user.first_name+" "+self.user.last_name

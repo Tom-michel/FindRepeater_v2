@@ -4,6 +4,10 @@ textarea {
   font-family: "Poppins", sans-serif;
 }
 
+h3 {
+  color: rgb(56, 51, 133) !important;
+}
+
 .titre h1{
   margin-top: 10px;
 	font-size: 20px;
@@ -180,12 +184,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-get-started {
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   font-weight: 400;
   font-size: 14px;
-  letter-spacing: 1px;
+  /* letter-spacing: 1px; */
   display: inline-block;
-  padding: 9px 25px 9px 25px;
+  padding: 9px 15px;
   border-radius: 20px;
   transition: 0.5s;
   border: 2px solid #fff;
@@ -198,8 +202,100 @@ h1, h2, h3, h4, h5, h6 {
   color: #000;
 }
 
+.btn-get-started.rec:hover {
+  background: rgb(56, 51, 133);
+  border: 2px solid rgb(56, 51, 133);
+  color: #fff;
+}
+
 
 /* banière page d'accueil FIN */
+
+
+/* Page d'adccueil après baniere début */
+
+
+#missions .missionBox h3{
+  font-size: 17px;
+  font-weight: bold;
+  opacity: .8;
+}
+#missions .missionBox i{
+  font-size: 28px;
+  color: orange;
+}
+#missions .missionBox p{
+  margin-top: 1rem;
+  font-size: 14px;
+}
+
+#missions .missionBox hr{
+  margin-top: 20px;
+}
+
+#missions .missionBox .dscProf{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#missions .missionBox .dscProf p{
+  width: 300px;
+}
+#missions .missionBox .dscProf img{
+  height: 241px;
+  width: auto;
+}
+
+@media screen and (min-width: 992px) {
+  #missions .missionBox{
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
+    position: relative;
+    padding: 25px 40px 0;
+    margin-bottom: 50px;
+    top: -60px;
+    background: #fff;
+    border-radius: 20px;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  #missions .missionBox{
+    margin: 25px 0;
+  }
+  #missions .missionBox .dscProf{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  #missions .missionBox .dscProf{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  #missions .missionBox .dscProf p{
+    width: 100%;
+  }
+  #missions .missionBox{
+    margin: 25px 20px;
+  }
+  #missions .missionBox .dscProf img{
+    height: 300px;
+    width: auto;
+  }
+  #missions .missionBox p{
+    font-size: 15px;
+  }
+}
+
+
+/* Page d'adccueil après baniere début */
+
+
 
 /* page d'enregistrement DÉBUT */
 
