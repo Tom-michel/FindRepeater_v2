@@ -1,23 +1,3 @@
-// changement du bouton menu après click
-
-var menuO = document.getElementById('menuO');
-var menuC = document.getElementById('menuC');
-menuC.style.display = "none";
-
-menuO.addEventListener('click', function(){
-  menuO.style.display = "none";
-  menuC.style.display = "";
-  // menuO.classList.toggle('cliq');
-  // menuC.classList.toggle('cliq');
-});
-menuC.addEventListener('click', function(){
-  menuO.style.display = "";
-  menuC.style.display = "none";
-  // menuC.classList.toggle('cliq');
-  // menuO.classList.toggle('cliq');
-});
-
-
 // baisser le menu lorsqu'on clique ailleur sur l'ecran
 
 // var navbarNavDropdown = document.getElementById('navbarNavDropdown');

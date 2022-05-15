@@ -12,9 +12,6 @@
   #lien_devProf {
     display: inline;
   }
-  #menuO, #menuC, .dropdown {
-    display: none !important;
-  } 
   
   .reseaux i{
     font-size: 25px;
@@ -334,13 +331,13 @@
                                 </style>
                                 <div class="partage">
                                     <span class="wha">
-                                        <a style="text-decoration: none;" href="https://wa.me/?text=Salut, je me nomme {{rep.civilite}} {{rep.user.last_name}} {{rep.user.first_name}}, je suis {{rep.profession}} et également enseignant des cours répétion. Pour plus d'information bien vouloir consulter mon *Profil Enseignant* sur la plateforme findrepeater via le lien suivant : {% url 'voir_profil' rep.id user.id %}">
+                                        <a style="text-decoration: none;" href="https://wa.me/?text=Salut, je me nomme {{rep.civilite}} {{rep.user.last_name}} {{rep.user.first_name}}, je suis {{rep.profession}} et également enseignant des cours répétion. Pour plus d'information bien vouloir consulter mon *Profil Enseignant* sur la plateforme findrepeater via le lien suivant : {% url 'voir_profil' rep.id %}">
                                             <i class="fab fa-whatsapp"></i>
                                         </a>&emsp;
                                     </span>
                                     <span class="tel">
                                         <a style="text-decoration: none;" >
-                                            <span style="position: absolute; margin-bottom: 20px; opacity: 1; height: 0; width: 0; overflow: hidden;" id="tocopy">Salut, je me nomme {{rep.civilite}} {{rep.user.last_name}} {{rep.user.first_name}}, je suis {{rep.profession}} et également enseignant des cours répétion. Pour plus d'information bien vouloir consulter mon *Profil Enseignant* sur la plateforme findrepeater via le lien suivant : {% url 'voir_profil' rep.id user.id %}</span>
+                                            <span style="position: absolute; margin-bottom: 20px; opacity: 1; height: 0; width: 0; overflow: hidden;" id="tocopy">Salut, je me nomme {{rep.civilite}} {{rep.user.last_name}} {{rep.user.first_name}}, je suis {{rep.profession}} et également enseignant des cours répétion. Pour plus d'information bien vouloir consulter mon *Profil Enseignant* sur la plateforme findrepeater via le lien suivant : {% url 'voir_profil' rep.id %}</span>
                                             <i class="far fa-clone js-copy" data-target="#tocopy"></i>
                                         </a>
                                     </span>

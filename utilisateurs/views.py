@@ -195,14 +195,13 @@ def connexion(request):
 @login_required(login_url='connexion')
 def consulter_profil(request):
     coursList = Cours.objects.all()
-    repList = Repetiteur.objects.all()
     tlList = Type_Lieu_Cours.objects.all()
             
     tlTab = []
     for tl in tlList:
         tlTab.append(tl.repetiteur.user.id)
 
-    context = {'coursList':coursList, 'repList':repList, 'tlList':tlList, 'tlTab':tlTab}
+    context = {'coursList':coursList, 'tlList':tlList, 'tlTab':tlTab}
     return render(request, 'utilisateurs/consulter_profil.html', context)
 
 
@@ -321,19 +320,12 @@ def modifier_profil_cli(request, id_c, id_u):
 
 # voir un profil (par le client)
 
-@login_required(login_url='connexion')
-def voir_profil(request, id_r, id_u):
-    repList = Repetiteur.objects.all()
+def voir_profil(request, id_r):
     coursList = Cours.objects.all()
     tlList  =Type_Lieu_Cours.objects.all()
 
     # identifier un répétiteur spécifique par son id
     rep = Repetiteur.objects.get(id=id_r)
-    
-    # identifier le user associé à ce répétiteur, par son id
-    for u in User.objects.all():
-        if u.id == rep.user.id:
-            use = User.objects.get(id=id_u)
     
     coursL = []
     for c in coursList:
@@ -348,8 +340,6 @@ def voir_profil(request, id_r, id_u):
 
     context = {
         'rep':rep,
-        'use':use,
-        'repList':repList,
         'tlList':tlList,
         'coursL':coursL,
         'n':n,
