@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.db.models import fields
-from .models import Client, CoursEns, Repetiteur, Personne
+from .models import Client, Repetiteur
 
 
 
@@ -45,24 +45,4 @@ class ClientForm(forms.ModelForm):
             'quartier',
             'telephone1',
             'langue'
-        ]
-
-# testmultiselect
-
-class CoursEnsForm(forms.ModelForm):
-    class Meta():
-        model = CoursEns
-        fields = [
-            'intitule',
-            'classes',
-        ]
-
-# enregistrement multiple
-
-class PersonneForm(forms.ModelForm):
-    class Meta():
-        model = Personne
-        fields = [
-            'nom',
-            'prenom',
         ]

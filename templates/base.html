@@ -296,79 +296,77 @@
           </div>
         
         <!-- Button trigger modal -->
-
   
-  <!-- Modal pour ajout de types et lieux -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">AJOUT DES TYPES ET LIEUX DE COURS</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <form action="" method="post">
-            {% csrf_token %}
-            <div class="modal-body">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <style>
-                                .choix label {
-                                    margin: 0 5px 0 16px;
-                                    cursor: pointer;
-                                }
-                                .choix label input {
-                                    margin: 0 0 12px;
-                                    cursor: pointer;
-                                }
-                            </style>
-                            <p id="indication" style="color: rgb(56, 51, 133) !important; font-style: italic; font-size: 15px;" class="text-center align-items-center mt-4">
-                                <i style="font-size: 20px;" class="bi-question-circle"></i> 
-                                - Séléctionner au moins un type de cours <br>
-                                - Sélectionner au moins un lieux de cours
-                            </p>
-                            <div class="form-group" style="display: none;">
-                                votre identité
-                                {% for rep in repList %}
-                                    {% if rep.user.id == user.id %}
-                                        <select name="repetiteur" required="" id="id_repetiteur">
-                                        <option value="{{rep.id}}">{{rep}}</option>
-                                        </select>
-                                    {% endif %}
-                                {% endfor %}
-                            </div>
+        <!-- Modal pour ajout de types et lieux -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">AJOUT DES TYPES ET LIEUX DE COURS</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <div class="container">
                             <div class="row">
-                                <div class="col-md-6 offset-md-3">
-                                    <div class="form-group choix">
-                                        <b>Les types de cours</b>
-                                        {{tl_form.types}}
+                                <div class="col-md-12">
+                                    <style>
+                                        .choix label {
+                                            margin: 0 5px 0 16px;
+                                            cursor: pointer;
+                                        }
+                                        .choix label input {
+                                            margin: 0 0 12px;
+                                            cursor: pointer;
+                                        }
+                                    </style>
+                                    <p id="indication" style="color: rgb(56, 51, 133) !important; font-style: italic; font-size: 15px;" class="text-center align-items-center mt-4">
+                                        <i style="font-size: 20px;" class="bi-question-circle"></i> 
+                                        - Séléctionner au moins un type de cours <br>
+                                        - Sélectionner au moins un lieux de cours
+                                    </p>
+                                    <div class="form-group" style="display: none;">
+                                        votre identité
+                                        {% for rep in repList %}
+                                            {% if rep.user.id == user.id %}
+                                                <select name="repetiteur" required="" id="id_repetiteur">
+                                                <option value="{{rep.id}}">{{rep}}</option>
+                                                </select>
+                                            {% endif %}
+                                        {% endfor %}
                                     </div>
-                                    <div class="form-group choix">
-                                        <b>Les lieux de cours</b>
-                                        {{tl_form.lieux}}
+                                    <div class="row">
+                                        <div class="col-md-6 offset-md-3">
+                                            <div class="form-group choix">
+                                                <b>Les types de cours</b>
+                                                {{tl_form.types}}
+                                            </div>
+                                            <div class="form-group choix">
+                                                <b>Les lieux de cours</b>
+                                                {{tl_form.lieux}}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                
+                    <div class="modal-footer">
+                    <button type="button" class="btn-register" data-bs-dismiss="modal">Annuler</button>
+                    <input type="submit" class="btn-connexion" value="Enregistrer">
+                    </div>
+                </form>
             </div>
-        
-            <div class="modal-footer">
-            <button type="button" class="btn-register" data-bs-dismiss="modal">Annuler</button>
-            <input type="submit" class="btn-connexion" value="Enregistrer">
             </div>
-        </form>
-      </div>
-    </div>
-  </div>
-  
-        
+        </div>
+   
         <!--  ============== Navbar End ========================-->
         
         {% endblock %}
 
-	      {% block content %} 
+	    {% block content %} 
 
         {% endblock %}
 

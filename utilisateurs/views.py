@@ -4,60 +4,13 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .forms import CoursEnsForm, UserForm, ClientForm, RepetiteurForm, PersonneForm
+from .forms import UserForm, ClientForm, RepetiteurForm
 from cours.forms import Type_Lieu_Cours_Form
 from django.contrib.auth.models import User
-from .models import CoursEns, Repetiteur, Client, Personne
+from .models import Repetiteur, Client
 from cours.models import Cours, Type_Lieu_Cours
 
 # Create your views here.
-
-
-# enregistrrment multiple
-
-def personne(request):
-    persForm = PersonneForm()
-    persList = Personne.objects.all()
-    nb = [1,2]
-    if request.method == 'POST':
-        persForm = PersonneForm(data=request.POST)
-        person = persForm.save()
-        person.save()
-        
-        context = {
-            'persList':persList,
-            'persForm':persForm,'nb':nb
-        }
-        return render(request, 'utilisateurs/personne.html', context)
-    context = {
-            'persList':persList,
-            'persForm':persForm,
-            'nb':nb
-        }
-    return render(request, 'utilisateurs/personne.html', context)
-
-
-
-
-# test du multiselectfiedl
-
-def testMult(request):
-    cform = CoursEnsForm()
-    if request.method == 'POST':
-        # intitule = request.POST.get('intitule')
-        # classes = request.POST.get('classes')
-        # coursE = CoursEns(intitule=intitule, classes=classes)
-        # coursE.save()
-        cform = CoursEnsForm(data=request.POST)
-        coursE = cform.save()
-        coursE.save()
-        context = {'coursE':coursE}
-        return render(request, 'utilisateurs/testMult.html', context)
-        # return HttpResponseRedirect('/')
-
-    coursEns = CoursEns.objects.all()
-    context = {'coursEns':coursEns, 'cform':cform}
-    return render(request, 'utilisateurs/testMult.html', context)
 
 
 # page d'accueil
@@ -218,7 +171,7 @@ def connexion(request):
                     if user.is_authenticated:
                         logout(request)
                     login(request, user)
-                    return HttpResponseRedirect('admin')
+                    return HttpResponseRedirect('/')
                 #     msg1 = messages.info(request, "cet utilisateur ne correspond pas à un compte Parent/Élève ou Enseignant !")
                 # context1 = {
                 #     'msg1':msg1
@@ -244,20 +197,6 @@ def consulter_profil(request):
     coursList = Cours.objects.all()
     repList = Repetiteur.objects.all()
     tlList = Type_Lieu_Cours.objects.all()
-
-    # formulaire pour ajout de types_lieux_cours (via un modal)
-    # tl_form = Type_Lieu_Cours_Form()
-    # if request.method == 'POST':
-    #     tl_form = Type_Lieu_Cours_Form(data=request.POST)
-    #     if tl_form.is_valid():
-    #         type_lieux = tl_form.save()
-    #         type_lieux.save()
-    #         tlList = Type_Lieu_Cours.objects.all()
-    #         tlTab = []
-    #         for tl in tlList:
-    #             tlTab.append(tl.repetiteur.user.id)
-    #         context = {'coursList':coursList, 'repList':repList, 'tlList':tlList, 'tlTab':tlTab, 'tl_form':tl_form}
-    #         return render(request, 'utilisateurs/consulter_profil.html', context)
             
     tlTab = []
     for tl in tlList:
@@ -272,7 +211,7 @@ def consulter_profil(request):
 # modifier son profil (le prof)
 
 @login_required(login_url='connexion')
-def modifier_profil(request, id_r, id_u):
+def modifier_profil(request, id_r):
     err = ''
     err2 = ''
     repList = Repetiteur.objects.all()
@@ -281,9 +220,7 @@ def modifier_profil(request, id_r, id_u):
     repetiteur = Repetiteur.objects.get(id=id_r)
     
     # identifier le user associé à ce répétiteur, par son id
-    for u in User.objects.all():
-        if u.id == repetiteur.user.id:
-            user = User.objects.get(id=id_u)
+    user = User.objects.get(id=repetiteur.user.id)
     
     # remplir le formulaire avec les info du répétiteur
     rep_form = RepetiteurForm(instance=repetiteur)
@@ -293,9 +230,7 @@ def modifier_profil(request, id_r, id_u):
         user_form = UserForm(data=request.POST, instance=user)
         
         if rep_form.is_valid() and user_form.is_valid():
-            rep = rep_form.save()
-            rep.save()
-
+            #enregistrer dans la BD
             use = user_form.save()
             use.save()
             repetit = rep_form.save(commit=False)

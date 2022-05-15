@@ -48,249 +48,222 @@
       </div> 
   </div>
 
-  <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="row form-enregistrement">
-            <div class="col-md-3 barre border-right">
-              <div class="d-flex flex-column align-items-center text-center px-3">
-                {% for rep in repList %}
-                  {% if rep.user.id == user.id %}
-                    {% comment %} {% if not rep.photoProfil %}
-                        <img class="rounded-circle mt-5" style="width: 150px;" src="{% static 'img/profile.jpg' %}">
-                    {% endif %}
-                    {% if rep.photoProfil %} {% endcomment %}
-                        <img class="rounded-circle mt-5 profile-img" src="{{request.user.Repetiteur.photoProfil.url}}">
-                    {% comment %} {% endif %} {% endcomment %}
-                    {{rep_form.photoProfil}}
-                    <span class="font-weight-bold">{{rep.user.username}}</span>
-                    <span class="pt-4"> 
-                      <!-- {{user_form.username.errors}} -->
-                      {% for err in rep_form.photoProfil.errors %}
-                        <p class="errornotes">{{err}}</p>
-                      {% endfor %}
-                      {% for err in user_form.username.errors %}
-                        <p class="errornotes">{{err}} Veuillez reéssayer !</p>
-                      {% endfor %}
-                      {% for err in user_form.password2.errors %}
-                        <p class="errornotes">{{err}} Veuillez reéssayer !</p>
-                      {% endfor %}
-                      {% for err in user_form.password1.errors %}
-                        <p class="errornotes">{{err}} Veuillez reéssayer !</p>
-                      {% endfor %}
-                      <!-- {{user_form.password2.errors}} -->
-                      <!-- {{user_form.password1.errors}} -->
-                    </span>
-                  {% endif %}
-                {% endfor %}
-              </div>
-            </div>
-
-            <div class="col-md-9">
-                <div class="py-2 px-3 m-2">
-                  <form name="formModif" method="POST" action="#">
-                    {% csrf_token %}
-
-                    <div class="text-center pt-3 pb-3">
-                        <h4>Informations personnelles</h4>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-md-4 mt-2">
-                          <div class="form-group">
-                            <label for="civilite">Civilité &emsp;</label><br>
-                            {{rep_form.civilite}}
-                          </div>
-                      </div>
-                      <div class="col-md-4 mt-2">
-                        <div class="form-group">
-                          <label for="age">Âge </label>
-                          <!-- <input class="form-control" type="number" name="age" id="ageRep"> -->
-                          {{rep_form.age}}
-                          <p><span class="errorform" id="error_ageRep"></span></p>
+    <div class="container">
+        <div class="row">
+            <form name="formModif" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+                <div class="col-md-12">
+                    <div class="row form-enregistrement">
+                        <div class="col-md-3 barre border-right">
+                            <div class="d-flex flex-column align-items-center text-center px-3">
+                                <img class="rounded-circle mt-5 profile-img" src="{{request.user.rep.photoProfil.url}}">
+                                <span class="font-weight-bold">{{request.user.username}}</span>
+                                <input type="file" name="photoProfil" accept="image/*" id="id_photoProfil" class=" form-control">
+                                <span class="pt-4"> 
+                                    <!-- {{user_form.username.errors}} -->
+                                    {% for err in rep_form.photoProfil.errors %}
+                                        <p class="errornotes">{{err}}</p>
+                                    {% endfor %}
+                                    {% for err in user_form.username.errors %}
+                                        <p class="errornotes">{{err}} Veuillez reéssayer !</p>
+                                    {% endfor %}
+                                    {% for err in user_form.password2.errors %}
+                                        <p class="errornotes">{{err}} Veuillez reéssayer !</p>
+                                    {% endfor %}
+                                    {% for err in user_form.password1.errors %}
+                                        <p class="errornotes">{{err}} Veuillez reéssayer !</p>
+                                    {% endfor %}
+                                    <!-- {{user_form.password2.errors}} -->
+                                    <!-- {{user_form.password1.errors}} -->
+                                </span>
+                            </div>
                         </div>
-                      </div>
-                    </div>
 
+                        <div class="col-md-9">
+                            <div class="py-2 px-3 m-2">
+                                <div class="text-center pt-3 pb-3">
+                                    <h4>Informations personnelles</h4>
+                                </div>
 
-                    {% comment %} <div class="row">
-                      <div class="col-md-4 mt-2">
-                        <div class="form-group">
-                          <label for="nom_image">nom_image_profil dans la BD</label>
-                          {{rep_form.nom_image}}
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                          {{rep_form.photoProfil}}
-                      </div>
-                    </div> {% endcomment %}
+                                <div class="row">
+                                    <div class="col-md-4 mt-2">
+                                        <div class="form-group">
+                                            <label for="civilite">Civilité &emsp;</label><br>
+                                            {{rep_form.civilite}}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mt-2">
+                                        <div class="form-group">
+                                        <label for="age">Âge </label>
+                                        <!-- <input class="form-control" type="number" name="age" id="ageRep"> -->
+                                        {{rep_form.age}}
+                                        <p><span class="errorform" id="error_ageRep"></span></p>
+                                        </div>
+                                    </div>
+                                </div>
 
+                                <div class="row">
+                                <div class="col-md-4 mt-3">
+                                    <div class="form-group">
+                                        <label for="last_name">Nom </label>
+                                        <!-- <input class="form-control" type="text" name="last_name" id="last_nameRep"> -->
+                                        {{user_form.last_name}}
+                                        <p><span class="errorform" id="error_last_nameRep"></span></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mt-3">
+                                    <div class="form-group">
+                                        <label for="first_name">Prénom </label>
+                                        <!-- <input class="form-control" type="text" name="first_name" id="first_nameRep"> -->
+                                        {{user_form.first_name}}
+                                        <p><span class="errorform" id="error_first_nameRep"></span></p>
+                                    </div>
+                                </div>
+                                    <div class="col-md-4 mt-3">
+                                        <div class="form-group">
+                                        <label for="telephone1">Téléphone </label>
+                                        {{rep_form.telephone1}}
+                                        <!-- <input class="form-control" type="text" name="telephone1" id="telephone1Rep"> -->
+                                        <p><span class="errorform" id="error_telephone1Rep"></span></p>
+                                        </div>
+                                    </div>
+                                </div>
 
-                    <div class="row">
-                      <div class="col-md-4 mt-3">
-                          <div class="form-group">
-                            <label for="last_name">Nom </label>
-                            <!-- <input class="form-control" type="text" name="last_name" id="last_nameRep"> -->
-                            {{user_form.last_name}}
-                            <p><span class="errorform" id="error_last_nameRep"></span></p>
-                          </div>
-                      </div>
-                      <div class="col-md-4 mt-3">
-                          <div class="form-group">
-                            <label for="first_name">Prénom </label>
-                            <!-- <input class="form-control" type="text" name="first_name" id="first_nameRep"> -->
-                            {{user_form.first_name}}
-                            <p><span class="errorform" id="error_first_nameRep"></span></p>
-                          </div>
-                      </div>
-                      <div class="col-md-4 mt-3">
-                        <div class="form-group">
-                          <label for="telephone1">Téléphone </label>
-                          {{rep_form.telephone1}}
-                          <!-- <input class="form-control" type="text" name="telephone1" id="telephone1Rep"> -->
-                          <p><span class="errorform" id="error_telephone1Rep"></span></p>
-                        </div>
-                      </div>
-                    </div>
+                                <div class="text-center pt-4 mt-4 pb-3">
+                                    <h4>Informations professionnelles</h4>
+                                </div>
 
-                    <div class="text-center pt-4 mt-4 pb-3">
-                      <h4>Informations professionnelles</h4>
-                    </div>
+                                <div class="row">
+                                    <div class="col-md-6 offset-md-3 mt-1">
+                                        <div class="form-group">
+                                        <label for="langue">Profession actuelle</label>
+                                        {{rep_form.profession}}
+                                        <p><span class="errorform" id="error_professionRep"></span></p>
+                                        </div>
+                                    </div>
+                                </div>  
+                                <div class="row">
+                                    <div class="col-md-6 mt-3">
+                                        <div class="form-group">
+                                            <label for="langue">Langue d'enseignement &emsp;</label>
+                                            {{rep_form.langue}}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mt-3">
+                                        <div class="form-group">
+                                        <label for="niveauEtude">Niveau d'étude </label>
+                                        <!-- <input class="form-control" type="text" name="niveauEtude" id="niveauEtudeRep"> -->
+                                        {{rep_form.niveauEtude}}
+                                        <p><span class="errorform" id="error_niveauEtudeRep"></span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mt-1">
+                                        <div class="form-group">
+                                        <label for="telephone2">Whatsapp </label>
+                                        <!-- <input class="form-control" type="text" name="telephone2" id="telephone2Rep"> -->
+                                        {{rep_form.telephone2}}
+                                        <p><span class="errorform" id="error_telephone2Rep"></span></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mt-1">
+                                        <div class="form-group">
+                                        <label for="email">Email </label>
+                                        <!-- <input class="form-control" type="email" name="email" id="emailRep"> -->
+                                        {{user_form.email}}
+                                        <p><span class="errorform" id="error_emailRep"></span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mt-1">
+                                        <div class="form-group">
+                                        <label for="ville">Ville </label>
+                                        <!-- <input class="form-control" type="text" name="ville" id="villeRep"> -->
+                                        {{rep_form.ville}}
+                                        <p><span class="errorform" id="error_villeRep"></span></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mt-1">
+                                        <div class="form-group">
+                                        <label for="quartier">Quartier </label>
+                                        <!-- <input class="form-control" type="text" name="quartier" id="quartierRep"> -->
+                                        {{rep_form.quartier}}
+                                        <p><span class="errorform" id="error_quartierRep"></span></p>
+                                        </div>
+                                    </div>
+                                </div>
 
-                    <div class="row">
-                      <div class="col-md-6 offset-md-3 mt-1">
-                        <div class="form-group">
-                          <label for="langue">Profession actuelle</label>
-                          {{rep_form.profession}}
-                          <p><span class="errorform" id="error_professionRep"></span></p>
-                        </div>
-                      </div>
-                    </div>  
-                    <div class="row">
-                        <div class="col-md-6 mt-3">
-                          <div class="form-group">
-                            <label for="langue">Langue d'enseignement &emsp;</label>
-                            {{rep_form.langue}}
-                          </div>
-                        </div>
-                        <div class="col-md-6 mt-3">
-                            <div class="form-group">
-                              <label for="niveauEtude">Niveau d'étude </label>
-                              <!-- <input class="form-control" type="text" name="niveauEtude" id="niveauEtudeRep"> -->
-                              {{rep_form.niveauEtude}}
-                              <p><span class="errorform" id="error_niveauEtudeRep"></span></p>
+                                <div class="row">
+                                    <div class="col-md-3 mt-2">
+                                        <div class="form-group">
+                                            <label for="username">Nom d'utilisateur</label>
+                                            <!-- <input class="form-control" type="text" name="username" id="usernameRep"> -->
+                                            {{user_form.username}}
+                                            {{user_form.username.errors}}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mt-2">
+                                        <div class="form-group">
+                                            <label for="password1">Créez votre mot de passe</label>
+                                            <!-- <input class="form-control" type="password" name="password1" id="password1Rep"> -->
+                                            <input type="password" name="password1" autocomplete="current-password" required="" id="id_password1" class=" form-control">
+                                            {{user_form.password1.errors}}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-4 mb-2">
+                                    <div class="col-md-6 text-center">
+
+                                        <style>
+                                        .fom {
+                                            /* position: relative; */
+                                            align-items: center !important;
+                                            display: flex;
+                                        }
+                                        .far {
+                                            position: absolute;
+                                            right: 41%;
+                                            cursor: pointer;
+                                            color: rgb(48, 48, 48);
+                                            font-size: 20px;
+                                        }
+
+                                        @media screen and (max-width: 991px) {
+                                            .far {
+                                            right: 41%;
+                                            }
+                                        }
+
+                                        @media screen and (max-width: 767px) {
+                                            .far {
+                                            /* right: 12%; */
+                                            right: 17%;
+                                            }
+                                        }
+                                        </style>
+                                        <div class="form-group">
+                                        <label for="password2">Confirmez les mofications en entrant votre mot de passe</label>
+                                        <!-- <input class="form-control" type="password" name="password2" id="password2Rep"> -->
+                                        <div class="fom">
+                                            {{user_form.password2}} <i class="far fa-eye" onclick="affiMdp()"></i> <i class="far fa-eye-slash" onclick="affiMdp()"></i>
+                                        </div>
+                                        {{user_form.password2.errors}}
+                                        </div>
+                                    </div>
+                                <div class="col-md-4 offset-md-1  mt-4 text-center align-self-end">
+                                    <input id="sub_mod" class="btn-connexion" type="submit" onclick="return ValFormModif()" value="Sauvegarder">
+                                </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                      <div class="col-md-6 mt-1">
-                        <div class="form-group">
-                          <label for="telephone2">Whatsapp </label>
-                          <!-- <input class="form-control" type="text" name="telephone2" id="telephone2Rep"> -->
-                          {{rep_form.telephone2}}
-                          <p><span class="errorform" id="error_telephone2Rep"></span></p>
-                        </div>
-                      </div>
-                      <div class="col-md-6 mt-1">
-                        <div class="form-group">
-                          <label for="email">Email </label>
-                          <!-- <input class="form-control" type="email" name="email" id="emailRep"> -->
-                          {{user_form.email}}
-                          <p><span class="errorform" id="error_emailRep"></span></p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6 mt-1">
-                        <div class="form-group">
-                          <label for="ville">Ville </label>
-                          <!-- <input class="form-control" type="text" name="ville" id="villeRep"> -->
-                          {{rep_form.ville}}
-                          <p><span class="errorform" id="error_villeRep"></span></p>
-                        </div>
-                      </div>
-                      <div class="col-md-6 mt-1">
-                        <div class="form-group">
-                          <label for="quartier">Quartier </label>
-                          <!-- <input class="form-control" type="text" name="quartier" id="quartierRep"> -->
-                          {{rep_form.quartier}}
-                          <p><span class="errorform" id="error_quartierRep"></span></p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="row" style="display: none;">
-                      <div class="col-md-3 mt-2">
-                          <div class="form-group">
-                            <label for="username">Nom d'utilisateur</label>
-                            <!-- <input class="form-control" type="text" name="username" id="usernameRep"> -->
-                            {{user_form.username}}
-                            {{user_form.username.errors}}
-                          </div>
-                      </div>
-                      <div class="col-md-4 mt-2">
-                          <div class="form-group">
-                            <label for="password1">Créez votre mot de passe</label>
-                            <!-- <input class="form-control" type="password" name="password1" id="password1Rep"> -->
-                            {{user_form.password1}}
-                            {{user_form.password1.errors}}
-                          </div>
-                      </div>
-                    </div>
-
-                    <div class="row mt-4 mb-2">
-                      <div class="col-md-6 text-center">
-
-                        <style>
-                          .fom {
-                            /* position: relative; */
-                            align-items: center !important;
-                            display: flex;
-                          }
-                          .far {
-                            position: absolute;
-                            right: 41%;
-                            cursor: pointer;
-                            color: rgb(48, 48, 48);
-                            font-size: 20px;
-                          }
-
-                          @media screen and (max-width: 991px) {
-                            .far {
-                              right: 41%;
-                            }
-                          }
-
-                          @media screen and (max-width: 767px) {
-                            .far {
-                              /* right: 12%; */
-                              right: 17%;
-                            }
-                          }
-                        </style>
-                        <div class="form-group">
-                          <label for="password2">Confirmez les mofications en entrant votre mot de passe</label>
-                          <!-- <input class="form-control" type="password" name="password2" id="password2Rep"> -->
-                          <div class="fom">
-                            {{user_form.password2}} <i class="far fa-eye" onclick="affiMdp()"></i> <i class="far fa-eye-slash" onclick="affiMdp()"></i>
-                          </div>
-                          {{user_form.password2.errors}}
-                        </div>
-                      </div>
-                      <div class="col-md-4 offset-md-1  mt-4 text-center align-self-end">
-                        <input id="sub_mod" class="btn-connexion" type="submit" onclick="return ValFormModif()" value="Sauvegarder">
-                      </div>
-                    </div>
-
-                      
-                  </form>
-                </div>
-
-            </div>
-          </div>
-        </div>           
-      </div>
-  </div>  
+                </div> 
+            </form>          
+        </div>
+    </div>  
 
 </section>
 

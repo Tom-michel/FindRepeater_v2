@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.db.models import fields
-from .models import Cours, Matiere, Classe, Type_Lieu_Cours
+from .models import Cours, Matiere, Type_Lieu_Cours
 
 
 
@@ -19,11 +19,6 @@ class MatiereFrom(forms.ModelForm):
     class Meta():
         model = Matiere
         fields = ['intitule']
-
-class ClasseFrom(forms.ModelForm):
-    class Meta():
-        model = Classe
-        fields = ['niveau']
 
 class Type_Lieu_Cours_Form(forms.ModelForm):
     class Meta():

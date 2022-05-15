@@ -1,8 +1,15 @@
-body,
-input,
-textarea {
-  font-family: "Poppins", sans-serif;
+/* @import url('https://fonts.googleapis.com/css2?family=Lobster&family=Poppins:wght@400;500;600;700&family=Pacifico&family=Righteous&family=Merienda&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Cookie&family=Poppins:wght@400;500;600;700&display=swap');
+
+/* @font-face {
+    font-family: Poppins;
+    src: url(../fonts/Poppins-Regular.ttf);
+} */
+
+*{
+    font-family: 'Poppins', sans-serif !important;
 }
+
 
 h3 {
   color: rgb(56, 51, 133) !important;
@@ -255,6 +262,7 @@ h1, h2, h3, h4, h5, h6 {
     top: -60px;
     background: #fff;
     border-radius: 20px;
+    border-bottom: orange solid 2px;
   }
 }
 

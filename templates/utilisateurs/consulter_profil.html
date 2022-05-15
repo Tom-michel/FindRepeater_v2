@@ -93,22 +93,15 @@
         </div> 
     </div>
 
-    {% for rep in repList %}
-    {% if rep.user.id == user.id %}
+    
     <div class="container">
         <div class="row">
             <div class="col-md-4 shadow-lg dash mx-4">
                 <div class="d-flex flex-column align-items-center dash-content text-center p-3">
-                    {% comment %} {% if not rep.photoProfil %}
-                        <img class="rounded-circle mt-5" style="width: 150px;" src="{% static 'img/profile.jpg' %}">
-                    {% endif %}
-                    {% if rep.photoProfil %} {% endcomment %}
-                        <img class="rounded-circle mt-5 profile-img" src="{{request.user.Repetiteur.photoProfil.url}}">
-                    {% comment %} {% endif %} {% endcomment %}
-                    
-                    <span>{{rep.age}} ans | {{rep.profession}}</span>
-                    <span>{{rep.ville}}, {{rep.quartier}}</span>
-                    <span>{{rep.user.email}}</span>
+                    <img class="rounded-circle mt-5 profile-img" src="{{request.user.rep.photoProfil.url}}">
+                    <span>{{request.user.rep.age}} ans | {{request.user.rep.profession}}</span>
+                    <span>{{request.user.rep.ville}}, {{request.user.rep.quartier}}</span>
+                    <span>{{request.user.email}}</span>
                 </div>
             </div>
             <div class="col-md-7">
@@ -120,7 +113,7 @@
                                 <h6><b>Noms et Prénoms</b></h6>
                             </div>
                             <div class="col text-end">
-                                <span>{{rep.user.last_name}} {{rep.user.first_name}}</span>
+                                <span>{{request.user.last_name}} {{request.user.first_name}}</span>
                             </div>
                             <hr>
                         </div>
@@ -129,7 +122,7 @@
                                 <h6><b>Télephone</b></h6>
                             </div>
                             <div class="col text-end">
-                                <span>{{rep.telephone1}}</span>
+                                <span>{{request.user.rep.telephone1}}</span>
                             </div>
                             <hr>
                         </div>
@@ -138,7 +131,7 @@
                                 <h6><b>Whatsapp</b></h6>
                             </div>
                             <div class="col text-end">
-                                <span>{{rep.telephone2}}</span>
+                                <span>{{request.user.rep.telephone2}}</span>
                             </div>
                             <hr>
                         </div>
@@ -147,7 +140,7 @@
                                 <h6><b>Niveau d'étude</b></h6>
                             </div>
                             <div class="col text-end">
-                                <span>{{rep.niveauEtude}}</span>
+                                <span>{{request.user.rep.niveauEtude}}</span>
                             </div>
                             <hr>
                         </div>
@@ -156,13 +149,13 @@
                                 <h6><b>Langue d'enseignement</b></h6>
                             </div>
                             <div class="col text-end">
-                                <span>{{rep.langue}}</span>
+                                <span>{{request.user.rep.langue}}</span>
                             </div>
                             <hr>
                         </div>
 
                         <div class="text-center p-2">
-                            <a class="btn-connexion" href="{% url 'modifier_profil' rep.id user.id %}">Modifier</a>
+                            <a class="btn-connexion" href="{% url 'modifier_profil' request.user.rep.id %}">Modifier</a>
                         </div>
                     </div>
                 </div>
@@ -287,18 +280,18 @@
                                 </style>
                                 <div class="partage">
                                     <span class="wha">
-                                        <a style="text-decoration: none;" href="https://wa.me/?text=Salut, je suis {{rep.civilite}} {{rep.user.last_name}} {{rep.user.first_name}}, {{rep.profession}} et également enseignant des cours répétion. Pour plus d'information bien vouloir consulter mon *Profil Enseignant* sur la plateforme findrepeater via le lien suivant : {% url 'voir_profil' rep.id user.id %}">
+                                        <a style="text-decoration: none;" href="https://wa.me/?text=Salut, je suis {{request.user.rep.civilite}} {{request.user.rep.user.last_name}} {{request.user.rep.user.first_name}}, {{request.user.rep.profession}} et également enseignant des cours répétion. Pour plus d'information bien vouloir consulter mon *Profil Enseignant* sur la plateforme findrepeater via le lien suivant : {% url 'voir_profil' request.user.rep.id request.user.id %}">
                                             <i class="fab fa-whatsapp"></i>
                                         </a>&emsp;
                                     </span>
                                     <span class="tel">
                                         <a style="text-decoration: none;" >
-                                            <span style="position: absolute; margin-bottom: 20px; opacity: 1; height: 0; width: 0; overflow: hidden;" id="tocopy">Salut, je suis {{rep.civilite}} {{rep.user.last_name}} {{rep.user.first_name}}, {{rep.profession}} et également enseignant des cours répétion. Pour plus d'information bien vouloir consulter mon *Profil Enseignant* sur la plateforme findrepeater via le lien suivant : {% url 'voir_profil' rep.id user.id %}</span>
+                                            <span style="position: absolute; margin-bottom: 20px; opacity: 1; height: 0; width: 0; overflow: hidden;" id="tocopy">Salut, je suis {{request.user.rep.civilite}} {{request.user.rep.user.last_name}} {{request.user.rep.user.first_name}}, {{request.user.rep.profession}} et également enseignant des cours répétion. Pour plus d'information bien vouloir consulter mon *Profil Enseignant* sur la plateforme findrepeater via le lien suivant : {% url 'voir_profil' request.user.rep.id request.user.id %}</span>
                                             <i class="far fa-clone js-copy" data-target="#tocopy"></i>
                                         </a>
                                     </span>&emsp;
                                     <span>
-                                        <a style="text-decoration: none;" href="{% url 'voir_profil' rep.id user.id %}">voir<i class="fas fa-eye"></i></a> 
+                                        <a style="text-decoration: none;" href="{% url 'voir_profil' request.user.rep.id user.id %}">voir<i class="fas fa-eye"></i></a> 
                                     </span>
                                     
                                 </div>
@@ -311,9 +304,7 @@
 
         
 
-    </div>
-    {% endif %}
-    {% endfor %}    
+    </div>    
 </section>
 
 <script>

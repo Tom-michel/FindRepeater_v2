@@ -8,20 +8,6 @@ import os
 # Create your models here.
 
 
-# test de l'enregistrement multiple
-
-class Personne(models.Model):
-    nom = models.CharField(max_length=100, null=True)
-    prenom = models.CharField(max_length=100, null=True)
-    
-    def __str__(self):
-        return self.nom+" "+self.prenom
-
-
-# model pour le test du multiselectfield
-
-from multiselectfield import MultiSelectField
-
 MY_CHOICES = (('Ecole primaire','Ecole primaire'),
               ('6e','6e'),
               ('5e','5e'),
@@ -34,18 +20,10 @@ MY_CHOICES = (('Ecole primaire','Ecole primaire'),
               ('Licence 2', 'Licence 2'),
               ('Licence 3', 'Licence 3'))
 
-class CoursEns(models.Model):
-    intitule = models.CharField(max_length=100)
-    classes = MultiSelectField(choices=MY_CHOICES)
-    def __str__(self):
-        return self.intitule
-
-
-
 
 # creation la classe Utilisateur
 
-class Utilisateur(models.Model):
+class Personne(models.Model):
     ville = models.CharField(max_length=200, null=True)
     quartier = models.CharField(max_length=200, null=True)
     LANGUE = [
@@ -68,18 +46,10 @@ class Utilisateur(models.Model):
 
 
 
-# creation de la classe Classe
-
-class Classe(models.Model):
-    niveau = models.CharField(max_length=200, null=True)
-
-    def __str__(self):
-        return self.niveau
-
 
 # creation de la classe Client(élève/parent d'élève) qui est un Utilisateur
 
-class Client(Utilisateur):
+class Client(Personne):
     # classe = models.ForeignKey(Classe, null=True, on_delete=models.SET_NULL)
     classe = models.CharField(max_length=200, null=True, choices=MY_CHOICES)
 
@@ -87,7 +57,7 @@ class Client(Utilisateur):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.user.last_name+" "+self.user.first_name
+        return f'Eleve {self.user.username}'
 
 
 
@@ -114,11 +84,11 @@ def renommer_image(instance, filename):
         return os.path.join(upload_to, filename)
 
 
-class Repetiteur(Utilisateur):
+class Repetiteur(Personne):
 
     # User possede déja : username, email, first_name, last_name, (password 1 et 2)
     # user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='Repetiteur')
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='Repetiteur')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='rep')
 
     CIVILITE = [
         ('Mr','Mr'),('Mme','Mme')
@@ -134,13 +104,4 @@ class Repetiteur(Utilisateur):
     # photoProfil = models.ImageField(upload_to=renommer_image, blank=True)
 
     def __str__(self):
-        info = self.civilite+" "+self.user.first_name+" "+self.user.last_name
-        return info
-   
-    # s'inscrire : redefinir la methdode inscrire() de Utilisateur
-    def inscrire():
-        pass
-
-    # modifier son profil (deja inscrit)
-    def modifierProfil(self):
-        pass
+        return f'Prof {self.user.username}'
