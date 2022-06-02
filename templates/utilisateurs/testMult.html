@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} FindRepeater | Trouvez facilement et rapidement des profs sur mesures | Accueil {% endblock %}
+
+{% block content %}
+  <br><br><br>
+  <section class="mb-5 pb-5">
+
+    <h1>TEST multiselect field</h1>
+
+    <form style="width: 50%;" action="" method="post">
+        {% csrf_token %}
+            <!-- <label for="intitule">intitule</label>
+            <input type="text" name="intitule" id="intitule"> -->
+
+            <label for="id_intitule">intitule</label>
+            {{cform.intitule}} <br>
+            <label for="coursEns.classes">classes</label>
+            {% for ch in cform.classes %}
+                {{ch}} &emsp;
+            {% endfor %} <br>
+
+
+        <input class="btn-connexion" type="submit" value="Enregister">
+    </form>
+
+    <div class="my-4">
+        {% if coursE %}
+            <span>intitule : {{coursE.intitule}}</span><br>
+            <span>classes: </span>
+            {% for c in coursE.classes %}
+                <span>{{c}}</span>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+  </section>
+  
+
+
+
+  <br><br><br><br><br><br><br><br><br><br>
+
+{% endblock %}

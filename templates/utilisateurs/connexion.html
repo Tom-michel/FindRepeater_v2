@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} FindRepeater | Se connecter à son compte {% endblock %}
+
+{% block content %}
+
+<section class="py-5 my-5" style="background-image:url('static/img/bgform.jpg'); background-attachment: fixed; background-repeat:no-repeat; background-size: cover;">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+        <div  class="form-enregistrement connect">
+          <form name="formConnexion" onsubmit="return validateFormConnex()" action="" method="post">
+            {% csrf_token %}
+
+            <h5 style="color: orange; font-size: 27px; padding: 5px 0 10px;" class="text-center">Connectez vous à votre compte</h5>
+            
+            <div>
+              {% for message in messages %}
+                <p class="errornotes">{{message}}</p>
+              {% endfor %}
+
+              {% if user.is_authenticated %}
+              <p class="infonotes text-center pt-2">
+                Vous êtes déja connecté en tant que <b>{{request.user.username}} 
+              </p>
+              {% endif %}
+            </div>
+            <br>
+            <div class="py-2 text-center">
+              <input class="form-control connect usernameC" type="text" name="username" id="username" placeholder="Adresse email">
+              <p>
+                <span class="errorform" id="error_username"></span>
+              </p>
+            </div>
+
+            <style>
+              .fom {
+                /* position: relative; */
+                align-items: center !important;
+                display: flex;
+              }
+              .far {
+                position: absolute;
+                /* top: 27%;
+                right: 0%; */
+                right: 37%;
+                cursor: pointer;
+                color: rgb(48, 48, 48);
+                font-size: 20px;
+              }
+
+              @media screen and (max-width: 991px) {
+                .far {
+                  right: 33%;
+                }
+              }
+
+              @media screen and (max-width: 767px) {
+                .far {
+                  /* right: 12%; */
+                  right: 15%;
+                }
+              }
+            </style>
+            
+            <div class="py-2">
+              <div class="fom">
+                <input class="form-control connect"  type="password" name="password" id="password" placeholder="Mot de passe">
+                <i class="far fa-eye" onclick="affiMdp()"></i> <i class="far fa-eye-slash" onclick="affiMdp()"></i>
+              </div>
+              <p>
+                <span class="errorform" id="error_password"></span>
+              </p>
+            </div>
+
+            <div class="text-center">
+              {% if user.is_authenticated %}
+              <br>
+              <a class="btn-register" href="{% url 'user_logout' %}">Déconnexion</a>
+              <br><br>
+              {% endif %}
+            </div>
+            <div class="text-center">
+              {% if not user.is_authenticated %}
+                <input class="btn-connexion mt-2 mb-3" type="submit" value="Connexion">
+                <br>
+                <style>
+                  .regis{
+                    color: blue;
+                  }
+                  .regis:hover{
+                    color: orange;
+                  }
+                </style>
+                <p>
+                  Vous n'avez pas de compte ?
+                  <a class="regis" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">S'inscrire</a>
+                </p>
+              {% endif %}
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  var password = document.getElementById('password');
+
+  // affichage/masquage du mdp
+  var eyeVisible = document.querySelector('.fa-eye');
+  var eyeHidden = document.querySelector('.fa-eye-slash');
+  
+  eyeHidden.style.display = "none";
+  
+  function affiMdp() {
+    if (password.type === "password") {
+      eyeHidden.style.display = "";
+      eyeVisible.style.display = "none";
+      password.type = 'text';
+      // alert('mdp vers text');
+    } else {
+      eyeHidden.style.display = "none";
+      eyeVisible.style.display = "";
+      password.type = 'password';
+      // alert('text vers mdp');
+    }
+  }
+</script>
+
+{% endblock %}

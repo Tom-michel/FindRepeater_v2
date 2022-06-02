@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} FindRepeater | Ajout une matière à la liste {% endblock %}
+
+{% block content %}
+
+<style>
+  .infonotes {
+    margin-right: 0;
+  }
+</style>
+
+<section class="py-5 bg_profile">
+  <div class="pt-4 pb-2">
+    <div class="py-2 titre">
+      <h1 class="text-center">Ajout d'une matière</h1>
+    </div> 
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 offset-md-4 mt-lg-4 text-end">
+        <form action="" method="post">
+          {% csrf_token %}
+
+          <div class="d-flex align-items-center">
+            <label for="id_intitule">Intitulé &emsp;</label>
+            {{mat_form.intitule}}
+          </div>
+          <p><span class="errorform" id="error_intituleCours"></span></p>
+          {% for message in messages %}
+            <p class="infonotes mb-3">{{message}}</p>
+          {% endfor %}
+          <input class="btn-connexion" type="submit" onclick="return valAjoutMatiere()" value="Valider">
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('id_intitule').className += ' form-control'
+  </script>
+</section>
+{% endblock %}

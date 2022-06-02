@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} FindRepeater | Ajout une classe à la liste {% endblock %}
+
+{% block content %}
+
+<style>
+  .infonotes {
+    margin-right: 0;
+  }
+</style>
+
+<section class="py-5 bg_profile">
+  <div class="pt-4 pb-2">
+    <div class="py-2 titre">
+      <h1 class="text-center">Ajout d'une classe</h1>
+    </div> 
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 offset-md-4 mt-lg-4 text-end">
+        <form action="" method="post">
+          {% csrf_token %}
+
+          {% for cli in cliList %}
+          {% if cli.user.id == user.id %}
+          <div class="d-flex align-items-center" style="display: none !important;">
+            <div class="form-group">
+              <input class="form-control" type="text" name="id_cli" id="id_cli" value="{{cli.id}}">
+              <input class="form-control" type="text" name="id_use" id="id_use" value="{{user.id}}">
+            </div>
+          </div>
+          {% endif %}
+          {% endfor %}
+
+          <div class="d-flex align-items-center">
+            <label for="id_niveau">Niveau/Classe &emsp;</label>
+            {{classe_form.niveau}}
+          </div>
+          <p><span class="errorform" id="error_niveauClasse"></span></p>
+          {% for message in messages %}
+            <p class="infonotes mb-3">{{message}}</p>
+          {% endfor %}
+          <input class="btn-connexion" type="submit" onclick="return valAjoutClasse()" value="Valider">
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('id_niveau').className += ' form-control'
+  </script>
+</section>
+{% endblock %}

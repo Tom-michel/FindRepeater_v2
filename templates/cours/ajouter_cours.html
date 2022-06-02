@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} FindRepeater | Ajouter un cours {% endblock %}
+
+{% block content %}
+
+<section class="py-5 bg_profile">
+  <div class="pt-4 pb-2">
+    <div class="py-2 titre">
+      <h1 class="text-center">Ajout/Modification d'un cours</h1>
+    </div> 
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 offset-md-1">
+        <div class="row form-enregistrement">
+          <div class="col-md-12">
+            <p class=" mt-2 pt-3 text-center" style="color: rgb(56, 51, 133); font-style: italic; font-size: 14px;">
+              <i style="font-size: 20px;" class="bi-question-circle"></i> 
+              - Changez les informations désirées puis cliquez sur "<b>Ajouter/Modifier</b>"<br>
+              - Cliquez sur le bouton <b>"+"</b> pour ajouter un nouvel élément à la liste
+            </p>
+            <form method="POST" action="#">
+              {% csrf_token %}
+              
+              <div class="row mt-3" style="display: none;">
+                <div class="col-md-6 offset-md-3 col-10 offset-1">
+                  <div class="form-group">
+                    <label for="repetiteur">Confirmez votre identité</label>  
+                    {% for rep in repList %}
+                      {% if rep.user.id == user.id %}
+                        <select name="repetiteur" required="" id="id_repetiteur">
+                          <option value="{{rep.id}}">{{rep}}</option>
+                        </select>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mt-3">
+                <div class="mt-3 col-md-6 offset-md-3 col-10 offset-1">
+                  <div class="form-group">
+                    <label for="id_matiere">Matière</label>
+                    <div class="d-flex align-items-center">
+                      {{cours_form.matiere}}
+                      {% if coursM.repetiteur.user.id != user.id %}
+                        <a href="{% url 'ajouter_matiere' %}"><i class="bi-plus-lg"></i></a>
+                      {% else %}
+                        {% for c in coursList %}
+                          {% if c.id == coursM.id %}
+                            <a href="{% url 'ajouter_matiere_rep_modif' c.id %}"><i class="bi-plus-lg"></i></a>
+                          {% endif %}
+                        {% endfor %}
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <style>
+                @media screen and (min-width: 768px) {
+                  #id_classes {
+                    display: flex;
+                    flex-wrap: wrap;
+                  }
+                  #les_classes label {
+                    margin: 0 0px 0 24px;
+                    cursor: pointer;
+                  }
+                  #les_classes label input {
+                    margin: 0 0 12px;
+                    cursor: pointer;
+                  }
+                }
+                @media screen and (max-width: 767px) {
+                  #id_classes {
+                    display: flex;
+                    flex-wrap: wrap;
+                  }
+                  #les_classes label {
+                    margin: 0 5px 0 8px;
+                    cursor: pointer;
+                  }
+                  #les_classes label input {
+                    margin: 0 0 12px;
+                    cursor: pointer;
+                  }
+                }
+                
+              </style>
+              <div class="row mt-3">
+                <div class="col-md-6 offset-md-3 col-10 offset-1">
+                  <div class="form-group">
+                    <div class="d-flex align-items-center mb-2">
+                      <div class="form-control">
+                          Choisir les classes concernées
+                      </div>
+                    </div>
+                    {% for msg in messages %}
+                      <p class="errornotes text-center mb-2">
+                        {{msg}}
+                      </p>
+                    {% endfor %}
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 offset-md-3 col-10 offset-1" id="les_classes">
+                    {{cours_form.classes}}
+                  </div>
+                </div>
+              </div>
+              <div class="d-flex justify-content-center my-5">
+                <input class="btn-connexion" type="submit" value="Ajouter / Mofifier">
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  var form_fields = document.getElementsByTagName('select');
+
+  for (var field in form_fields){
+      form_fields[field].className += ' form-control';
+  }
+
+</script>
+
+{% endblock %}

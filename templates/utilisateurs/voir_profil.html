@@ -1,0 +1,398 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} FindRepeater | Profil Enseignant {% endblock %}
+
+{% block content %}
+
+<style>
+  #lien_inscrip {
+    display: none;
+  }
+  #lien_devProf {
+    display: inline;
+  }
+  
+  .reseaux i{
+    font-size: 25px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    transition: .5s;
+    color: orange;
+  }
+  .reseaux i:hover{
+    color: rgb(56, 51, 133);
+    transform: scale(1.2);
+  }
+
+  .profile-img {
+      width: 150px;
+  }
+  h6 {
+      color: rgba(0, 0, 0, 0.678);
+  }
+  .info span {
+      font-size: 16px;
+  }
+  h3 {
+      color: rgb(56, 51, 133);
+  }
+  p span {
+      color: orange;
+  }
+
+
+  .bg_profile, #tab, .titre {
+      position: relative;
+      z-index: 10;
+  }
+
+  .dash {
+      background: #fff;
+  }
+
+  @media screen and (min-width: 768px) {
+    .dash {
+        border-left: orange solid 4px;
+    }
+    .card-body {
+        width: 80% !important;
+        margin: auto;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    .dash {
+        margin: 0 !important;
+        border-top: orange solid 2px;
+    }
+    hr {
+        margin-top: 10px;
+    }
+    h6 {
+        font-size: 14px;
+    }
+    .info span {
+        font-size: 14px;
+    }
+    .dash-content {
+        padding: 0 0 20px !important;
+    }
+    .profile-img {
+        margin-top: 20px !important;
+    }
+    .btn-connexion {
+        font-size: 12px;
+    }
+    .btn-connexion.ajout {
+        margin-left: 20px;
+    }
+    p {
+        font-size: 15px;
+    }
+    .container {
+        width: 95%;
+        margin-right: auto;
+        margin-left: auto;
+        
+    }
+    .cours {
+        margin-top: 0 !important;
+    }
+    .container .row.r {
+        border-bottom-right-radius: 10px !important;
+        border-bottom-left-radius: 10px !important;
+    }
+  }
+
+  .cont_part {
+      transition: 0.3s ease-in-out;
+      padding: 5px 20px;
+      /* box-shadow: 0 0 1rem rgba(0,0,0,.15); */
+      /* margin-left: 20px; */
+  }
+  .cont_part:hover {
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.2);
+  }
+  .cont {
+    background: #1da0f21f;
+  }
+  .part {
+    background: rgba(255, 166, 0, 0.11);
+  }
+
+  @media screen and (max-width: 767px) {
+    .cont_part {
+      padding: 5px 20px;
+      box-shadow: 0 0 1rem rgba(0, 0, 0, .2);
+    }
+    .cont {
+        margin-bottom: 15px;
+    }
+  }
+
+    .profile-img {
+        height: 180px !important;
+        width: auto !important;
+    }
+</style>
+
+
+<section class="py-5 bg_profile">
+
+    <div class="pt-4 pb-2">
+        <div class="py-2 titre">
+            <h1 class="text-center">Profil Enseignant</h1>
+        </div> 
+    </div>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 shadow-lg dash mx-4">
+                <div class="d-flex flex-column align-items-center dash-content text-center p-3">
+                    {% comment %} <img class="rounded-circle mt-5 profile-img" src="{% static 'img/profile.jpg' %}"> {% endcomment %}
+                    {% if not rep.photoProfil %}
+                    <img class="rounded-circle mt-4" style="width: 150px;" src="{% static 'img/profile.jpg' %}">
+                    {% endif %}
+                    {% if rep.photoProfil %}
+                    <img class="rounded-circle mt-4 profile-img" src="../../media/{{rep.photoProfil}}">
+                    {% endif %}
+                    <span>{{rep.age}} ans | {{rep.profession}}</span>
+                    <span>{{rep.ville}}, {{rep.quartier}}</span>
+                    <span>{{rep.user.email}}</span>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="row p-3 bg-white shadow">
+                    <div class="col-md-12 info">
+                        <h3 class="text-center">À propos</h3><br>
+                        <div class="row">
+                            <div class="col">
+                                <h6><b>Noms et Prénoms</b></h6>
+                            </div>
+                            <div class="col text-end">
+                                <span>{{rep.user.last_name}} {{rep.user.first_name}}</span>
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <h6><b>Télephone</b></h6>
+                            </div>
+                            <div class="col text-end">
+                                <span>{{rep.telephone1}}</span>
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <h6><b>Whatsapp</b></h6>
+                            </div>
+                            <div class="col text-end">
+                                <span>{{rep.telephone2}}</span>
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <h6><b>Niveau d'étude</b></h6>
+                            </div>
+                            <div class="col text-end">
+                                <span>{{rep.niveauEtude}}</span>
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <h6><b>Langue d'enseignement</b></h6>
+                            </div>
+                            <div class="col text-end">
+                                <span>{{rep.langue}}</span>
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="pt-1 pb-3 mt-3 bg-white shadow cours">
+                <div class="row pt-2">
+                    <div class="col-lg-5 pb-3">
+                        <style>
+                            th, td {border: orange solid 1px; border-top: none; align-items: center;}
+                            .card {
+                                min-width: 100% !important;
+                                border: none !important;
+                            }
+                        </style>
+                        <h3 class="text-center">Cours enseignés ({{n}})</h3>
+                        <div id="tab" class="card card-body text-center" style="padding: 5px 3px;">                    
+                            <div class="table_cours table-responsive">
+                                <table class="table table-hover table-sm">
+                                    <tr  style="border-bottom: orange solid 3px; background-color: rgb(216, 210, 200);">
+                                        <th>Matière</th>
+                                        <th>Classe</th>
+                                    </tr>
+                                    {% for c in coursL %}
+                                        <tr>
+                                            <td>
+                                                {{c.matiere}} <br>
+                                            </td>
+                                            <style>
+                                                .les_classes{
+                                                    display: flex !important;
+                                                    flex-wrap: wrap;
+                                                    justify-content: center;
+                                                    font-size: 14px;
+                                                }
+                                            </style>
+                                            <td>
+                                                <div class="les_classes">
+                                                    {% for cla in c.classes %}
+                                                    <span style="border-radius: 20px; padding: 5px 10px;
+                                                    margin-bottom: 5px; margin-right: 3px; border: green solid 1px;" 
+                                                    class="classe">{{cla}}</span>
+                                                    {% endfor %}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-7">
+                        <div class="row pb-3">
+                            <style> 
+                                h4{font-weight: bold; padding-bottom: 10px;}
+                                .type, .lieu {
+                                    border-radius: 20px;
+                                    padding: 5px 10px;
+                                    margin-bottom: 5px;
+                                    margin-right: 10px;
+                                    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.575);
+                                }
+                                .type{border: blue solid 1px;}
+                                .lieu {border: yellow solid 1px;}
+                                .les_types{
+                                    display: flex !important;
+                                    flex-wrap: wrap;
+                                    justify-content: center;
+                                    font-size: 14px;
+                                }
+                            </style>
+                            <div class="col-md-12 pb-1 text-center">
+                                <h3 class="pb-2">Types et Lieux de cours</h3>
+                                {% for tl in tlList %}
+                                {% if tl.repetiteur.user.id == rep.user.id %}
+                                    <div class="les_types">
+                                    {% for typ in tl.types %}
+                                        <span class="type">{{typ}}</span><br>
+                                    {% endfor %}
+                                    {% for lie in tl.lieux %}
+                                        <span class="lieu">{{lie}}</span><br>
+                                    {% endfor %}
+                                    </div>
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div> 
+                        <div class="row">
+                            <div class="col-md-6 text-center cont_part cont">
+                                <h3>Contacts</h3>
+                                <p>Contacter cet enseignant pour en savoir plus ou bien pour le recruter comme <b>répétiteur</b></p>
+                                <div class="reseaux">
+                                    <a style="text-decoration: none; color: silver;" href="https://wa.me/{{rep.telephone2}}?text=Recherche d'un répétiteur | FindRepeater        Salut {{rep.civilite}} {{rep.user.last_name}}, j'ai visité la plateforme en ligne findrepeater et je suis intéressé.e par vous services de répétition; Pouvons-nous en discuter ?">
+                                        <i class="fab fa-whatsapp"></i>
+                                    </a>&emsp;
+                                    <a style="text-decoration: none; color: silver;" href="tel:{{rep.telephone1}}">
+                                        <i class="fas fa-mobile-alt"></i>
+                                    </a>&emsp;
+                                    <a style="text-decoration: none; color: silver;" href="mailto:{{rep.user.email}}?subject=Recherche d'un répétiteur | FindRepeater&body=Salut {{rep.civilite}} {{rep.user.last_name}}, j'ai visité la plateforme en ligne findrepeater et je suis intéressé.e par vos services de répétition; Pouvons-nous en discuter ?">
+                                        <i class="far fa-envelope"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-6 text-center cont_part part">
+                                <h3>Partager</h3>
+                                <p>Partager ce profil avec votre entourage sur <b>Whatsapp</b>, ou ailleurs en <b>copiant</b> le lien</p>
+                                <style>
+                                    .fa-whatsapp {
+                                        color: #25d366;
+                                    }
+                                    .fa-facebook {
+                                        color: #273c75;
+                                    }
+                                    .fa-clone, .fa-copy {
+                                        color: #000;
+                                    }
+                                </style>
+                                <div class="partage">
+                                    <span class="wha">
+                                        <a style="text-decoration: none;" href="https://wa.me/?text=Salut, je me nomme {{rep.civilite}} {{rep.user.last_name}} {{rep.user.first_name}}, je suis {{rep.profession}} et également enseignant des cours répétion. Pour plus d'information bien vouloir consulter mon *Profil Enseignant* sur la plateforme findrepeater via le lien suivant : {% url 'voir_profil' rep.id %}">
+                                            <i class="fab fa-whatsapp"></i>
+                                        </a>&emsp;
+                                    </span>
+                                    <span class="tel">
+                                        <a style="text-decoration: none;" >
+                                            <span style="position: absolute; margin-bottom: 20px; opacity: 1; height: 0; width: 0; overflow: hidden;" id="tocopy">Salut, je me nomme {{rep.civilite}} {{rep.user.last_name}} {{rep.user.first_name}}, je suis {{rep.profession}} et également enseignant des cours répétion. Pour plus d'information bien vouloir consulter mon *Profil Enseignant* sur la plateforme findrepeater via le lien suivant : {% url 'voir_profil' rep.id %}</span>
+                                            <i class="far fa-clone js-copy" data-target="#tocopy"></i>
+                                        </a>
+                                    </span>
+                                    
+                                </div>
+                            </div>
+                        </div>   
+                    </div>        
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</section>
+
+<script>
+
+
+var btncopy = document.querySelector('.js-copy');
+if(btncopy) {
+    btncopy.addEventListener('click', docopy);
+}
+
+function docopy() {
+    var range = document.createRange();
+    var target = this.dataset.target;
+    var fromElement = document.querySelector(target);
+    var selection = window.getSelection();
+
+    range.selectNode(fromElement);
+    selection.removeAllRanges();
+    selection.addRange(range);
+
+    try {
+        var result = document.execCommand('copy');
+        if (result) {
+            // La copie a réussi
+            alert("Lien Copié !");
+        }
+    }
+    catch(err) {
+        // Une erreur est surevnue lors de la tentative de copie
+        alert(err);
+    }
+
+    selection = window.getSelection();
+
+    if (typeof selection.removeRange === 'function') {
+        selection.removeRange(range);
+    } else if (typeof selection.removeAllRanges === 'function') {
+        selection.removeAllRanges();
+    }
+}
+
+
+</script>
+
+{% endblock %}

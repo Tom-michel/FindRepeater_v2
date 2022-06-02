@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} FindRepeater | Trouvez facilement et rapidement des profs sur mesures | Accueil {% endblock %}
+
+{% block content %}
+  <br><br><br>
+  <h1>Enregistrement multiple</h1>
+    <div class="d-flex">
+        
+
+            <form action="" method="post">
+                {% csrf_token %}
+                1
+                <div>
+                    <label for="nom">Nom :</label>
+                    {{persForm.nom}}
+                </div><br>
+                <div>
+                    <label for="prenom">Prénom : </label>
+                    {{persForm.prenom}}
+                </div><br>
+            
+                <p>
+                    <input type="submit" value="Envoyer">
+                    <input type="reset" value="Effacer">
+                </p>
+            </form>
+
+            <form action="" method="post">
+                {% csrf_token %}
+                2
+                <div>
+                    <label for="nom">Nom :</label>
+                    {{persForm.nom}}
+                </div><br>
+                <div>
+                    <label for="prenom">Prénom : </label>
+                    {{persForm.prenom}}
+                </div><br>
+            
+                <p>
+                    <input type="submit" value="Envoyer">
+                    <input type="reset" value="Effacer">
+                </p>
+            </form>
+        
+    
+        <div>
+            {% for pers in persList %}
+                - {{pers.nom}} {{pers.prenom}} <br>
+            {% endfor %}
+        </div>
+    </div>
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+{% endblock %}

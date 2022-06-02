@@ -1,0 +1,327 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} FindRepeater | Créer un compte enseignant {% endblock %}
+
+{% block content %}
+
+<section class="py-5 my-5" style="background-image:url('static/img/bgform.jpg'); background-attachment: fixed; background-repeat:no-repeat; background-size: cover;">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 align-items-center justify-content-center px-0">
+        <div class="enrO">
+          <div class="text-center">    
+            <p>Vous avez déja un compte ?</p>
+            <a class="btn-connexion mt-5" href="{% url 'connexion' %}">Connexion</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8 enrC"> 
+        <form name="formRegister" onsubmit="return validateFormEnreg()" action="" method="post">
+          {% csrf_token %}
+          
+          <div class="etape"><span class="numEtape">1</span></div>
+            <div  class="form-enregistrement">
+              <h4 class="text-center">Type de compte</h4>
+              <div class="etapeRep active">
+                  <div class="contentRep et1 text-center">
+                    <span id="type" style="color: orange; font-size: 17px;">enseignant</span>
+                  </div> 
+            </div>
+          </div>
+
+          <style>
+            .precedentRep{
+              color: rgb(99, 99, 99);
+              font-size: 14px;
+            }
+            .precedentRep:hover{
+              color: rgb(173, 169, 147);
+            }
+            .form-group{
+              font-size: 14px;
+              text-align: center !important;
+              padding: 0 3px !important;
+            }
+          </style>
+          
+          <div class="formRep">
+            <div class="etape"><span class="numEtape">2</span></div>
+            <div  class="form-enregistrement">
+                <h4 class="text-center">Informations personnelles</h4>
+                {% if util == " " %}
+                <div class="etapeRep active mt-1">
+                {% endif %}
+                {% if util != " " %}
+                <div class="etapeRep mt-1">
+                {% endif %}
+                    <div class="contentRep et2">
+                        <div class="row">
+                            <div class="col-md-6 offset-md-3 mt-3">
+                                <div class="form-group">
+                                  <label for="civilite">Civilité &emsp;</label><br>
+                                  {{form2.civilite}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mt-3">
+                                <div class="form-group">
+                                  <label for="last_name">Nom </label>
+                                  <!-- <input class="form-control" type="text" name="last_name" id="last_nameRep"> -->
+                                  {{form1.last_name}}
+                                  <p><span class="errorform" id="error_last_nameRep"></span></p>
+                                </div>
+                                <div class="form-group" style="display: none;">
+                                  <label for="nom_image">nom_image_profil dans la BD</label>
+                                  {{form2.nom_image}}
+                                </div>
+                            </div>
+                            <div class="col-md-6 mt-3">
+                                <div class="form-group">
+                                  <label for="first_name">Prénom </label>
+                                  <!-- <input class="form-control" type="text" name="first_name" id="first_nameRep"> -->
+                                  {{form1.first_name}}
+                                  <p><span class="errorform" id="error_first_nameRep"></span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mt-1">
+                                <div class="form-group">
+                                  <label for="age">Âge </label>
+                                  <!-- <input class="form-control" type="number" name="age" id="ageRep"> -->
+                                  {{form2.age}}
+                                  <p><span class="errorform" id="error_ageRep"></span></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mt-1">
+                                <div class="form-group">
+                                  <label for="telephone1">Téléphone </label>
+                                  {{form2.telephone1}}
+                                  <!-- <input class="form-control" type="text" name="telephone1" id="telephone1Rep"> -->
+                                  <p><span class="errorform" id="error_telephone1Rep"></span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pt-2 pb-1 mb-1 text-end">
+                            <span class="btn-connexion suivant suivantRep" type="button">Suivant</span>
+                        </div>
+                    </div>  
+              </div>
+            </div>
+            <div class="etape"><span class="numEtape">3</span></div>
+            <div  class="form-enregistrement">
+                <h4 class="text-center">Informations professionnelles</h4>
+                <div class="etapeRep mt-1">
+                    <div class="contentRep et3">
+                      <div class="row">
+                        <div class="col-md-6 offset-md-3 mt-1">
+                          <div class="form-group">
+                            <label for="langue">Profession actuelle</label>
+                            {{form2.profession}}
+                            <p><span class="errorform" id="error_professionRep"></span></p>
+                          </div>
+                        </div>
+                      </div>  
+                      <div class="row">
+                            <div class="col-md-6 mt-1">
+                              <div class="form-group">
+                                <label for="langue">Langue d'enseignement &emsp;</label>
+                                {{form2.langue}}
+                              </div>
+                            </div>
+                            <div class="col-md-6 mt-1">
+                                <div class="form-group">
+                                  <label for="niveauEtude">Niveau d'étude </label>
+                                  <!-- <input class="form-control" type="text" name="niveauEtude" id="niveauEtudeRep"> -->
+                                  {{form2.niveauEtude}}
+                                  <p><span class="errorform" id="error_niveauEtudeRep"></span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mt-1">
+                                <div class="form-group">
+                                    <label for="telephone2">Whatsapp </label>
+                                    <!-- <input class="form-control" type="text" name="telephone2" id="telephone2Rep"> -->
+                                    {{form2.telephone2}}
+                                    <p><span class="errorform" id="error_telephone2Rep"></span></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mt-1">
+                                <div class="form-group">
+                                    <label for="email">Email </label>
+                                    <!-- <input class="form-control" type="email" name="email" id="emailRep"> -->
+                                    {{form1.email}}
+                                    <p><span class="errorform" id="error_emailRep"></span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                        <div class="col-md-6 mt-1">
+                            <div class="form-group">
+                                <label for="ville">Ville </label>
+                                <!-- <input class="form-control" type="text" name="ville" id="villeRep"> -->
+                                {{form2.ville}}
+                                <p><span class="errorform" id="error_villeRep"></span></p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mt-1">
+                            <div class="form-group">
+                                <label for="quartier">Quartier </label>
+                                <!-- <input class="form-control" type="text" name="quartier" id="quartierRep"> -->
+                                {{form2.quartier}}
+                                <p><span class="errorform" id="error_quartierRep"></span></p>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="pt-2 pb-1 mb-1 text-end">
+                            <span type="button" class="precedentRep">Précédent</span>
+                            &emsp;
+                            <span class="btn-connexion suivant suivantRep" type="button">Suivant</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="etape"><span class="numEtape">4</span></div>
+            <div  class="form-enregistrement">
+                <h4 class="text-center">Informations de connexion</h4>
+                {% if util == " " %}
+                <div class="etapeRep mt-1">
+                {% endif %}
+                {% if util != " " %}
+                <div class="etapeRep active mt-1">
+                {% endif %}
+                    <div class="contentRep et4">
+                        <div class="row">
+                            <div class="col-md-6 mt-1" style="display: none !important;">
+                                <div class="form-group">
+                                  <label for="username">Nom d'utilisateur</label>
+                                  <input type="text" name="username" maxlength="150" autofocus="" id="id_username">
+                                  <!-- {{form1.username}} -->
+                                  {{form1.username.errors}}
+                                </div>
+                            </div>
+
+                            <style>
+                                .fom {
+                                  align-items: center !important;
+                                  display: flex;
+                                }
+                                .far {
+                                  position: absolute;
+                                  right: 4%;
+                                  cursor: pointer;
+                                  color: rgb(48, 48, 48);
+                                  font-size: 20px;
+                                }
+                  
+                                @media screen and (max-width: 991px) {
+                                  .far {
+                                    right: 4%;
+                                  }
+                                }
+                  
+                                @media screen and (max-width: 767px) {
+                                  .far {
+                                    right: 3%;
+                                  }
+                                }
+                            </style>
+
+                            <div class="col-md-6 mt-1">
+                                <div class="form-group">
+                                  <label for="password1">Créez votre mot de passe </label>
+                                  <!-- <input class="form-control" type="password" name="password1" id="password1Rep"> -->
+                                  <div class="fom">
+                                    {{form1.password1}}<i class="far fa-eye" onclick="affiMdp()"></i> <i class="far fa-eye-slash" onclick="affiMdp()"></i>
+                                  </div>
+                                  {{form1.password2.errors}}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                <label for="password2">Retapez le mot de passe </label>
+                                  <!-- <input class="form-control" type="password" name="password2" id="password2Rep"> -->
+                                  {{form1.password2}}
+                                </div>
+                            </div>
+
+                            <div class="text-center mt-1">
+                                {% if form1.username.errors %}                                    
+                                    <span style="color: #e35f5f !important;
+                                    font-weight: 700;
+                                    font-size: 13px !important;">
+                                        votre adresse mail est déja utilisé
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="pt-2 pb-1 mt-4 text-center">
+                            <span type="button" class="precedentRep">Précédent</span>
+                            <a class="btn-register annuler mt-2 mb-1" href="{% url 'enregistrement_prof' %}">Recommencer</a>
+                            <input class="btn-connexion sub mt-2 mb-1" type="submit" value="Enregistrer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+    var form_fields = document.getElementsByTagName('input');
+    for (let i = 0; i < (form_fields.length-1); i++) {
+        form_fields[i].className += ' form-control';
+    }
+    var form_fieldSel = document.getElementsByTagName('select');
+    for (var fields in form_fieldSel) {
+        form_fieldSel[fields].className += ' form-control';
+    }
+    document.getElementById('id_civilite').focus();
+
+
+
+    function validateFormEnreg() {
+      var usernam = document.getElementById('id_username');
+      var email = document.getElementById('id_email');
+      usernam.value = email.value
+      if (usernam.value != ""){
+        return true;
+      }
+    }
+
+
+    // affichage/masquage du mdp
+  
+  var password1 = document.getElementById('id_password1');
+  var password2 = document.getElementById('id_password2');
+
+  var eyeVisible = document.querySelector('.fa-eye');
+  var eyeHidden = document.querySelector('.fa-eye-slash');
+  
+  eyeHidden.style.display = "none";
+  
+  function affiMdp() {
+    if (password1.type === "password") {
+      eyeHidden.style.display = "";
+      eyeVisible.style.display = "none";
+      password1.type = 'text';
+      password2.type = 'text';
+      // alert('mdp vers text');
+    } else {
+      eyeHidden.style.display = "none";
+      eyeVisible.style.display = "";
+      password1.type = 'password';
+      password2.type = 'password';
+      // alert('text vers mdp');
+    }
+  }
+</script>
+
+{% endblock %}

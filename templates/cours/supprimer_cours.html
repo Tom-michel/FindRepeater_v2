@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} FindRepeater | Supprimer un cours {% endblock %}
+
+{% block content %}
+
+<style>
+  
+
+  @media screen and (max-width: 768px) {}
+
+  span {
+    display: none !important;
+  }
+
+  .btn-connexion {
+    background: #dc3545 !important;
+    color: #fff !important;
+    margin-left: .8rem !important;
+  }
+  .btn-connexion:hover {
+    background: rgb(56, 51, 133) !important;
+  }
+</style>
+
+<section class="pt-5 pb-5 bg_profile">
+  <div class="mt-3">
+    <div class="pt-4 pb-2">
+      <div class="py-2 titre">
+          <h1 class="text-center">Supprimer un cours</h1>
+      </div> 
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="pb-3 mt-3 col-md-6 offset-md-3 text-center">
+          <div class="row form-enregistrement pt-5 pb-5">
+            <form action="" method="post">
+              {% csrf_token %}
+              
+              <div class="py-2 mb-4">
+                  <p class="infonotes mb-2">{{cours}}</p>
+                  Voulez-vous vraiment supprimer ce cours ?
+              </div>
+              <a class="btn-register" href="{% url 'consulter_profil' %}">
+                  Annuler
+              </a>
+              <input class="btn-connexion" type="submit" value="Valider">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{% endblock %}

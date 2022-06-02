@@ -1,0 +1,320 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} FindRepeater | Bienvenue {% endblock %}
+
+{% block content %}
+
+<style>
+	.salut {
+		position: relative;
+	}
+
+	.btn-connexion{
+		background: orange;
+		border: none;
+		color: #000 !important;
+		border-radius: 20px;
+		padding: 6px 15px !important;
+		font-size: 0.9rem;;
+		text-decoration: none !important;
+	}
+	.btn-connexion:hover{
+		background: rgb(56, 51, 133);
+		border: none;
+		color: #fff !important;
+	}
+	.btn-register.bienv{
+		background: rgb(56, 51, 133);
+		color: #fff !important;
+		border: none;
+		border-radius: 20px;
+		transition: 0.5s;
+		padding: 8px 17px !important;
+		font-size: 1rem;
+		text-decoration: none !important;
+	}
+	.btn-register.bienv:hover{
+		background: orange;
+		border: none;
+		color: #000 !important;
+	}
+
+	
+	.dash{
+		align-items: center;
+		justify-content: center;
+		display: flex;
+	}
+	.dash i {
+		font-size: 100px;
+		color: rgb(56, 51, 133);
+	}
+
+	.contain {
+		width: 93% !important;
+		position: relative;
+		top: -150px;
+		height: 0;
+		transition: 0.3s ease-in-out;
+		visibility: hidden;
+		opacity: 0;
+	}
+	.contain.aff {
+		top: 0;
+		visibility: visible;
+		opacity: 1;
+		height: 240px;
+		margin-bottom: 30px;
+	}
+
+
+	.containerTM {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		overflow: hidden;
+		box-sizing: border-box;
+		padding: 10px 20px;
+	}
+
+	.action {
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-wrap: wrap;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.box h4 {
+		color: rgb(56, 51, 133);
+		font-weight: bold;
+	}
+	.box {
+		font-size: 14px;
+		position: relative;
+		transition: 0.2s ease-in-out;
+		margin: 10px 20px;
+    	padding: 10px;
+		display: flex;
+		flex-direction: column;
+		width: 300px;
+		border-radius: 10px;
+	}
+	.box i {
+		font-size: 50px;
+		transition: 0.4s ease-in-out;
+	}
+	.box .content p {
+		font-size: 14px;
+		margin-top: 3px;
+	}
+
+	.box:hover {
+		box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
+	}
+
+	.box i {
+		color: rgb(56, 51, 133);
+	}
+
+	.box .content a {
+		position: relative;
+		margin: 5px 0;
+		color: #fff !important;
+		font-size: 12px;
+	}
+
+	.salut p {
+		font-style: italic;
+	}
+
+	@media screen and (min-width: 992px) {
+		.salut h1 {
+			font-size: 30px !important;
+			color: rgb(56, 51, 133) !important;
+			transition: 0.3s ease-in-out;
+		}
+	}
+
+	@media screen and (min-width: 768px) and (max-width: 991px) {
+		.salut h1 {
+			font-size: 25px !important;
+			color: rgb(56, 51, 133) !important;
+			transition: 0.3s ease-in-out;
+		}
+		.btn-register.bienv{
+			padding: 6px 15px !important;
+			font-size: 0.8rem;
+		}
+		.contain.aff {
+			height: 250px;
+			margin-bottom: 50px;
+		}
+	}
+	@media screen and (max-width: 767px) {
+		.salut h1 {
+			font-size: 25px !important;
+			color: rgb(56, 51, 133) !important;
+			transition: 0.3s ease-in-out;
+		}
+		.btn-register.bienv{
+			padding: 6px 15px !important;
+			font-size: 0.8rem;
+		}
+		.contain.aff {
+			height: 450px;
+			margin-bottom: 0px;
+		}
+	}
+
+	.box .number{
+		position: absolute;
+	}
+	.box .number i{
+		color: orange;
+		font-size: 25px;
+		border-radius: 50%;
+		font-weight: 600;
+		padding: 5px 8px;
+	}
+  
+  .action, #footer {
+    position: relative;
+    z-index: 10;
+  }
+</style>
+
+<section class="pt-5 pb-5 mt-5 bg_profile text-center">
+
+{% for cli in listC %}
+	{% if cli.user.id == user.id%}
+
+  <div class="salut text-center mb-4">
+    <h1>Salut {{user.username}} !</h1>
+    <p>Bienvenue sur la plateforme FindRepeater</p>
+	<hr style="width: 50%; margin-left: auto; margin-right: auto; color: rgb(56, 51, 133); height: 2px;">
+    <button id="aff" class="btn-register bienv">Mon profil</button>
+  </div>
+  <div class="container contain" id="card">
+    <div class="row">
+      <div class="col-md-4 offset-md-1 dash bg-white">
+        <div class="dash-content text-center">
+          <i class="bi-person-circle"></i>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="row p-3 bg-white">
+          <div class="col-md-12 info">
+            <div class="row">
+              <div class="col text-start">
+                <h6><b>Télephone</b></h6>
+              </div>
+              <div class="col text-end">
+                <span>{{cli.telephone1}}</span>
+              </div>
+              <hr>
+            </div>
+            <div class="row">
+              <div class="col text-start">
+                <h6><b>Email</b></h6>
+              </div>
+              <div class="col text-end">
+                <span>{{cli.user.email}}</span>
+              </div>
+              <hr>
+            </div>
+            <div class="row">
+              <div class="col text-start">
+                <h6><b>Classe</b></h6>
+              </div>
+              <div class="col text-end">
+                <span>{{cli.classe}}</span>
+              </div>
+              <hr>
+            </div>
+            <div class="row">
+              <div class="col text-start">
+                <h6><b>Langue d'étude</b></h6>
+              </div>
+              <div class="col text-end">
+                <span>{{cli.langue}}</span>
+              </div>
+              <hr>
+            </div>
+            <div class="row">
+              <div class="col text-start">
+                <h6><b>Ville, Quartier</b></h6>
+              </div>
+              <div class="col text-end">
+                <span>{{cli.ville}}, {{cli.quartier}}</span>
+              </div>
+              <hr>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <h4 class="mb-2" style="font-weight: bold;">Quelques actions rapides</h4>
+  <div class="containerTM">
+    <div class="action">
+      <div class="box b1 text-center">
+        <div class="header">
+		<p class="number"><i class="bi-patch-check"></i></p>
+          <i class="bi-person-badge"></i>
+          <h4>Professeurs Compatibles</h4>
+        </div>
+        <div class="content">
+          <p>
+            Afficher les répétiteurs correspondant à votre profil <b>(classe, ville)</b>
+          </p>
+          <a class="btn-connexion" href="{% url 'profs_compatibles' cli.id %}">Consulter</a>
+        </div>
+      </div>
+      <div class="box b2 text-center">
+        <div class="header">
+		<p class="number"><i class="bi-patch-check"></i></p>
+          <i class="bi-search"></i>
+          <h4>Rechercher un Répétiteur</h4>
+        </div>
+        <div class="content">
+          <p>
+            Rechercher un répétiteur à partir des critères que vous indiquerez
+          </p>
+          <a class="btn-connexion" href="{% url 'recherche_repetiteur' %}">Rechercher</a>
+        </div>
+      </div>
+      <div class="box b3 text-center">
+        <div class="header">
+			<p class="number"><i class="bi-patch-check"></i></p>
+          <i class="bi-person-lines-fill"></i>
+          <h4>Modifier mon Profil</h4>
+        </div>
+        <div class="content">
+          <p>
+            Modifier les informations renseignées lors de la création de votre profil
+          </p>
+          <a class="btn-connexion" href="{% url 'modifier_profil_cli' cli.id user.id %}">Modifier</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+	{% endif %}
+{% endfor %}
+
+</section>
+
+<script>
+  var aff = document.getElementById('aff');
+  var card = document.getElementById('card');
+  aff.addEventListener('click', function(){
+    card.classList.toggle('aff');
+  });
+</script>
+
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} FindRepeater | Trouvez facilement et rapidement des profs sur mesures | Accueil {% endblock %}
+
+{% block content %}
+  <br><br><br>
+  <h1>Accueil</h1>
+
+{% endblock %}
