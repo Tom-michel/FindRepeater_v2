@@ -23,7 +23,7 @@ services:
     image: adminer
     restart: always
     ports:
-      - 9001:8080
+      - 9099:8080
   repeat:
     build: .
     command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8099"
