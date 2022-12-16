@@ -81,11 +81,39 @@ WSGI_APPLICATION = 'FindRepeater.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+DATABASE = 0
+
+if DATABASE == 1:
+    # use the Local SQLite Database
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        } 
     }
+elif DATABASE == 2:
+    # use the Deployment MYSQL Database
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'find_repeater',
+            'HOST': 'db_repeat',
+            'USER': 'root',
+            'PASSWORD': 'passs',
+            'PORT': 3306
+        }
+    }
+else:
+    # use the Local MYSQL Database
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'find_repeater',
+            'HOST': '127.0.0.1',
+            'USER': 'root',
+            'PASSWORD': '',
+            'PORT': 3307
+        }
 }
 
 

@@ -1,0 +1,39 @@
+version: "3.9"
+   
+services:
+  db_repeat:
+    image: mariadb:10.8.2
+    restart: always
+    volumes:
+      - ./data/db:/var/lib/mariadb/data
+    ports:
+      - "3304:3306"
+    environment:
+      - MYSQL_DATABASE=find_repeater
+      - MYSQL_HOST=localhost
+      - MYSQL_PORT=3306
+      - MARIADB_ROOT_PASSWORD=passs
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-uroot", "-ppasss"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 9001:8080
+  repeat:
+    build: .
+    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8099"
+    volumes:
+      - .:/code
+    ports:
+      - "8087:8087"
+    environment:
+      - MARIADB_ROOT_PASSWORD=passs
+    depends_on:
+      db_repeat:
+        condition: service_healthy
+      
