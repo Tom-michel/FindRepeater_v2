@@ -7,7 +7,7 @@ services:
     volumes:
       - ./data/db:/var/lib/mariadb/data
     ports:
-      - "3304:3399"
+      - "3399:3399"
     environment:
       - MYSQL_DATABASE=find_repeater
       - MYSQL_HOST=localhost
