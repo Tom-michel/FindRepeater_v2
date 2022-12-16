@@ -38,7 +38,7 @@ class Cours(models.Model):
     matiere = models.ForeignKey(Matiere, null=True, on_delete=models.CASCADE)
 
     # un Cours concerne au moins une Classe
-    classes = MultiSelectField(choices=MY_CLASSES)
+    classes = MultiSelectField(choices=MY_CLASSES, max_length=100)
 
     # un Cours est dispensé par un seul Repetiteur
     repetiteur = models.ForeignKey(Repetiteur, null=True, on_delete=models.CASCADE)
@@ -60,8 +60,8 @@ MY_LIEUX = (("Chez le prof","Chez le prof"),
 
 class Type_Lieu_Cours(models.Model):
     repetiteur = models.ForeignKey(Repetiteur, null=True, on_delete=models.CASCADE)
-    types = MultiSelectField(choices=MY_TYPES)
-    lieux = MultiSelectField(choices=MY_LIEUX)
+    types = MultiSelectField(choices=MY_TYPES, max_length=100)
+    lieux = MultiSelectField(choices=MY_LIEUX, max_length=100)
     
     
 
