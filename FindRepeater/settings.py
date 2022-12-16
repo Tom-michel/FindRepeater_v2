@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'FindRepeater.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASE = 0
+DATABASE = 2
 
 if DATABASE == 1:
     # use the Local SQLite Database
